@@ -11,8 +11,8 @@ import {
   TotalSurveySVG,
 } from "@/components/core/dashboard/dashboard/stat-card/svg";
 import Image from "next/image";
-import { CampaignCTA } from "@/components/core/dashboard/dashboard/campaign-card/campaign-cta";
 import { useTranslations } from "next-intl";
+import { VoteDeliveryChart } from "@/components/core/dashboard/dashboard/vote-delivery-chart";
 
 const Dashboard = () => {
   const t = useTranslations("dashboard.stats");
@@ -25,6 +25,10 @@ const Dashboard = () => {
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#EAF5FF]", // Light Blue
+      breakdown: [
+        { label: t("brands"), value: 15 },
+        { label: t("influencers"), value: 5 },
+      ],
     },
     {
       title: t("totalResponses"),
@@ -33,6 +37,10 @@ const Dashboard = () => {
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#F0F2FF]", // Light Lavender
+      breakdown: [
+        { label: t("pending"), value: 15 },
+        { label: t("completed"), value: 5 },
+      ],
     },
     {
       title: t("totalSurveys"),
@@ -40,7 +48,8 @@ const Dashboard = () => {
       icon: TotalSurveySVG,
       trend: "-0.03%",
       trendType: "down" as const,
-      bgColor: "bg-[#EAF5FF]", // Light Blue
+      bgColor: "bg-[#EAF5FF]",
+      breakdown: [{ label: t("votes delivered this week"), value: 238 }], // Light Blue
     },
     {
       title: t("completionRate"),
@@ -52,20 +61,20 @@ const Dashboard = () => {
     },
   ];
 
-interface CampaignProps {
-  id: number;
-  title: string;
-  responses: number;
-  totalResponses: number;
-  status: "active";
-}
+  interface CampaignProps {
+    id: number;
+    title: string;
+    responses: number;
+    totalResponses: number;
+    status: "active";
+  }
 
-interface ActivityProps {
-  id: number;
-  title: string;
-  metric: number;
-  timeAgo: string;
-}
+  interface ActivityProps {
+    id: number;
+    title: string;
+    metric: number;
+    timeAgo: string;
+  }
   const tSections = useTranslations("dashboard.sections");
   const tEmpty = useTranslations("dashboard.emptyStates");
 
@@ -77,14 +86,16 @@ interface ActivityProps {
         ))}
       </div>
 
-      {/* Campaign CTA */}
       <div className="mt-4">
-        <CampaignCTA />
+        <VoteDeliveryChart />
       </div>
+      
       <div className="grid gap-4 lg:grid-cols-2 mt-4">
         {/* Active Campaigns Section */}
         <div className="space-y-4 bg-white p-2 sm:p-5 shadow-xs rounded">
-          <h2 className="text-base font-semibold">{tSections("activeCampaigns")}</h2>
+          <h2 className="text-base font-semibold">
+            {tSections("activeCampaigns")}
+          </h2>
           <div className="space-y-4">
             {campaigns.length ? (
               campaigns?.map((campaign: CampaignProps) => (

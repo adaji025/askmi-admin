@@ -3,7 +3,12 @@
     "activeCampaigns": "Active Campaigns",
     "totalResponses": "Total Responses",
     "totalSurveys": "Total Surveys",
-    "completionRate": "Completion Rate"
+    "completionRate": "Completion Rate",
+    "brands": "brands",
+    "influencers": "influencers",
+    "pending": "pending",
+    "completed": "completed",
+    "votes delivered this week": "votes delivered this week"
   },
   "sections": {
     "activeCampaigns": "Active Campaigns",

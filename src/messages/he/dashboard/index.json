@@ -3,7 +3,12 @@
     "activeCampaigns": "קמפיינים פעילים",
     "totalResponses": "סה\"כ תגובות",
     "totalSurveys": "סה\"כ סקרים",
-    "completionRate": "שיעור השלמה"
+    "completionRate": "שיעור השלמה",
+    "brands": "מותגים",
+    "influencers": "אינפלואנסרים",
+    "pending": "ממתין",
+    "completed": "הושלם",
+    "votes delivered this week": "קולות שנמסרו השבוע"
   },
   "sections": {
     "activeCampaigns": "קמפיינים פעילים",
