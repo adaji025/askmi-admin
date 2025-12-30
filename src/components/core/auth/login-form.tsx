@@ -135,7 +135,7 @@ export function LoginForm() {
               placeholder={t("emailPlaceholder")}
               value={formData.email}
               onChange={handleEmailChange}
-              className={`h-11 rounded-[6px] ${
+              className={`h-11 rounded-[6px] text-white ${
                 errors.email
                   ? "border-destructive focus-visible:ring-destructive"
                   : ""
@@ -160,7 +160,7 @@ export function LoginForm() {
               placeholder={t("passwordPlaceholder")}
               value={formData.password}
               onChange={handlePasswordChange}
-              className={`h-11  rounded-[6px] ${
+              className={`h-11  rounded-[6px] text-white ${
                 errors.password
                   ? "border-destructive focus-visible:ring-destructive"
                   : ""
