@@ -36,34 +36,24 @@ const data = {
       icon: DashboardSVG,
     },
     {
-      title: "Campaign",
-      url: "/dashboard/campaigns",
+      title: "Brands",
+      url: "/dashboard/brands",
       icon: CampaignsSVG,
     },
     {
-      title: "Surveys",
+      title: "Influencers",
       url: "/dashboard/surveys",
       icon: SurveysSVG,
     },
     {
-      title: "Analytics",
-      url: "/dashboard/analytics",
+      title: "OCR Review",
+      url: "/dashboard/ocr-review",
       icon: AnalyticsSVG,
     },
     {
-      title: "Influencers",
-      url: "/dashboard/influencers",
-      icon: InfluencersSVG,
-    },
-    {
-      title: "Billings",
-      url: "/dashboard/billings",
+      title: "Campaigns",
+      url: "/dashboard/campaigns",
       icon: BillingsSVG,
-    },
-    {
-      title: "Settings",
-      url: "/dashboard/settings",
-      icon: SurveysSVG,
     },
   ],
 };
