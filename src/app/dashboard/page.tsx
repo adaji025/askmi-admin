@@ -1,8 +1,5 @@
 "use client";
 
-import { activities, campaigns } from "@/components/core/dashboard/data";
-import { ActivityItem } from "@/components/core/dashboard/dashboard/recent-active-item";
-import { CampaignCard } from "@/components/core/dashboard/dashboard/campaign-card";
 import { StatCard } from "@/components/core/dashboard/dashboard/stat-card";
 import {
   ActiveCampaignSVG,
@@ -13,6 +10,10 @@ import {
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { VoteDeliveryChart } from "@/components/core/dashboard/dashboard/vote-delivery-chart";
+import OCRProcessingQueue from "@/components/core/dashboard/dashboard/ocr-que-processing";
+import { OCRAccuracyTrends } from "@/components/core/dashboard/dashboard/ocr-accuracy-trend";
+import TopOverPerformer from "@/components/core/dashboard/dashboard/top-over-performer";
+import UnderOverPerformingInfluencers from "@/components/core/dashboard/dashboard/under-performing-influencers";
 
 const Dashboard = () => {
   const t = useTranslations("dashboard.stats");
@@ -89,7 +90,7 @@ const Dashboard = () => {
       <div className="mt-4">
         <VoteDeliveryChart />
       </div>
-      
+
       <div className="grid gap-4 lg:grid-cols-2 mt-4">
         {/* Active Campaigns Section */}
         <div className="space-y-4 bg-white p-2 sm:p-5 shadow-xs rounded">
@@ -97,50 +98,19 @@ const Dashboard = () => {
             {tSections("activeCampaigns")}
           </h2>
           <div className="space-y-4">
-            {campaigns.length ? (
-              campaigns?.map((campaign: CampaignProps) => (
-                <CampaignCard
-                  key={campaign.id}
-                  title={campaign.title}
-                  responses={campaign.responses}
-                  totalResponses={campaign.totalResponses}
-                  status={campaign.status}
-                />
-              ))
-            ) : (
-              <div className="min-h-50 gap-2 text-[#8E8E8E] text-sm flex flex-col justify-center items-center">
-                <Image
-                  src={"/images/svgs/campaign-filled.svg"}
-                  width={20}
-                  height={20}
-                  alt="No Active Campaigns"
-                />
-                {tEmpty("noActiveCampaigns")}
-              </div>
-            )}
+            <OCRProcessingQueue />
           </div>
         </div>
 
         {/* Recent Activity Section */}
         <div className="space-y-4 bg-white p-2 sm:p-5 shadow-xs rounded">
           <h2 className="text-base font-bold">{tSections("recentActivity")}</h2>
-          {activities.length ? (
-            <div className="divide-y divide-border">
-              {activities.map((activity: ActivityProps) => (
-                <ActivityItem
-                  key={activity.id}
-                  title={activity.title}
-                  metric={activity.metric}
-                  timeAgo={activity.timeAgo}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="min-h-50 text-sm text-[#8E8E8E] flex flex-col justify-center items-center">
-              {tEmpty("noRecentActivity")}
-            </div>
-          )}
+          <OCRAccuracyTrends />
         </div>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2 mt-4">
+        <TopOverPerformer />
+        <UnderOverPerformingInfluencers />
       </div>
     </div>
   );

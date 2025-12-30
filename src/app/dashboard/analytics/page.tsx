@@ -6,7 +6,6 @@ import {
   InfluencersSVG,
   SurveysSVG,
 } from "@/components/core/dashboard/dashboard/layout/svg";
-import { ActivityItem } from "@/components/core/dashboard/dashboard/recent-active-item";
 import { StatCard } from "@/components/core/dashboard/dashboard/stat-card";
 import { activities } from "@/components/core/dashboard/data";
 import { ExportSVG, WadOfMoneySVG } from "@/components/core/dashboard/svg";
@@ -105,22 +104,6 @@ const Analytics = () => {
         {/* Recent Activity Section */}
         <div className="space-y-4 bg-white p-2 sm:p-5 shadow-xs rounded">
           <h2 className="text-base font-bold">Recent Activity</h2>
-          {activities.length ? (
-            <div className="divide-y divide-border">
-              {activities.map((activity: ActivityProps) => (
-                <ActivityItem
-                  key={activity.id}
-                  title={activity.title}
-                  metric={activity.metric}
-                  timeAgo={activity.timeAgo}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="min-h-50 text-sm text-[#8E8E8E] flex flex-col justify-center items-center">
-              No Recent Activity
-            </div>
-          )}
         </div>
       </div>
     </div>

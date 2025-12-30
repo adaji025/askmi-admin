@@ -23,6 +23,19 @@
     "description1": "Start engaging with your audience by creating targeted campaigns.",
     "description2": "Track responses, analyze insights, and grow your brand presence.",
     "button": "Create Campaign"
+  },
+  "ocr": {
+    "title": "OCR Processing Queue",
+    "processedToday": "Processed Today",
+    "autoVerified": "Auto-Verified",
+    "pendingReview": "Pending Review",
+    "flaggedFraud": "Flagged Fraud",
+    "ocrErrors": "OCR Errors",
+    "reviewQueue": "Review Queue"
+  },
+  "topPerformers": {
+    "title": "Top Over-Performers",
+    "subtitle": "Consistently exceeding vote expectations"
   }
 }
 
