@@ -1,0 +1,23 @@
+{
+  "stats": {
+    "activeCampaigns": "קמפיינים פעילים",
+    "totalResponses": "סה\"כ תגובות",
+    "totalSurveys": "סה\"כ סקרים",
+    "completionRate": "שיעור השלמה"
+  },
+  "sections": {
+    "activeCampaigns": "קמפיינים פעילים",
+    "recentActivity": "פעילות אחרונה"
+  },
+  "emptyStates": {
+    "noActiveCampaigns": "אין קמפיינים פעילים",
+    "noRecentActivity": "אין פעילות אחרונה"
+  },
+  "cta": {
+    "title": "צור את הקמפיין הראשון שלך",
+    "description1": "התחל ליצור אינטראקציה עם הקהל שלך על ידי יצירת קמפיינים ממוקדים.",
+    "description2": "עקוב אחר תגובות, נתח תובנות וצמח את נוכחות המותג שלך.",
+    "button": "צור קמפיין"
+  }
+}
+

@@ -1,0 +1,25 @@
+{
+  "myProfile": "My Profile",
+  "preferences": "Preferences",
+  "photo": "Photo",
+  "photoDescription": "Shown on your brand profile",
+  "fullName": "Full name",
+  "fullNameDescription": "Your name as it appears to influencers",
+  "contactEmail": "Contact email",
+  "contactEmailDescription": "Primary email for platform communications",
+  "company": "Company",
+  "companyDescription": "Your brand or company name",
+  "phoneNumber": "Phone number",
+  "phoneNumberDescription": "For account security and notifications",
+  "language": "Language",
+  "languageDescription": "Platform display language",
+  "timezone": "Timezone",
+  "timezoneDescription": "Used for campaign scheduling",
+  "campaignUpdates": "Campaign updates",
+  "campaignUpdatesDescription": "Get notified about campaign milestones",
+  "responseAlerts": "Response alerts",
+  "responseAlertsDescription": "Email when target responses are reached",
+  "influencerActivity": "Influencer activity",
+  "influencerActivityDescription": "Updates when influencers join campaigns"
+}
+

@@ -1,0 +1,25 @@
+{
+  "myProfile": "הפרופיל שלי",
+  "preferences": "העדפות",
+  "photo": "תמונה",
+  "photoDescription": "מוצג בפרופיל המותג שלך",
+  "fullName": "שם מלא",
+  "fullNameDescription": "השם שלך כפי שהוא מופיע לאינפלואנסרים",
+  "contactEmail": "אימייל ליצירת קשר",
+  "contactEmailDescription": "אימייל ראשי לתקשורת בפלטפורמה",
+  "company": "חברה",
+  "companyDescription": "שם המותג או החברה שלך",
+  "phoneNumber": "מספר טלפון",
+  "phoneNumberDescription": "לביטחון החשבון והתראות",
+  "language": "שפה",
+  "languageDescription": "שפת תצוגת הפלטפורמה",
+  "timezone": "אזור זמן",
+  "timezoneDescription": "משמש לתזמון קמפיינים",
+  "campaignUpdates": "עדכוני קמפיין",
+  "campaignUpdatesDescription": "קבל התראות על אבני דרך בקמפיין",
+  "responseAlerts": "התראות תגובה",
+  "responseAlertsDescription": "אימייל כאשר מגיעים לתגובות יעד",
+  "influencerActivity": "פעילות אינפלואנסר",
+  "influencerActivityDescription": "עדכונים כאשר אינפלואנסרים מצטרפים לקמפיינים"
+}
+

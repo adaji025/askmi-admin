@@ -1,0 +1,15 @@
+{
+  "createSurvey": "Create Survey",
+  "questionTypes": "Question Types",
+  "multipleChoice": "Multiple Choice",
+  "yesNo": "Yes/No",
+  "ratingScale": "Rating Scale",
+  "shortText": "Short Text",
+  "longText": "Long Text",
+  "required": "Required",
+  "addOption": "Add Option",
+  "removeOption": "Remove Option",
+  "questionTitle": "Question Title",
+  "questionTitlePlaceholder": "Enter your question here"
+}
+

@@ -1,0 +1,23 @@
+{
+  "stats": {
+    "activeCampaigns": "Active Campaigns",
+    "totalResponses": "Total Responses",
+    "totalSurveys": "Total Surveys",
+    "completionRate": "Completion Rate"
+  },
+  "sections": {
+    "activeCampaigns": "Active Campaigns",
+    "recentActivity": "Recent Activity"
+  },
+  "emptyStates": {
+    "noActiveCampaigns": "No active campaigns",
+    "noRecentActivity": "No recent activity"
+  },
+  "cta": {
+    "title": "Create Your First Campaign",
+    "description1": "Start engaging with your audience by creating targeted campaigns.",
+    "description2": "Track responses, analyze insights, and grow your brand presence.",
+    "button": "Create Campaign"
+  }
+}
+

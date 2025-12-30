@@ -1,0 +1,15 @@
+{
+  "createSurvey": "צור סקר",
+  "questionTypes": "סוגי שאלות",
+  "multipleChoice": "בחירה מרובה",
+  "yesNo": "כן/לא",
+  "ratingScale": "סולם דירוג",
+  "shortText": "טקסט קצר",
+  "longText": "טקסט ארוך",
+  "required": "נדרש",
+  "addOption": "הוסף אפשרות",
+  "removeOption": "הסר אפשרות",
+  "questionTitle": "כותרת שאלה",
+  "questionTitlePlaceholder": "הזן את השאלה שלך כאן"
+}
+
