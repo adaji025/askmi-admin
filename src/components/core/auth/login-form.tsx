@@ -3,14 +3,13 @@
 import type React from "react";
 
 import { useState } from "react";
-import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import LanguageDropdown from "../dashboard/dashboard/layout/lang-dropdown";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export function LoginForm() {
   const t = useTranslations("auth.signIn");
@@ -97,18 +96,25 @@ export function LoginForm() {
   };
 
   return (
-    <div>
+    <div className="relative py-10 px-6 lg:px-8">
+      <Image
+        src={"/images/svgs/auth-ellipse.svg"}
+        height={338}
+        width={264}
+        alt="askmi"
+        className="absolute left-0 -bottom-30 hidden lg:block"
+      />
       <div className="flex justify-end mb-6">
         <LanguageDropdown />
       </div>
       <div className="w-full max-w-md mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-[32px] font-bold mb-2 text-blck">
-            {t("title")}
-          </h1>
-          <p className="text-sm text-center text-[#5D6A6B]">
-            {t("subtitle")}
-          </p>
+        <div className="flex justify-center mb-10">
+          <Image
+            src={"/images/svgs/logo-admin.svg"}
+            height={72}
+            width={94}
+            alt="askmi"
+          />
         </div>
 
         {/* Form */}
@@ -129,10 +135,11 @@ export function LoginForm() {
               placeholder={t("emailPlaceholder")}
               value={formData.email}
               onChange={handleEmailChange}
-              className={`h-11 bg-white rounded-[6px] ${errors.email
+              className={`h-11 rounded-[6px] ${
+                errors.email
                   ? "border-destructive focus-visible:ring-destructive"
                   : ""
-                }`}
+              }`}
               disabled={isLoading}
             />
             {errors.email && (
@@ -153,10 +160,11 @@ export function LoginForm() {
               placeholder={t("passwordPlaceholder")}
               value={formData.password}
               onChange={handlePasswordChange}
-              className={`h-11 bg-white rounded-[6px] ${errors.password
+              className={`h-11  rounded-[6px] ${
+                errors.password
                   ? "border-destructive focus-visible:ring-destructive"
                   : ""
-                }`}
+              }`}
               disabled={isLoading}
             />
             {errors.password && (
@@ -172,16 +180,6 @@ export function LoginForm() {
             {isLoading ? t("signingIn") : t("signInButton")}
           </Button>
         </form>
-
-        <p className="text-center mt-6 text-sm text-muted-foreground">
-          {t("noAccount")}{" "}
-          <Link
-            href={"/auth/sign-up"}
-            className="text-[#8B5CF6] font-medium cursor-pointer hover:underline"
-          >
-            {t("signUp")}
-          </Link>
-        </p>
       </div>
     </div>
   );
