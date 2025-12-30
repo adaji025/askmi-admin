@@ -102,13 +102,13 @@ export function LoginForm() {
         height={338}
         width={264}
         alt="askmi"
-        className="absolute left-0 -bottom-30 hidden lg:block"
+        className="absolute left-0 -bottom-14 hidden lg:block"
       />
       <div className="flex justify-end mb-6">
         <LanguageDropdown />
       </div>
       <div className="w-full max-w-md mx-auto">
-        <div className="flex justify-center mb-10">
+        <div className="flex justify-center mb-6">
           <Image
             src={"/images/svgs/logo-admin.svg"}
             height={72}
@@ -174,7 +174,7 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            className="mt-12 rounded-[6px] w-full h-12 text-base font-medium bg-[#2563EB] hover:bg-[#2563EB]/90"
+            className="mt-8 rounded-[6px] w-full h-12 text-base font-medium bg-[#2563EB] hover:bg-[#2563EB]/90"
             disabled={isLoading}
           >
             {isLoading ? t("signingIn") : t("signInButton")}
