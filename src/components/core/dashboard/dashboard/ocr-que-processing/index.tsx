@@ -21,7 +21,7 @@ const OCRProcessingQueue = () => {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-white p-4">
       {/* Title */}
       <h2 className="font-bold text-slate-900">{t("title")}</h2>
 
@@ -30,7 +30,7 @@ const OCRProcessingQueue = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="flex items-center justify-between bg-[#F8F8F9] rounded-lg p-3 "
+            className="flex items-center justify-between bg-[#F8F8F9] rounded-md p-4 "
           >
             <span className="text-sm text-slate-600 font-medium">
               {stat.label}

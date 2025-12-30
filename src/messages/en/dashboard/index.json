@@ -10,10 +10,6 @@
     "completed": "completed",
     "votes delivered this week": "votes delivered this week"
   },
-  "sections": {
-    "activeCampaigns": "Active Campaigns",
-    "recentActivity": "Recent Activity"
-  },
   "emptyStates": {
     "noActiveCampaigns": "No active campaigns",
     "noRecentActivity": "No recent activity"

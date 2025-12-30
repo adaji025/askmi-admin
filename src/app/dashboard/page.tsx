@@ -92,21 +92,8 @@ const Dashboard = () => {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2 mt-4">
-        {/* Active Campaigns Section */}
-        <div className="space-y-4 bg-white p-2 sm:p-5 shadow-xs rounded">
-          <h2 className="text-base font-semibold">
-            {tSections("activeCampaigns")}
-          </h2>
-          <div className="space-y-4">
-            <OCRProcessingQueue />
-          </div>
-        </div>
-
-        {/* Recent Activity Section */}
-        <div className="space-y-4 bg-white p-2 sm:p-5 shadow-xs rounded">
-          <h2 className="text-base font-bold">{tSections("recentActivity")}</h2>
-          <OCRAccuracyTrends />
-        </div>
+        <OCRProcessingQueue />
+        <OCRAccuracyTrends />
       </div>
       <div className="grid gap-4 lg:grid-cols-2 mt-4">
         <TopOverPerformer />

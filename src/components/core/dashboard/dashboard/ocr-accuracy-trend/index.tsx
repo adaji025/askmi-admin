@@ -28,7 +28,7 @@ const chartConfig = {
 
 export function OCRAccuracyTrends() {
   return (
-    <div className="w-full bg-white rounded-lg border border-[#E2E8F0] p-6">
+    <div className="w-full bg-white rounded-lg p-4">
       <h3 className="font-bold mb-6 text-slate-900">OCR Accuracy Trend</h3>
       <ChartContainer config={chartConfig} className="h-60 w-full">
         <LineChart

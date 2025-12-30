@@ -10,10 +10,6 @@
     "completed": "הושלם",
     "votes delivered this week": "קולות שנמסרו השבוע"
   },
-  "sections": {
-    "activeCampaigns": "קמפיינים פעילים",
-    "recentActivity": "פעילות אחרונה"
-  },
   "emptyStates": {
     "noActiveCampaigns": "אין קמפיינים פעילים",
     "noRecentActivity": "אין פעילות אחרונה"
