@@ -31,16 +31,20 @@ interface Brand {
   riskLevel: "none" | "low-ocr"; // none = green, low-ocr = orange
 }
 
-const mockBrands: Brand[] = Array(0).fill(null).map((_, index) => ({
+const mockBrands: Brand[] = Array(10).fill(null).map((_, index) => ({
   id: index + 1,
   name: "TechCo Limited",
   email: "contact@techco.com",
+  // Mix of statuses: some flagged, some active with different risk levels
   status: index === 2 || index === 5 ? "flagged" : "active",
   totalCampaigns: 23,
   activeCampaigns: 2,
   totalSpend: 4600,
   lastActivity: "2 days ago",
-  riskLevel: index === 2 || index === 5 ? "low-ocr" : "none",
+  // For approved: status active + riskLevel none
+  // For pending: status active + riskLevel low-ocr
+  // For flagged: status flagged
+  riskLevel: index === 2 || index === 5 ? "low-ocr" : index === 3 || index === 7 ? "low-ocr" : "none",
 }));
 
 interface BrandsTableProps {

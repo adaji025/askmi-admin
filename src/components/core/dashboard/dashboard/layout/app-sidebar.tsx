@@ -41,7 +41,7 @@ const data = {
     },
     {
       title: "Influencers",
-      url: "/dashboard/surveys",
+      url: "/dashboard/influencers",
       icon: InfluencersSVG,
     },
     {

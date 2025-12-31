@@ -52,7 +52,15 @@ const BrandsComponent = () => {
               <span
                 className={cn(
                   "text-[10px] font-medium px-2 py-0.5 rounded-md text-white",
-                  isSelected ? "bg-[#2563EB]" : "bg-[#6B7280]"
+                  isSelected
+                    ? option.value === "approved"
+                      ? "bg-[#10B981]"
+                      : option.value === "pending"
+                      ? "bg-[#EDAE40]"
+                      : option.value === "flagged"
+                      ? "bg-[#EB5757]"
+                      : "bg-[#2563EB]"
+                    : "bg-[#6B7280]"
                 )}
               >
                 {option.count}
