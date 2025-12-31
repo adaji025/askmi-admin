@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Eye, BarChart3, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import ApproveScreenshot from "./approve-screenshot";
 
 interface PollOption {
   label: string;
@@ -43,8 +44,13 @@ const OCRReviewDetails: React.FC<OCRReviewDetailsProps> = ({
   onReject,
 }) => {
   const router = useRouter();
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const totalVotes = pollOptions.reduce((sum, option) => sum + option.votes, 0);
   const maxVotes = Math.max(...pollOptions.map((opt) => opt.votes), 1);
+
+  const handleApproveClick = () => {
+    setIsApproveModalOpen(true);
+  };
 
   const handleApprove = () => {
     if (onApprove) {
@@ -80,7 +86,14 @@ const OCRReviewDetails: React.FC<OCRReviewDetailsProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <>
+      <ApproveScreenshot
+        open={isApproveModalOpen}
+        onOpenChange={setIsApproveModalOpen}
+        campaignName={screenshotDetails.campaign}
+        onApprove={handleApprove}
+      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Left Section: Extracted Poll Data */}
       <div className="order-2 lg:order-1">
         <div className="space-y-6 bg-white">
@@ -234,7 +247,7 @@ const OCRReviewDetails: React.FC<OCRReviewDetailsProps> = ({
         {/* Action Buttons */}
         <div className="flex gap-3 max-w-62.5 mx-auto">
           <Button
-            onClick={handleApprove}
+            onClick={handleApproveClick}
             className="flex-1 bg-[#10B981] hover:bg-[#10B981]/90 text-white h-10"
           >
             <Check className="h-5 w-5 mr-2" />
@@ -251,6 +264,7 @@ const OCRReviewDetails: React.FC<OCRReviewDetailsProps> = ({
         </div>
       </div>
     </div>
+    </>
   );
 };
 
