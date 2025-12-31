@@ -1,6 +1,7 @@
 import React from "react";
 import { Check, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface OCRScreenshot {
   id: number;
@@ -69,13 +70,18 @@ const ScreenshotCard = ({
 
       {/* Screenshot Image */}
       <div className="p-4 bg-[#F5F5F5] flex items-center justify-center">
-        <div className="w-full max-w-30 aspect-9/16 bg-linear-to-b from-blue-100 to-gray-200 rounded-lg border border-gray-300 shadow-inner relative overflow-hidden">
-          {/* Mock phone screen content */}
+        {/* <div className="w-full max-w-30 aspect-9/16 bg-linear-to-b from-blue-100 to-gray-200 rounded-lg border border-gray-300 shadow-inner relative overflow-hidden">
           <div className="absolute inset-0 flex flex-col">
             <div className="h-8 bg-blue-200"></div>
             <div className="flex-1 bg-gray-100"></div>
           </div>
-        </div>
+        </div> */}
+        <Image
+          src={"/images/svgs/screenshot.svg"}
+          width={78}
+          height={136}
+          alt="screenshot"
+        />
       </div>
 
       {/* Brand/Influencer Info */}
@@ -105,8 +111,15 @@ const ScreenshotCard = ({
       {/* Status Bar */}
       <div className="px-4 py-3 bg-[#0F172A]">
         <div className="flex items-center justify-between">
-          <span className="text-white text-xs font-medium">{screenshot.timeAgo}</span>
-          <span className={cn("px-3 py-1 rounded text-white text-xs font-medium", getStatusColor(screenshot.status))}>
+          <span className="text-white text-xs font-medium">
+            {screenshot.timeAgo}
+          </span>
+          <span
+            className={cn(
+              "px-3 py-1 rounded text-white text-xs font-medium",
+              getStatusColor(screenshot.status)
+            )}
+          >
             {getStatusLabel(screenshot.status)}
           </span>
         </div>
