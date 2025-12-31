@@ -9,27 +9,51 @@ export const DashboardSVG = () => (
     <path
       d="M16.5 8.175V3.075C16.5 1.95 16.02 1.5 14.8275 1.5H11.7975C10.605 1.5 10.125 1.95 10.125 3.075V8.175C10.125 9.3 10.605 9.75 11.7975 9.75H14.8275C16.02 9.75 16.5 9.3 16.5 8.175Z"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M16.5 14.925V13.575C16.5 12.45 16.02 12 14.8275 12H11.7975C10.605 12 10.125 12.45 10.125 13.575V14.925C10.125 16.05 10.605 16.5 11.7975 16.5H14.8275C16.02 16.5 16.5 16.05 16.5 14.925Z"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M7.875 9.825V14.925C7.875 16.05 7.395 16.5 6.2025 16.5H3.1725C1.98 16.5 1.5 16.05 1.5 14.925V9.825C1.5 8.7 1.98 8.25 3.1725 8.25H6.2025C7.395 8.25 7.875 8.7 7.875 9.825Z"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M7.875 3.075V4.425C7.875 5.55 7.395 6 6.2025 6H3.1725C1.98 6 1.5 5.55 1.5 4.425V3.075C1.5 1.95 1.98 1.5 3.1725 1.5H6.2025C7.395 1.5 7.875 1.95 7.875 3.075Z"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
+  </svg>
+);
+
+export const BrandsSVG = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M16.5 16.5H1.5" stroke="currentColor" strokeLinecap="round" />
+    <path
+      d="M15.7506 16.5V4.5C15.7506 3.08579 15.7506 2.37868 15.3113 1.93934C14.872 1.5 14.1649 1.5 12.7506 1.5H11.2506C9.83641 1.5 9.12931 1.5 8.68996 1.93934C8.33633 2.293 8.26733 2.82017 8.25391 3.75"
+      stroke="currentColor"
+    />
+    <path
+      d="M11.25 16.5V6.75C11.25 5.33579 11.25 4.62868 10.8106 4.18934C10.3713 3.75 9.6642 3.75 8.25 3.75H5.25C3.83579 3.75 3.12868 3.75 2.68934 4.18934C2.25 4.62868 2.25 5.33579 2.25 6.75V16.5"
+      stroke="currentColor"
+    />
+    <path d="M6.75 16.5V14.25" stroke="currentColor" strokeLinecap="round" />
+    <path d="M4.5 6H9" stroke="currentColor" strokeLinecap="round" />
+    <path d="M4.5 8.25H9" stroke="currentColor" strokeLinecap="round" />
+    <path d="M4.5 10.5H9" stroke="currentColor" strokeLinecap="round" />
   </svg>
 );
 
@@ -52,36 +76,13 @@ export const CampaignsSVG = () => (
     <path
       d="M4.88867 10.5H4.89542M7.50671 10.5H7.51346M10.125 10.5H10.1317"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
 
-export const AnalyticsSVG = () => (
-  <svg
-    width="18"
-    height="18"
-    viewBox="0 0 18 18"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M1.5 1.5H16.5" stroke="currentColor" stroke-linecap="round" />
-    <path
-      d="M6.75 7.875L7.71968 6.90533C7.96965 6.65533 8.09467 6.53033 8.25 6.53033C8.40533 6.53033 8.53035 6.65533 8.78032 6.90533L9.21968 7.34467C9.46965 7.59465 9.59467 7.71968 9.75 7.71968C9.90533 7.71968 10.0303 7.59465 10.2803 7.34467L11.25 6.375"
-      stroke="currentColor"
-      stroke-linecap="round"
-    />
-    <path d="M9 15.75V12.75" stroke="currentColor" stroke-linecap="round" />
-    <path d="M7.5 16.5L9 15.75" stroke="currentColor" stroke-linecap="round" />
-    <path d="M10.5 16.5L9 15.75" stroke="currentColor" stroke-linecap="round" />
-    <path
-      d="M15 1.5V7.875C15 10.1731 15 11.3221 14.2469 12.0361C13.4937 12.75 12.2815 12.75 9.85718 12.75H8.14282C5.71849 12.75 4.50631 12.75 3.75316 12.0361C3 11.3221 3 10.1731 3 7.875V1.5"
-      stroke="currentColor"
-    />
-  </svg>
-);
-export const SurveysSVG = () => (
+export const OCRReviewSVG = () => (
   <svg
     width="18"
     height="18"
@@ -90,26 +91,12 @@ export const SurveysSVG = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M15.2337 9.48547L15.622 8.03655C16.0751 6.34525 16.3017 5.4996 16.1311 4.76777C15.9964 4.18993 15.6933 3.66501 15.2602 3.2594C14.7118 2.74571 13.8661 2.51912 12.1748 2.06593C10.4835 1.61275 9.6378 1.38616 8.90602 1.5568C8.32815 1.69153 7.80322 1.99459 7.39763 2.42765C6.95782 2.89723 6.72846 3.58468 6.38716 4.83421C6.32984 5.04405 6.26936 5.26975 6.2042 5.51293L5.81593 6.96197C5.36275 8.65327 5.13616 9.4989 5.3068 10.2307C5.44153 10.8086 5.74459 11.3335 6.17765 11.7391C6.72611 12.2528 7.57177 12.4794 9.2631 12.9326C10.7875 13.3411 11.6249 13.5655 12.3112 13.4808C12.3864 13.4716 12.4597 13.4586 12.5319 13.4417C13.1097 13.307 13.6346 13.0039 14.0402 12.5709C14.5539 12.0224 14.7805 11.1768 15.2337 9.48547Z"
+      d="M2.45617 11.4718C1.81872 10.6436 1.5 10.2296 1.5 9C1.5 7.77045 1.81872 7.3564 2.45617 6.52825C3.72897 4.87467 5.86358 3 9 3C12.1364 3 14.271 4.87467 15.5438 6.52825C16.1812 7.3564 16.5 7.77045 16.5 9C16.5 10.2296 16.1812 10.6436 15.5438 11.4718C14.271 13.1253 12.1364 15 9 15C5.86358 15 3.72897 13.1253 2.45617 11.4718Z"
       stroke="currentColor"
-      stroke-width="1.2"
     />
     <path
-      d="M12.3112 13.4806C12.1549 13.9595 11.8799 14.3927 11.5102 14.7389C10.9618 15.2526 10.1161 15.4792 8.42482 15.9324C6.73348 16.3856 5.88783 16.6121 5.15599 16.4415C4.57816 16.3068 4.05324 16.0037 3.64763 15.5707C3.13394 15.0222 2.90735 14.1766 2.45416 12.4853L2.06593 11.0363C1.61275 9.345 1.38616 8.49938 1.5568 7.76753C1.69153 7.1897 1.99459 6.66479 2.42765 6.25918C2.97611 5.74549 3.82177 5.5189 5.51308 5.06571C5.83306 4.97997 6.12276 4.90235 6.38716 4.83398"
+      d="M11.25 9C11.25 10.2427 10.2427 11.25 9 11.25C7.75732 11.25 6.75 10.2427 6.75 9C6.75 7.75732 7.75732 6.75 9 6.75C10.2427 6.75 11.25 7.75732 11.25 9Z"
       stroke="currentColor"
-      stroke-width="1.2"
-    />
-    <path
-      d="M8.83203 7.5L12.4542 8.47057"
-      stroke="currentColor"
-      stroke-width="1.2"
-      stroke-linecap="round"
-    />
-    <path
-      d="M8.25 9.6731L10.4234 10.2554"
-      stroke="currentColor"
-      stroke-width="1.2"
-      stroke-linecap="round"
     />
   </svg>
 );
@@ -129,7 +116,7 @@ export const InfluencersSVG = () => (
     <path
       d="M11.25 6.75C12.4927 6.75 13.5 5.74264 13.5 4.5C13.5 3.25736 12.4927 2.25 11.25 2.25"
       stroke="currentColor"
-      stroke-linecap="round"
+      strokeLinecap="round"
     />
     <path
       d="M6.75 15.75C9.6495 15.75 12 14.4069 12 12.75C12 11.0931 9.6495 9.75 6.75 9.75C3.85051 9.75 1.5 11.0931 1.5 12.75C1.5 14.4069 3.85051 15.75 6.75 15.75Z"
@@ -138,65 +125,125 @@ export const InfluencersSVG = () => (
     <path
       d="M13.5 10.5C14.8156 10.7885 15.75 11.5192 15.75 12.375C15.75 13.147 14.9897 13.8172 13.875 14.1528"
       stroke="currentColor"
-      stroke-linecap="round"
+      strokeLinecap="round"
     />
   </svg>
 );
-export const BillingsSVG = () => (
+
+export const UsersSVG = () => (
   <svg
-    width="18"
-    height="18"
-    viewBox="0 0 18 18"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M4.5 7.5H7.5"
+      d="M12 10C14.2091 10 16 8.20914 16 6C16 3.79086 14.2091 2 12 2C9.79086 2 8 3.79086 8 6C8 8.20914 9.79086 10 12 10Z"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.2"
     />
     <path
-      d="M15.625 8.25H13.6731C12.3349 8.25 11.25 9.25732 11.25 10.5C11.25 11.7427 12.3349 12.75 13.6731 12.75H15.625C15.6875 12.75 15.7187 12.75 15.7451 12.7484C16.1496 12.7238 16.4717 12.4246 16.4983 12.049C16.5 12.0245 16.5 11.9955 16.5 11.9375V9.06247C16.5 9.0045 16.5 8.97547 16.4983 8.95095C16.4717 8.57535 16.1496 8.27625 15.7451 8.25157C15.7187 8.25 15.6875 8.25 15.625 8.25Z"
+      d="M18 9C19.6569 9 21 7.88071 21 6.5C21 5.11929 19.6569 4 18 4"
       stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
     <path
-      d="M15.7238 8.25C15.6655 6.84577 15.4774 5.98481 14.8713 5.37868C13.9927 4.5 12.5784 4.5 9.75 4.5H7.5C4.67157 4.5 3.25736 4.5 2.37868 5.37868C1.5 6.25736 1.5 7.6716 1.5 10.5C1.5 13.3284 1.5 14.7427 2.37868 15.6213C3.25736 16.5 4.67157 16.5 7.5 16.5H9.75C12.5784 16.5 13.9927 16.5 14.8713 15.6213C15.4774 15.0152 15.6655 14.1542 15.7238 12.75"
+      d="M6 9C4.34315 9 3 7.88071 3 6.5C3 5.11929 4.34315 4 6 4"
       stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
     <path
-      d="M4.5 4.5L7.30162 2.64235C8.09055 2.11922 9.15945 2.11922 9.94837 2.64235L12.75 4.5"
+      d="M12 21C15.3137 21 18 19.2091 18 17C18 14.7909 15.3137 13 12 13C8.68629 13 6 14.7909 6 17C6 19.2091 8.68629 21 12 21Z"
       stroke="currentColor"
-      stroke-linecap="round"
+      strokeWidth="1.2"
     />
     <path
-      d="M13.4941 10.5H13.5009"
+      d="M20 19C21.7542 18.6153 23 17.6411 23 16.5C23 15.3589 21.7542 14.3847 20 14"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M4 19C2.24575 18.6153 1 17.6411 1 16.5C1 15.3589 2.24575 14.3847 4 14"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
   </svg>
 );
-export const SettingsSVG = () => (
+
+export const VoteDeliverySVG = () => (
   <svg
-    width="18"
-    height="18"
-    viewBox="0 0 18 18"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M5.88231 2.85158C7.40385 1.95052 8.16465 1.5 9 1.5C9.83535 1.5 10.5962 1.95052 12.1177 2.85158L12.6323 3.15634C14.1538 4.0574 14.9146 4.50793 15.3323 5.25C15.75 5.99207 15.75 6.89313 15.75 8.69528V9.30472C15.75 11.1069 15.75 12.0079 15.3323 12.75C14.9146 13.4921 14.1538 13.9426 12.6323 14.8436L12.1177 15.1484C10.5962 16.0495 9.83535 16.5 9 16.5C8.16465 16.5 7.40385 16.0495 5.88231 15.1484L5.36769 14.8436C3.84615 13.9426 3.08538 13.4921 2.66769 12.75C2.25 12.0079 2.25 11.1069 2.25 9.30472V8.69528C2.25 6.89313 2.25 5.99207 2.66769 5.25C3.08538 4.50793 3.84615 4.0574 5.36769 3.15634L5.88231 2.85158Z"
+      d="M14 2.00522C13.3848 2 12.7199 2 12 2C7.28595 2 4.92893 2 3.46447 3.46447C2 4.92893 2 7.28595 2 12C2 16.714 2 19.0711 3.46447 20.5355C4.92893 22 7.28595 22 12 22C16.714 22 19.0711 22 20.5355 20.5355C22 19.0711 22 16.714 22 12C22 11.2801 22 10.6152 21.9948 10"
       stroke="currentColor"
-      stroke-width="1.2"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
     <path
-      d="M9 11.25C10.2426 11.25 11.25 10.2426 11.25 9C11.25 7.75736 10.2426 6.75 9 6.75C7.75736 6.75 6.75 7.75736 6.75 9C6.75 10.2426 7.75736 11.25 9 11.25Z"
+      d="M19 8C20.6569 8 22 6.65685 22 5C22 3.34315 20.6569 2 19 2C17.3431 2 16 3.34315 16 5C16 6.65685 17.3431 8 19 8Z"
       stroke="currentColor"
-      stroke-width="1.2"
+      strokeWidth="1.2"
+    />
+    <path
+      d="M2 13H5.16026C6.06543 13 6.51802 13 6.91584 13.183C7.31367 13.3659 7.60821 13.7096 8.19729 14.3968L8.80271 15.1032C9.39179 15.7904 9.68633 16.1341 10.0842 16.317C10.482 16.5 10.9346 16.5 11.8397 16.5H12.1603C13.0654 16.5 13.518 16.5 13.9158 16.317C14.3137 16.1341 14.6082 15.7904 15.1973 15.1032L15.8027 14.3968C16.3918 13.7096 16.6863 13.3659 17.0842 13.183C17.482 13 17.9346 13 18.8397 13H22"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
   </svg>
 );
+
+export const OCRAccuracySVG = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M10 22C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 18.7712 2 15"
+      stroke="black"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M22 15C22 18.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22"
+      stroke="black"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M14 2C17.7712 2 19.6569 2 20.8284 3.17157C22 4.34315 22 5.22876 22 9"
+      stroke="black"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M10 2C6.22876 2 4.34315 2 3.17157 3.17157C2 4.34315 2 5.22876 2 9"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M2 12H22"
+      stroke="black"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export const LogoutSVG = () => (
   <svg
     width="20"
@@ -208,23 +255,23 @@ export const LogoutSVG = () => (
     <path
       d="M14.5332 12.1827L16.6665 10.0493L14.5332 7.91602"
       stroke="black"
-      stroke-miterlimit="10"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M8.13281 10.0508H16.6078"
       stroke="black"
-      stroke-miterlimit="10"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M9.79948 16.6673C6.11615 16.6673 3.13281 14.1673 3.13281 10.0007C3.13281 5.83398 6.11615 3.33398 9.79948 3.33398"
       stroke="black"
-      stroke-miterlimit="10"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

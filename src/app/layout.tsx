@@ -9,6 +9,7 @@ import enProfile from "@/messages/en/profile.json";
 import enCampaign from "@/messages/en/campaign.json";
 import enSurvey from "@/messages/en/survey.json";
 import enDashboard from "@/messages/en/dashboard/index.json";
+import enBrands from "@/messages/en/brands/index.json";
 import { routing } from "@/i18n/routing";
 
 const enMessages = {
@@ -19,6 +20,7 @@ const enMessages = {
   campaign: enCampaign,
   survey: enSurvey,
   dashboard: enDashboard,
+  brands: enBrands,
 };
 
 const inter = Inter({

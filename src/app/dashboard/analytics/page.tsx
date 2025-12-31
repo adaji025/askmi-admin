@@ -4,7 +4,6 @@ import { VoteCollectionChart } from "@/components/core/dashboard/analytics/vote-
 import {
   CampaignsSVG,
   InfluencersSVG,
-  SurveysSVG,
 } from "@/components/core/dashboard/dashboard/layout/svg";
 import { StatCard } from "@/components/core/dashboard/dashboard/stat-card";
 import { activities } from "@/components/core/dashboard/data";
@@ -42,7 +41,7 @@ const stats = [
   {
     title: "Avg Response Rate",
     value: "78%",
-    icon: SurveysSVG,
+    icon: WadOfMoneySVG,
     bgColor: "bg-[#F0F2FF]", // Light Lavender
   },
   {

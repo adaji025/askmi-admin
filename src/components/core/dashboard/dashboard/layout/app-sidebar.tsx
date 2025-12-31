@@ -13,12 +13,11 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import {
-  AnalyticsSVG,
-  BillingsSVG,
+  BrandsSVG,
   CampaignsSVG,
   DashboardSVG,
   InfluencersSVG,
-  SurveysSVG,
+  OCRReviewSVG,
 } from "./svg";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -38,22 +37,22 @@ const data = {
     {
       title: "Brands",
       url: "/dashboard/brands",
-      icon: CampaignsSVG,
+      icon: BrandsSVG,
     },
     {
       title: "Influencers",
       url: "/dashboard/surveys",
-      icon: SurveysSVG,
+      icon: InfluencersSVG,
     },
     {
       title: "OCR Review",
       url: "/dashboard/ocr-review",
-      icon: AnalyticsSVG,
+      icon: OCRReviewSVG,
     },
     {
       title: "Campaigns",
       url: "/dashboard/campaigns",
-      icon: BillingsSVG,
+      icon: CampaignsSVG,
     },
   ],
 };

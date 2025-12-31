@@ -1,28 +1,27 @@
 "use client";
 
 import { StatCard } from "@/components/core/dashboard/dashboard/stat-card";
-import {
-  ActiveCampaignSVG,
-  CompletionRateSVG,
-  TotalResponseSVG,
-  TotalSurveySVG,
-} from "@/components/core/dashboard/dashboard/stat-card/svg";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { VoteDeliveryChart } from "@/components/core/dashboard/dashboard/vote-delivery-chart";
 import OCRProcessingQueue from "@/components/core/dashboard/dashboard/ocr-que-processing";
 import { OCRAccuracyTrends } from "@/components/core/dashboard/dashboard/ocr-accuracy-trend";
 import TopOverPerformer from "@/components/core/dashboard/dashboard/top-over-performer";
 import UnderOverPerformingInfluencers from "@/components/core/dashboard/dashboard/under-performing-influencers";
+import {
+  CampaignsSVG,
+  OCRAccuracySVG,
+  UsersSVG,
+  VoteDeliverySVG,
+} from "@/components/core/dashboard/dashboard/layout/svg";
 
 const Dashboard = () => {
   const t = useTranslations("dashboard.stats");
 
   const stats = [
     {
-      title: t("activeCampaigns"),
-      value: "20",
-      icon: ActiveCampaignSVG,
+      title: t("Total Users"),
+      value: "1,020",
+      icon: UsersSVG,
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#EAF5FF]", // Light Blue
@@ -32,9 +31,9 @@ const Dashboard = () => {
       ],
     },
     {
-      title: t("totalResponses"),
+      title: t("active campaigns"),
       value: "20",
-      icon: TotalResponseSVG,
+      icon: CampaignsSVG,
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#F0F2FF]", // Light Lavender
@@ -44,21 +43,21 @@ const Dashboard = () => {
       ],
     },
     {
-      title: t("totalSurveys"),
-      value: "20",
-      icon: TotalSurveySVG,
+      title: t("vote delivery"),
+      value: "92%",
+      icon: VoteDeliverySVG,
       trend: "-0.03%",
       trendType: "down" as const,
-      bgColor: "bg-[#EAF5FF]",
+      bgColor: "bg-[#FDF8E1]",
       breakdown: [{ label: t("votes delivered this week"), value: 238 }], // Light Blue
     },
     {
-      title: t("completionRate"),
-      value: "20%",
-      icon: CompletionRateSVG,
+      title: t("OCR accuracy"),
+      value: "90%",
+      icon: OCRAccuracySVG,
       trend: "+4.2%",
       trendType: "up" as const,
-      bgColor: "bg-[#F0F2FF]", // Light Lavender
+      bgColor: "bg-[#E5F7E8]", // Light Lavender
     },
   ];
 

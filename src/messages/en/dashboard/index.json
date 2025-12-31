@@ -1,9 +1,13 @@
 {
   "stats": {
+    "Total Users": "Total Users",
     "activeCampaigns": "Active Campaigns",
+    "active campaigns": "Active Campaigns",
     "totalResponses": "Total Responses",
     "totalSurveys": "Total Surveys",
     "completionRate": "Completion Rate",
+    "vote delivery": "Vote Delivery",
+    "OCR accuracy": "OCR Accuracy",
     "brands": "brands",
     "influencers": "influencers",
     "pending": "pending",

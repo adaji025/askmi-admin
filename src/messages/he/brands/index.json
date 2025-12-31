@@ -1,0 +1,41 @@
+{
+  "stats": {
+    "total brands": "סה\"כ מותגים",
+    "active campaigns": "קמפיינים פעילים",
+    "total revenue": "סה\"כ הכנסות",
+    "brands": "מותגים",
+    "influencers": "אינפלואנסרים",
+    "pending": "ממתין",
+    "completed": "הושלם",
+    "votes delivered this week": "קולות שנמסרו השבוע"
+  },
+  "filters": {
+    "all": "הכל",
+    "approved": "אושר",
+    "pending": "ממתין",
+    "flagged": "סומן"
+  },
+  "table": {
+    "brand": "מותג",
+    "totalCampaigns": "סה\"כ קמפיינים",
+    "activeCampaigns": "קמפיינים פעילים",
+    "totalSpend": "סה\"כ הוצאה",
+    "lastActivity": "פעילות אחרונה",
+    "riskFlags": "סיכון/דגלים",
+    "none": "אין",
+    "lowOcr": "OCR נמוך",
+    "view": "צפה",
+    "message": "הודעה",
+    "flag": "סמן",
+    "page": "עמוד",
+    "of": "מתוך",
+    "jumpToPage": "קפוץ לעמוד"
+  },
+  "emptyStates": {
+    "noBrands": "אין כרגע מותגים",
+    "noFlaggedBrands": "אין כרגע מותגים מסומנים",
+    "noApprovedBrands": "אין כרגע מותגים מאושרים",
+    "noPendingBrands": "אין כרגע מותגים ממתינים"
+  }
+}
+

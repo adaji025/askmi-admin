@@ -1,9 +1,13 @@
 {
   "stats": {
+    "Total Users": "סה\"כ משתמשים",
     "activeCampaigns": "קמפיינים פעילים",
+    "active campaigns": "קמפיינים פעילים",
     "totalResponses": "סה\"כ תגובות",
     "totalSurveys": "סה\"כ סקרים",
     "completionRate": "שיעור השלמה",
+    "vote delivery": "מסירת הצבעות",
+    "OCR accuracy": "דיוק OCR",
     "brands": "מותגים",
     "influencers": "אינפלואנסרים",
     "pending": "ממתין",

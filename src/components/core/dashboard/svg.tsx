@@ -9,21 +9,21 @@ export const InboxSVG = () => (
     <path
       d="M12 2V10M12 10L15 7M12 10L9 7"
       stroke="black"
-      stroke-width="1.2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M2 13H5.16026C6.06543 13 6.51802 13 6.91584 13.183C7.31367 13.3659 7.60821 13.7096 8.19729 14.3968L8.80271 15.1032C9.39179 15.7904 9.68633 16.1341 10.0842 16.317C10.482 16.5 10.9346 16.5 11.8397 16.5H12.1603C13.0654 16.5 13.518 16.5 13.9158 16.317C14.3137 16.1341 14.6082 15.7904 15.1973 15.1032L15.8027 14.3968C16.3918 13.7096 16.6863 13.3659 17.0842 13.183C17.482 13 17.9346 13 18.8397 13H22"
       stroke="black"
-      stroke-width="1.2"
-      stroke-linecap="round"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
     <path
       d="M17 2.12695C18.6251 2.28681 19.7191 2.64808 20.5355 3.46455C22 4.92902 22 7.28604 22 12.0001C22 16.7141 22 19.0712 20.5355 20.5356C19.0711 22.0001 16.714 22.0001 12 22.0001C7.28595 22.0001 4.92893 22.0001 3.46447 20.5356C2 19.0712 2 16.7141 2 12.0001C2 7.28604 2 4.92902 3.46447 3.46455C4.28094 2.64808 5.37486 2.28681 7 2.12695"
       stroke="black"
-      stroke-width="1.2"
-      stroke-linecap="round"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
   </svg>
 );
@@ -39,29 +39,29 @@ export const WadOfMoneySVG = () => (
     <path
       d="M9 19C6.19108 19 4.78661 19 3.77772 18.3259C3.34096 18.034 2.96596 17.659 2.67412 17.2223C2 16.2134 2 14.8089 2 12C2 9.19108 2 7.78661 2.67412 6.77772C2.96596 6.34096 3.34096 5.96596 3.77772 5.67412C4.78661 5 6.19108 5 9 5H15C17.8089 5 19.2134 5 20.2223 5.67412C20.659 5.96596 21.034 6.34096 21.3259 6.77772C22 7.78661 22 9.19108 22 12C22 14.8089 22 16.2134 21.3259 17.2223C21.034 17.659 20.659 18.034 20.2223 18.3259C19.2134 19 17.8089 19 15 19H9Z"
       stroke="black"
-      stroke-width="1.2"
+      strokeWidth="1.2"
     />
     <path
       d="M9 9C7.34315 9 6 10.3431 6 12C6 13.6569 7.34315 15 9 15"
       stroke="black"
-      stroke-width="1.2"
+      strokeWidth="1.2"
     />
     <path
       d="M15 9C16.6569 9 18 10.3431 18 12C18 13.6569 16.6569 15 15 15"
       stroke="black"
-      stroke-width="1.2"
+      strokeWidth="1.2"
     />
     <path
       d="M9 5V18.5"
       stroke="black"
-      stroke-width="1.2"
-      stroke-linecap="round"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
     <path
       d="M15 5V18.5"
       stroke="black"
-      stroke-width="1.2"
-      stroke-linecap="round"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
   </svg>
 );
@@ -75,8 +75,8 @@ export const ExportSVG = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M7.37056 6.58842C7.61463 6.8325 8.01036 6.8325 8.25444 6.58842L9.6875 5.15537V11.9798C9.6875 12.325 9.96733 12.6048 10.3125 12.6048C10.6577 12.6048 10.9375 12.325 10.9375 11.9798V5.15537L12.3706 6.58842C12.6147 6.8325 13.0103 6.8325 13.2544 6.58842C13.4985 6.34435 13.4985 5.94862 13.2544 5.70454L10.7544 3.20454C10.5103 2.96047 10.1147 2.96047 9.87058 3.20454L7.37056 5.70454C7.12648 5.94862 7.12648 6.34435 7.37056 6.58842Z"
       fill="white"
     />
@@ -95,7 +95,7 @@ export const MultiChoiceSVG = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle cx="13" cy="13" r="12.25" stroke="#2563EB" stroke-width="1.5" />
+    <circle cx="13" cy="13" r="12.25" stroke="#2563EB" strokeWidth="1.5" />
     <circle cx="13.0004" cy="12.9999" r="9.28559" fill="#2563EB" />
   </svg>
 );
@@ -108,7 +108,7 @@ export const YesNoSVG = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle cx="13" cy="13" r="12.25" stroke="#2563EB" stroke-width="1.5" />
+    <circle cx="13" cy="13" r="12.25" stroke="#2563EB" strokeWidth="1.5" />
     <path
       d="M26 13C26 9.55219 24.6304 6.24558 22.1924 3.80761C19.7544 1.36964 16.4478 2.60303e-07 13 0C9.55219 -2.60303e-07 6.24559 1.36964 3.80761 3.80761C1.36964 6.24558 5.20606e-07 9.55218 0 13L13 13H26Z"
       fill="#2563EB"
@@ -195,7 +195,7 @@ export const SmallMultiChoiceSVG = () => (
       cy="13.5"
       r="7.09615"
       stroke="white"
-      stroke-width="0.807692"
+      strokeWidth="0.807692"
     />
     <circle cx="17.4997" cy="13.4989" r="5.35707" fill="white" />
   </svg>

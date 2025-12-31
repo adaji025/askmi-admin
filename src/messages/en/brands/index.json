@@ -1,0 +1,41 @@
+{
+  "stats": {
+    "total brands": "Total Brands",
+    "active campaigns": "Active Campaigns",
+    "total revenue": "Total Revenue",
+    "brands": "brands",
+    "influencers": "influencers",
+    "pending": "pending",
+    "completed": "completed",
+    "votes delivered this week": "votes delivered this week"
+  },
+  "filters": {
+    "all": "All",
+    "approved": "Approved",
+    "pending": "Pending",
+    "flagged": "Flagged"
+  },
+  "table": {
+    "brand": "BRAND",
+    "totalCampaigns": "TOTAL CAMPAIGNS",
+    "activeCampaigns": "ACTIVE CAMPAIGNS",
+    "totalSpend": "TOTAL SPEND",
+    "lastActivity": "LAST ACTIVITY",
+    "riskFlags": "RISK/FLAGS",
+    "none": "None",
+    "lowOcr": "Low OCR",
+    "view": "View",
+    "message": "Message",
+    "flag": "Flag",
+    "page": "Page",
+    "of": "of",
+    "jumpToPage": "Jump to page"
+  },
+  "emptyStates": {
+    "noBrands": "There are currently no brands",
+    "noFlaggedBrands": "There are currently no flagged brands",
+    "noApprovedBrands": "There are currently no approved brands",
+    "noPendingBrands": "There are currently no pending brands"
+  }
+}
+
