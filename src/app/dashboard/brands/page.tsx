@@ -1,20 +1,12 @@
 "use client";
-
 import {
   BrandsSVG,
   CampaignsSVG,
 } from "@/components/core/dashboard/dashboard/layout/svg";
 import { StatCard } from "@/components/core/dashboard/dashboard/stat-card";
-import {
-  ActiveCampaignSVG,
-  TotalResponseSVG,
-  TotalSurveySVG,
-} from "@/components/core/dashboard/dashboard/stat-card/svg";
 import { WadOfMoneySVG } from "@/components/core/dashboard/svg";
 import { useTranslations } from "next-intl";
-import React from "react";
 import BrandsComponent from "@/components/core/dashboard/brands/index";
-import BrandsTable from "@/components/core/dashboard/brands/brands-table";
 
 const Brands = () => {
   const t = useTranslations("brands.stats");
