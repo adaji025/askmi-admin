@@ -1,7 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Search, ChevronDown, Smile, Mail, Shield, ArrowUpRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  ChevronDown,
+  Smile,
+  Mail,
+  Shield,
+  ArrowUpRight,
+  Eye,
+  ShieldX,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -15,6 +26,8 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { BagSVG } from "../svg";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 interface Influencer {
   id: number;
@@ -29,22 +42,26 @@ interface Influencer {
   ocrAccuracy: number; // percentage
 }
 
-const mockInfluencers: Influencer[] = Array(10).fill(null).map((_, index) => ({
-  id: index + 1,
-  name: "Sarah Johnson",
-  username: "sarah_lifestyle",
-  avatar: "",
-  status: "active",
-  totalCampaigns: 23,
-  avgVotesDelivered: 32056,
-  performanceScore: 1,
-  deviationTrend: 4.2,
-  ocrAccuracy: 96.2,
-}));
+const mockInfluencers: Influencer[] = Array(10)
+  .fill(null)
+  .map((_, index) => ({
+    id: index + 1,
+    name: "Sarah Johnson",
+    username: "sarah_lifestyle",
+    avatar: "",
+    status: "active",
+    totalCampaigns: 23,
+    avgVotesDelivered: 32056,
+    performanceScore: 1,
+    deviationTrend: 4.2,
+    ocrAccuracy: 96.2,
+  }));
 
 type StatusFilter = "all" | "active" | "pending" | "suspended";
 
 const InfluencersTable = () => {
+  const t = useTranslations("influencers.table");
+  const tFilters = useTranslations("influencers.filters");
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 100;
   const [jumpToPage, setJumpToPage] = useState("");
@@ -64,10 +81,14 @@ const InfluencersTable = () => {
     label: string;
     count: number;
   }> = [
-    { value: "all", label: "All", count: counts.all },
-    { value: "active", label: "Active", count: counts.active },
-    { value: "pending", label: "Pending", count: counts.pending },
-    { value: "suspended", label: "Suspended", count: counts.suspended },
+    { value: "all", label: tFilters("all"), count: counts.all },
+    { value: "active", label: tFilters("active"), count: counts.active },
+    { value: "pending", label: tFilters("pending"), count: counts.pending },
+    {
+      value: "suspended",
+      label: tFilters("suspended"),
+      count: counts.suspended,
+    },
   ];
 
   const handlePageChange = (page: number) => {
@@ -165,7 +186,7 @@ const InfluencersTable = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search influencers..."
+              placeholder={t("searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9 w-64 h-10 bg-white border-border"
@@ -175,7 +196,7 @@ const InfluencersTable = () => {
             variant="outline"
             className="h-10 px-4 bg-white border-border hover:bg-muted"
           >
-            Sort
+            {t("sort")}
             <ChevronDown className="h-4 w-4 ml-2" />
           </Button>
         </div>
@@ -186,22 +207,22 @@ const InfluencersTable = () => {
         <TableHeader className="bg-[#FAFAFA] border-b border-[#E2E8F0]">
           <TableRow className="hover:bg-transparent">
             <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              INFLUENCER
+              {t("influencer")}
             </TableHead>
             <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              TOTAL CAMPAIGNS
+              {t("totalCampaigns")}
             </TableHead>
             <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              AVG VOTES DELIVERED
+              {t("avgVotesDelivered")}
             </TableHead>
             <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              PERFORMANCE SCORE
+              {t("performanceScore")}
             </TableHead>
             <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              DEVIATION TREND
+              {t("deviationTrend")}
             </TableHead>
             <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              OCR ACCURACY
+              {t("ocrAccuracy")}
             </TableHead>
             <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground w-24">
               {/* Actions column */}
@@ -240,7 +261,9 @@ const InfluencersTable = () => {
                 </div>
               </TableCell>
               <TableCell className="py-4 px-6">
-                <span className="text-sm text-foreground">{influencer.totalCampaigns}</span>
+                <span className="text-sm text-foreground">
+                  {influencer.totalCampaigns}
+                </span>
               </TableCell>
               <TableCell className="py-4 px-6">
                 <div className="flex items-center gap-2">
@@ -269,30 +292,32 @@ const InfluencersTable = () => {
                 </span>
               </TableCell>
               <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
+                  <Link href={`/dashboard/influencers/${influencer.id}`}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 rounded-sm border hover:bg-muted"
+                      title={t("view")}
+                    >
+                      <Eye className="h-2 w-2 text-muted-foreground" />
+                    </Button>
+                  </Link>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 rounded-full hover:bg-muted"
-                    title="View"
-                  >
-                    <Smile className="h-4 w-4 text-muted-foreground" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 rounded-full hover:bg-muted"
-                    title="Message"
+                    className="h-6 w-6 border rounded-sm hover:bg-muted"
+                    title={t("message")}
                   >
                     <Mail className="h-4 w-4 text-muted-foreground" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 rounded-full hover:bg-muted"
-                    title="Shield"
+                    className="h-6 w-6 rounded-sm border hover:bg-muted"
+                    title={t("flag")}
                   >
-                    <Shield className="h-4 w-4 text-muted-foreground" />
+                    <ShieldX className="h-4 w-4 text-muted-foreground" />
                   </Button>
                 </div>
               </TableCell>
@@ -304,7 +329,7 @@ const InfluencersTable = () => {
       {/* Pagination */}
       <div className="flex items-center justify-between py-4 px-6">
         <div className="text-sm text-muted-foreground">
-          Page {currentPage} of {totalPages}
+          {t("page")} {currentPage} {t("of")} {totalPages}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -348,7 +373,9 @@ const InfluencersTable = () => {
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Jump to page</span>
+          <span className="text-sm text-muted-foreground">
+            {t("jumpToPage")}
+          </span>
           <Input
             type="number"
             placeholder="#"

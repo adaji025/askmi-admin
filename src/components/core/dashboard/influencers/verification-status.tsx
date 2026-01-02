@@ -1,5 +1,8 @@
+"use client";
+
 import { Check } from "lucide-react";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 interface IProps {
   verificationStatus: {
@@ -9,10 +12,12 @@ interface IProps {
   }[];
 }
 const VerificationStatus = ({ verificationStatus }: IProps) => {
+  const t = useTranslations("influencers.profile");
+
   return (
     <div className="bg-white rounded-lg border border-[#E2E8F0]">
       <h3 className="font-bold text-foreground mb-6 border-b border-[#E2E8F0] py-4  px-5 lg:px-6">
-        Verification Status
+        {t("verificationStatus")}
       </h3>
       <div className="space-y-4 p-5 lg:p-6">
         {verificationStatus.map((item, index) => (

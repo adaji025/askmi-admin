@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import InfluencerInfo from "./influencer-info";
 import VerificationStatus from "./verification-status";
 import CampaignHistory from "./campaign-history";
@@ -11,6 +12,8 @@ import OCRActivity from "./ocr-activity";
 type TabType = "profile" | "campaign-history" | "ocr-activity";
 
 const InfluencerDetailsComponent = () => {
+  const t = useTranslations("influencers.tabs");
+  const tProfile = useTranslations("influencers.profile");
   const [activeTab, setActiveTab] = useState<TabType>("profile");
 
   // Mock data - in production, this would be fetched based on the ID
@@ -25,15 +28,15 @@ const InfluencerDetailsComponent = () => {
   };
 
   const verificationStatus = [
-    { label: "Email address", status: "Verified", verified: true },
-    { label: "Instagram", status: "Connected", verified: true },
-    { label: "Identity", status: "Verified", verified: true },
+    { label: tProfile("emailAddressLabel"), status: tProfile("verified"), verified: true },
+    { label: tProfile("instagram"), status: tProfile("connected"), verified: true },
+    { label: tProfile("identity"), status: tProfile("verified"), verified: true },
   ];
 
   const tabs = [
-    { id: "profile" as TabType, label: "Profile" },
-    { id: "campaign-history" as TabType, label: "Campaign History" },
-    { id: "ocr-activity" as TabType, label: "OCR Activity" },
+    { id: "profile" as TabType, label: t("profile") },
+    { id: "campaign-history" as TabType, label: t("campaignHistory") },
+    { id: "ocr-activity" as TabType, label: t("ocrActivity") },
   ];
 
   return (

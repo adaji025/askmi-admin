@@ -1,0 +1,76 @@
+{
+  "stats": {
+    "totalInfluencers": "Total Influencers",
+    "pendingApprovals": "Pending Approvals",
+    "flaggedForRisk": "Flagged for Risk",
+    "topPerformers": "Top Performers"
+  },
+  "filters": {
+    "all": "All",
+    "active": "Active",
+    "pending": "Pending",
+    "suspended": "Suspended"
+  },
+  "table": {
+    "searchPlaceholder": "Search influencers...",
+    "sort": "Sort",
+    "influencer": "INFLUENCER",
+    "totalCampaigns": "TOTAL CAMPAIGNS",
+    "avgVotesDelivered": "AVG VOTES DELIVERED",
+    "performanceScore": "PERFORMANCE SCORE",
+    "deviationTrend": "DEVIATION TREND",
+    "ocrAccuracy": "OCR ACCURACY",
+    "view": "View",
+    "message": "Message",
+    "flag": "Flag",
+    "page": "Page",
+    "of": "of",
+    "jumpToPage": "Jump to page"
+  },
+  "tabs": {
+    "profile": "Profile",
+    "campaignHistory": "Campaign History",
+    "ocrActivity": "OCR Activity"
+  },
+  "profile": {
+    "influencerInformation": "Influencer Information",
+    "fullName": "FULL NAME",
+    "instagramHandle": "INSTAGRAM HANDLE",
+    "followers": "FOLLOWERS",
+    "following": "FOLLOWING",
+    "emailAddress": "EMAIL ADDRESS",
+    "accountCreated": "ACCOUNT CREATED",
+    "location": "LOCATION",
+    "verificationStatus": "Verification Status",
+    "emailAddressLabel": "Email address",
+    "instagram": "Instagram",
+    "identity": "Identity",
+    "verified": "Verified",
+    "connected": "Connected"
+  },
+  "campaignHistory": {
+    "showingCampaigns": "Showing {count} Campaigns",
+    "showingCampaigns_one": "Showing {count} Campaign",
+    "showingCampaigns_other": "Showing {count} Campaigns",
+    "searchPlaceholder": "Search Campaigns...",
+    "sort": "Sort",
+    "campaign": "CAMPAIGN",
+    "brand": "BRAND",
+    "status": "STATUS",
+    "targetVotes": "TARGET VOTES",
+    "delivered": "DELIVERED",
+    "deviation": "DEVIATION",
+    "ocrAccuracy": "OCR ACCURACY",
+    "active": "Active",
+    "lagging": "Lagging",
+    "completed": "Completed"
+  },
+  "ocrActivity": {
+    "showingScreenshots": "Showing {count} Screenshots",
+    "showingScreenshots_one": "Showing {count} Screenshot",
+    "showingScreenshots_other": "Showing {count} Screenshots",
+    "searchPlaceholder": "Search...",
+    "sort": "Sort"
+  }
+}
+

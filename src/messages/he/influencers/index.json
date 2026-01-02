@@ -1,0 +1,76 @@
+{
+  "stats": {
+    "totalInfluencers": "סה\"כ אינפלואנסרים",
+    "pendingApprovals": "אישורים ממתינים",
+    "flaggedForRisk": "סומן כסיכון",
+    "topPerformers": "הביצועים הטובים ביותר"
+  },
+  "filters": {
+    "all": "הכל",
+    "active": "פעיל",
+    "pending": "ממתין",
+    "suspended": "מושעה"
+  },
+  "table": {
+    "searchPlaceholder": "חפש אינפלואנסרים...",
+    "sort": "מיין",
+    "influencer": "אינפלואנסר",
+    "totalCampaigns": "סה\"כ קמפיינים",
+    "avgVotesDelivered": "ממוצע הצבעות שנמסרו",
+    "performanceScore": "ציון ביצועים",
+    "deviationTrend": "מגמת סטייה",
+    "ocrAccuracy": "דיוק OCR",
+    "view": "צפה",
+    "message": "הודעה",
+    "flag": "סמן",
+    "page": "עמוד",
+    "of": "מתוך",
+    "jumpToPage": "עבור לעמוד"
+  },
+  "tabs": {
+    "profile": "פרופיל",
+    "campaignHistory": "היסטוריית קמפיינים",
+    "ocrActivity": "פעילות OCR"
+  },
+  "profile": {
+    "influencerInformation": "מידע על האינפלואנסר",
+    "fullName": "שם מלא",
+    "instagramHandle": "שם משתמש באינסטגרם",
+    "followers": "עוקבים",
+    "following": "עוקב אחרי",
+    "emailAddress": "כתובת אימייל",
+    "accountCreated": "חשבון נוצר",
+    "location": "מיקום",
+    "verificationStatus": "סטטוס אימות",
+    "emailAddressLabel": "כתובת אימייל",
+    "instagram": "אינסטגרם",
+    "identity": "זהות",
+    "verified": "מאומת",
+    "connected": "מחובר"
+  },
+  "campaignHistory": {
+    "showingCampaigns": "מציג {count} קמפיינים",
+    "showingCampaigns_one": "מציג {count} קמפיין",
+    "showingCampaigns_other": "מציג {count} קמפיינים",
+    "searchPlaceholder": "חפש קמפיינים...",
+    "sort": "מיין",
+    "campaign": "קמפיין",
+    "brand": "מותג",
+    "status": "סטטוס",
+    "targetVotes": "הצבעות יעד",
+    "delivered": "נמסר",
+    "deviation": "סטייה",
+    "ocrAccuracy": "דיוק OCR",
+    "active": "פעיל",
+    "lagging": "מפגר",
+    "completed": "הושלם"
+  },
+  "ocrActivity": {
+    "showingScreenshots": "מציג {count} צילומי מסך",
+    "showingScreenshots_one": "מציג {count} צילום מסך",
+    "showingScreenshots_other": "מציג {count} צילומי מסך",
+    "searchPlaceholder": "חפש...",
+    "sort": "מיין"
+  }
+}
+

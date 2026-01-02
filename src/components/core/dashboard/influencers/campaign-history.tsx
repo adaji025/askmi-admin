@@ -15,6 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface Campaign {
   id: number;
@@ -52,6 +53,7 @@ const mockCampaigns: Campaign[] = Array(18)
   }));
 
 const CampaignHistory = () => {
+  const t = useTranslations("influencers.campaignHistory");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("default");
 
@@ -60,19 +62,19 @@ const CampaignHistory = () => {
       case "active":
         return (
           <Badge className="bg-[#10B981] text-white border-0">
-            Active
+            {t("active")}
           </Badge>
         );
       case "lagging":
         return (
           <Badge className="bg-[#EDAE40] text-white border-0">
-            Lagging
+            {t("lagging")}
           </Badge>
         );
       case "completed":
         return (
           <Badge className="bg-[#2563EB] text-white border-0">
-            Completed
+            {t("completed")}
           </Badge>
         );
       default:
@@ -102,7 +104,7 @@ const CampaignHistory = () => {
       {/* Top Section: Title, Search, Sort */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 p-6 border-b border-[#E2E8F0]">
         <div className="text-sm font-medium text-foreground">
-          Showing {filteredCampaigns.length} Campaigns
+          {t("showingCampaigns", { count: filteredCampaigns.length })}
         </div>
         <div className="flex items-center gap-3 w-full lg:w-auto">
           {/* Search */}
@@ -110,7 +112,7 @@ const CampaignHistory = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search Campaigns..."
+              placeholder={t("searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 h-10 bg-white border-[#E2E8F0]"
@@ -121,7 +123,7 @@ const CampaignHistory = () => {
             variant="outline"
             className="h-10 border-[#E2E8F0] bg-white"
           >
-            Sort
+            {t("sort")}
             <ChevronDown className="h-4 w-4 ml-2" />
           </Button>
         </div>
@@ -133,25 +135,25 @@ const CampaignHistory = () => {
           <TableHeader>
             <TableRow className="bg-[#FAFAFA] hover:bg-[#FAFAFA]">
               <TableHead className="font-semibold text-foreground">
-                CAMPAIGN
+                {t("campaign")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                BRAND
+                {t("brand")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                STATUS
+                {t("status")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                TARGET VOTES
+                {t("targetVotes")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                DELIVERED
+                {t("delivered")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                DEVIATION
+                {t("deviation")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                OCR ACCURACY
+                {t("ocrAccuracy")}
               </TableHead>
             </TableRow>
           </TableHeader>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import ScreenshotCard from "@/components/core/dashboard/ocr-review/screenshot-card";
 
 interface OCRScreenshot {
@@ -30,6 +31,7 @@ const mockScreenshots: OCRScreenshot[] = Array(6)
   }));
 
 const OCRActivity = () => {
+  const t = useTranslations("influencers.ocrActivity");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
 
@@ -57,11 +59,7 @@ const OCRActivity = () => {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div className="text-sm font-medium text-foreground">
-          Showing{" "}
-          <span className="text-[#2563EB] font-bold">
-            {filteredScreenshots.length}
-          </span>{" "}
-          Screenshots
+          {t("showingScreenshots", { count: filteredScreenshots.length })}
         </div>
         <div className="flex items-center gap-3 w-full lg:w-auto">
           {/* Search */}
@@ -69,7 +67,7 @@ const OCRActivity = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search..."
+              placeholder={t("searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 h-10 bg-white border-[#E2E8F0]"
@@ -80,7 +78,7 @@ const OCRActivity = () => {
             variant="outline"
             className="h-10 border-[#E2E8F0] bg-white"
           >
-            Sort
+            {t("sort")}
             <ChevronDown className="h-4 w-4 ml-2" />
           </Button>
         </div>
