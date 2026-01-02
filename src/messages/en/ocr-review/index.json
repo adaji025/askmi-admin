@@ -1,0 +1,55 @@
+{
+  "stats": {
+    "pendingReview": "Pending Review",
+    "flaggedForRisk": "Flagged for Risk",
+    "avgReviewTime": "Avg Review Time",
+    "autoVerifyRate": "Auto-Verify Rate"
+  },
+  "filters": {
+    "all": "All",
+    "normal": "Normal",
+    "lowConfidence": "Low Confidence",
+    "possibleFraud": "Possible Fraud"
+  },
+  "main": {
+    "showingScreenshots": "Showing {count} Screenshots",
+    "showingScreenshots_one": "Showing {count} Screenshot",
+    "showingScreenshots_other": "Showing {count} Screenshots",
+    "approveSelected": "Approve Selected",
+    "rejectSelected": "Reject Selected",
+    "searchPlaceholder": "Search either brand or influencer...",
+    "sort": "Sort",
+    "page": "Page",
+    "of": "of",
+    "jumpToPage": "Jump to page"
+  },
+  "screenshotCard": {
+    "extractedVotes": "Extracted votes"
+  },
+  "details": {
+    "extractedPollData": "Extracted Poll Data",
+    "ocrConfidence": "OCR Confidence",
+    "performanceCheck": "Performance Check",
+    "status": {
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor"
+    },
+    "votes": "votes",
+    "questionAndPollOptions": "Question & Poll Options",
+    "totalVotes": "Total Votes",
+    "screenshotDetails": "Screenshot Details",
+    "influencer": "Influencer",
+    "campaign": "Campaign",
+    "brand": "Brand",
+    "uploadTime": "Upload Time",
+    "approve": "Approve",
+    "reject": "Reject"
+  },
+  "approveModal": {
+    "approveScreenshot": "Approve this screenshot?",
+    "cancel": "Cancel",
+    "approve": "Approve"
+  }
+}
+

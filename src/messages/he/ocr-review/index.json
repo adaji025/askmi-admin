@@ -1,0 +1,55 @@
+{
+  "stats": {
+    "pendingReview": "ביקורת ממתינה",
+    "flaggedForRisk": "סומן כסיכון",
+    "avgReviewTime": "זמן ביקורת ממוצע",
+    "autoVerifyRate": "שיעור אימות אוטומטי"
+  },
+  "filters": {
+    "all": "הכל",
+    "normal": "רגיל",
+    "lowConfidence": "ביטחון נמוך",
+    "possibleFraud": "הונאה אפשרית"
+  },
+  "main": {
+    "showingScreenshots": "מציג {count} צילומי מסך",
+    "showingScreenshots_one": "מציג {count} צילום מסך",
+    "showingScreenshots_other": "מציג {count} צילומי מסך",
+    "approveSelected": "אשר נבחר",
+    "rejectSelected": "דחה נבחר",
+    "searchPlaceholder": "חפש מותג או אינפלואנסר...",
+    "sort": "מיין",
+    "page": "עמוד",
+    "of": "מתוך",
+    "jumpToPage": "עבור לעמוד"
+  },
+  "screenshotCard": {
+    "extractedVotes": "הצבעות שחולצו"
+  },
+  "details": {
+    "extractedPollData": "נתוני סקר שחולצו",
+    "ocrConfidence": "ביטחון OCR",
+    "performanceCheck": "בדיקת ביצועים",
+    "status": {
+      "good": "טוב",
+      "fair": "הוגן",
+      "poor": "גרוע"
+    },
+    "votes": "הצבעות",
+    "questionAndPollOptions": "שאלה ואפשרויות סקר",
+    "totalVotes": "סה\"כ הצבעות",
+    "screenshotDetails": "פרטי צילום מסך",
+    "influencer": "אינפלואנסר",
+    "campaign": "קמפיין",
+    "brand": "מותג",
+    "uploadTime": "זמן העלאה",
+    "approve": "אשר",
+    "reject": "דחה"
+  },
+  "approveModal": {
+    "approveScreenshot": "לאשר את צילום המסך הזה?",
+    "cancel": "בטל",
+    "approve": "אשר"
+  }
+}
+

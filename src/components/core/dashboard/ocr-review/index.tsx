@@ -5,6 +5,7 @@ import { Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import ScreenshotCard from "./screenshot-card";
 
 type StatusFilter = "all" | "normal" | "low-confidence" | "possible-fraud";
@@ -38,6 +39,8 @@ const mockScreenshots: OCRScreenshot[] = Array(9)
   }));
 
 const OCRReviewComponent = () => {
+  const t = useTranslations("ocr-review.main");
+  const tFilters = useTranslations("ocr-review.filters");
   const [selectedFilter, setSelectedFilter] = useState<StatusFilter>("all");
   const [selectedItems, setSelectedItems] = useState<Set<number>>(
     new Set([1, 3])
@@ -60,16 +63,16 @@ const OCRReviewComponent = () => {
     label: string;
     count: number;
   }> = [
-    { value: "all", label: "All", count: counts.all },
-    { value: "normal", label: "Normal", count: counts.normal },
+    { value: "all", label: tFilters("all"), count: counts.all },
+    { value: "normal", label: tFilters("normal"), count: counts.normal },
     {
       value: "low-confidence",
-      label: "Low Confidence",
+      label: tFilters("lowConfidence"),
       count: counts["low-confidence"],
     },
     {
       value: "possible-fraud",
-      label: "Possible Fraud",
+      label: tFilters("possibleFraud"),
       count: counts["possible-fraud"],
     },
   ];
@@ -167,11 +170,11 @@ const OCRReviewComponent = () => {
   const getStatusLabel = (status: string) => {
     switch (status) {
       case "normal":
-        return "Normal";
+        return tFilters("normal");
       case "low-confidence":
-        return "Low Confidence";
+        return tFilters("lowConfidence");
       case "possible-fraud":
-        return "Possible Fraud";
+        return tFilters("possibleFraud");
       default:
         return status;
     }
@@ -223,7 +226,7 @@ const OCRReviewComponent = () => {
 
       <div className="flex flex-col xl:flex-row gap-2 justify-between xl:items-center">
         <div className="">
-          Showing <span>355</span> Screenshots
+          {t("showingScreenshots", { count: filteredScreenshots.length })}
         </div>
         <div className="flex flex-col xl:flex-row gap-2">
           {/* Action Buttons */}
@@ -233,14 +236,14 @@ const OCRReviewComponent = () => {
               className="bg-[#2563EB] text-xs hover:bg-[#2563EB]/90 text-white"
               disabled={selectedItems.size === 0}
             >
-              Approve Selected ({selectedItems.size})
+              {t("approveSelected")} ({selectedItems.size})
             </Button>
             <Button
               variant="destructive"
               className="bg-[#EB5757] text-xs hover:bg-[#EB5757]/90 text-white"
               disabled={selectedItems.size === 0}
             >
-              Reject Selected ({selectedItems.size})
+              {t("rejectSelected")} ({selectedItems.size})
             </Button>
           </div>
 
@@ -250,7 +253,7 @@ const OCRReviewComponent = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search either brand or influencer..."
+                placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9 w-64 h-10 bg-white border-border text-xs placeholder:text-xs"
@@ -260,7 +263,7 @@ const OCRReviewComponent = () => {
               variant="outline"
               className="h-10 px-4 bg-white border-border hover:bg-muted"
             >
-              Sort
+              {t("sort")}
               <ChevronDown className="h-4 w-4 ml-2" />
             </Button>
           </div>
@@ -285,7 +288,7 @@ const OCRReviewComponent = () => {
       {/* Pagination */}
       <div className="flex items-center justify-between py-4 px-6">
         <div className="text-sm text-muted-foreground">
-          Page {currentPage} of {totalPages}
+          {t("page")} {currentPage} {t("of")} {totalPages}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -329,7 +332,7 @@ const OCRReviewComponent = () => {
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Jump to page</span>
+          <span className="text-sm text-muted-foreground">{t("jumpToPage")}</span>
           <Input
             type="number"
             placeholder="#"

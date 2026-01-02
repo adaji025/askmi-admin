@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { Check, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,14 +37,14 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getStatusLabel = (status: string) => {
+const getStatusLabel = (status: string, tFilters: any) => {
   switch (status) {
     case "normal":
-      return "Normal";
+      return tFilters("normal");
     case "low-confidence":
-      return "Low Confidence";
+      return tFilters("lowConfidence");
     case "possible-fraud":
-      return "Possible Fraud";
+      return tFilters("possibleFraud");
     default:
       return status;
   }
@@ -52,6 +55,9 @@ const ScreenshotCard = ({
   isSelected,
   onToggle,
 }: ScreenshotCardProps) => {
+  const t = useTranslations("ocr-review");
+  const tFilters = useTranslations("ocr-review.filters");
+
   return (
     <Link href={`/dashboard/ocr-review/1`}>
       <div className="bg-white rounded-lg border border-[#E2E8F0] overflow-hidden hover:shadow-md transition-shadow">
@@ -98,7 +104,7 @@ const ScreenshotCard = ({
           <button className="flex items-center gap-2 px-3 py-2 bg-[#F8F8F9] rounded-md hover:bg-[#F0F0F0] transition-colors w-full">
             <ClipboardList className="h-4 w-4 text-muted-foreground" />
             <span className="text-sm font-medium text-foreground">
-              Extracted votes
+              {t("screenshotCard.extractedVotes")}
             </span>
             <span className="ml-auto text-sm font-bold text-foreground">
               {screenshot.extractedVotes.toLocaleString()}
@@ -118,7 +124,7 @@ const ScreenshotCard = ({
                 getStatusColor(screenshot.status)
               )}
             >
-              {getStatusLabel(screenshot.status)}
+              {getStatusLabel(screenshot.status, tFilters)}
             </span>
           </div>
         </div>

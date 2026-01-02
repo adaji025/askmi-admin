@@ -12,6 +12,7 @@ import enSurvey from "@/messages/en/survey.json";
 import enDashboard from "@/messages/en/dashboard/index.json";
 import enBrands from "@/messages/en/brands/index.json";
 import enInfluencers from "@/messages/en/influencers/index.json";
+import enOcrReview from "@/messages/en/ocr-review/index.json";
 import heCommon from "@/messages/he/common.json";
 import heAuth from "@/messages/he/auth/index.json";
 import heLanguage from "@/messages/he/language.json";
@@ -21,6 +22,7 @@ import heSurvey from "@/messages/he/survey.json";
 import heDashboard from "@/messages/he/dashboard/index.json";
 import heBrands from "@/messages/he/brands/index.json";
 import heInfluencers from "@/messages/he/influencers/index.json";
+import heOcrReview from "@/messages/he/ocr-review/index.json";
 
 const messagesMap = {
   en: {
@@ -33,6 +35,7 @@ const messagesMap = {
     dashboard: enDashboard,
     brands: enBrands,
     influencers: enInfluencers,
+    "ocr-review": enOcrReview,
   },
   he: {
     common: heCommon,
@@ -44,6 +47,7 @@ const messagesMap = {
     dashboard: heDashboard,
     brands: heBrands,
     influencers: heInfluencers,
+    "ocr-review": heOcrReview,
   },
 };
 

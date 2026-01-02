@@ -11,6 +11,7 @@ import enSurvey from "@/messages/en/survey.json";
 import enDashboard from "@/messages/en/dashboard/index.json";
 import enBrands from "@/messages/en/brands/index.json";
 import enInfluencers from "@/messages/en/influencers/index.json";
+import enOcrReview from "@/messages/en/ocr-review/index.json";
 import { routing } from "@/i18n/routing";
 
 const enMessages = {
@@ -23,6 +24,7 @@ const enMessages = {
   dashboard: enDashboard,
   brands: enBrands,
   influencers: enInfluencers,
+  "ocr-review": enOcrReview,
 };
 
 const inter = Inter({

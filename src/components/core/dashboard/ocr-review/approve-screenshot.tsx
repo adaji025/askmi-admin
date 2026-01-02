@@ -7,6 +7,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface ApproveScreenshotProps {
@@ -26,6 +27,8 @@ const ApproveScreenshot: React.FC<ApproveScreenshotProps> = ({
   onApprove,
   onCancel,
 }) => {
+  const t = useTranslations("ocr-review.approveModal");
+
   const handleApprove = () => {
     if (onApprove) {
       onApprove();
@@ -64,7 +67,7 @@ const ApproveScreenshot: React.FC<ApproveScreenshotProps> = ({
           {/* Question */}
           <div className="text-center">
             <h3 className="text-xl font-bold text-foreground">
-              Approve this screenshot?
+              {t("approveScreenshot")}
             </h3>
           </div>
 
@@ -75,13 +78,13 @@ const ApproveScreenshot: React.FC<ApproveScreenshotProps> = ({
               onClick={handleCancel}
               className="h-10 px-6 border-gray-300"
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               onClick={handleApprove}
               className="h-10 px-6 bg-[#2563EB] hover:bg-[#2563EB]/90 text-white"
             >
-              Approve
+              {t("approve")}
             </Button>
           </DialogFooter>
         </div>

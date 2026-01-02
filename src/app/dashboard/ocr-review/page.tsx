@@ -1,6 +1,5 @@
 "use client";
 
-import { InfluencersSVG } from "@/components/core/dashboard/dashboard/layout/svg";
 import { StatCard } from "@/components/core/dashboard/dashboard/stat-card";
 import { CompletionRateSVG } from "@/components/core/dashboard/dashboard/stat-card/svg";
 import {
@@ -8,12 +7,15 @@ import {
   ScannerSVG,
   WarningSVG,
 } from "@/components/core/dashboard/svg";
+import { useTranslations } from "next-intl";
 import OCRReviewComponent from "@/components/core/dashboard/ocr-review/index";
 
 const OCRReview = () => {
+  const t = useTranslations("ocr-review.stats");
+  
   const stats = [
     {
-      title: "pending Review",
+      title: t("pendingReview"),
       value: "20",
       icon: ScannerSVG,
       bgColor: "bg-[#E7F2FD]", // Light Blue
@@ -21,7 +23,7 @@ const OCRReview = () => {
       trendType: "up" as const,
     },
     {
-      title: "Flagged for risk",
+      title: t("flaggedForRisk"),
       value: "20",
       icon: WarningSVG,
       bgColor: "bg-[#FDF8E1]", // Light Lavender
@@ -29,7 +31,7 @@ const OCRReview = () => {
       trendType: "up" as const,
     },
     {
-      title: "Avg review time",
+      title: t("avgReviewTime"),
       value: "20",
       icon: ClockSVG,
       bgColor: "bg-[#EEEFFC]", // Light Blue
@@ -37,7 +39,7 @@ const OCRReview = () => {
       trendType: "up" as const,
     },
     {
-      title: "auto-verify rate",
+      title: t("autoVerifyRate"),
       value: "20",
       icon: CompletionRateSVG,
       bgColor: "bg-[#E5F7E8]", // Light Blue
