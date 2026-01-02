@@ -4,8 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useTranslations } from "next-intl";
 
 export default function CampaignDetail() {
+  const t = useTranslations("influencers.campaignDetail");
   return (
     <div className="max-w-4xl mx-auto space-y-12">
       {/* Header */}
@@ -14,15 +16,13 @@ export default function CampaignDetail() {
           variant="outline"
           className="bg-[#4AC3600D] rounded text-[#4AC360] border-[#4AC36026] font-medium px-2 py-1 uppercase text-[10px] tracking-wider"
         >
-          Active Campaign
+          {t("activeCampaign")}
         </Badge>
         <h1 className="text-2xl lg:text-4xl font-bold tracking-tight text-blck">
-          Product Feedback Survey
+          {t("productFeedbackSurvey")}
         </h1>
         <p className="text-[#8A97A0] max-w-3xl leading-relaxed">
-          Collecting valuable customer insights about product features,
-          usability, and satisfaction levels across our target demographic
-          through Instagram Stories.
+          {t("collectingInsights")}
         </p>
       </div>
 
@@ -32,7 +32,7 @@ export default function CampaignDetail() {
           <CardContent className="p-6">
             <div className="text-2xl font-bold text-emerald-950">78%</div>
             <div className="text-[10px] font-semibold text-emerald-800 uppercase tracking-widest mt-4">
-              Complete
+              {t("complete")}
             </div>
           </CardContent>
         </Card>
@@ -40,7 +40,7 @@ export default function CampaignDetail() {
           <CardContent className="p-6">
             <div className="text-2xl font-bold text-indigo-950">500</div>
             <div className="text-[10px] font-semibold text-indigo-800 uppercase tracking-widest mt-4">
-              Responses
+              {t("responses")}
             </div>
           </CardContent>
         </Card>
@@ -48,7 +48,7 @@ export default function CampaignDetail() {
           <CardContent className="p-6">
             <div className="text-2xl font-bold text-blue-950">4</div>
             <div className="text-[10px] font-semibold text-blue-800 uppercase tracking-widest mt-4">
-              Influencers
+              {t("influencers")}
             </div>
           </CardContent>
         </Card>
@@ -56,7 +56,7 @@ export default function CampaignDetail() {
           <CardContent className="p-6">
             <div className="text-2xl font-bold text-amber-950">7 days</div>
             <div className="text-[10px] font-semibold text-amber-800 uppercase tracking-widest mt-4">
-              Left
+              {t("left")}
             </div>
           </CardContent>
         </Card>
@@ -65,7 +65,7 @@ export default function CampaignDetail() {
       {/* Response Progress */}
       <div className="space-y-6">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-bold text-black">Response Progress</h2>
+          <h2 className="text-lg font-bold text-black">{t("responseProgress")}</h2>
           <div className="text-3xl font-bold">
             500 <span className="text-gray-400 font-bold text-lg">/ 1,000</span>
           </div>
@@ -78,7 +78,7 @@ export default function CampaignDetail() {
         <Card className="bg-[#E5F7E8] border-none shadow-none p-0">
           <CardContent className="p-6">
             <div className="text-[10px] font-semibold text-foreground uppercase tracking-widest mb-2">
-              COMPLETE
+              {t("completeUppercase")}
             </div>
             <div className="text-2xl font-bold text-foreground">78%</div>
           </CardContent>
@@ -86,7 +86,7 @@ export default function CampaignDetail() {
         <Card className="bg-[#E7F2FD] border-none shadow-none p-0">
           <CardContent className="p-6">
             <div className="text-[10px] font-semibold text-foreground uppercase tracking-widest mb-2">
-              INFLUENCERS
+              {t("influencersUppercase")}
             </div>
             <div className="text-2xl font-bold text-foreground">4</div>
           </CardContent>
@@ -94,7 +94,7 @@ export default function CampaignDetail() {
         <Card className="bg-[#FDF8E1] border-none shadow-none p-0">
           <CardContent className="p-6">
             <div className="text-[10px] font-semibold text-foreground uppercase tracking-widest mb-2">
-              LEFT
+              {t("leftUppercase")}
             </div>
             <div className="text-2xl font-bold text-foreground">7 days</div>
           </CardContent>
@@ -102,7 +102,7 @@ export default function CampaignDetail() {
         <Card className="bg-[#E7F2FD] border-none shadow-none p-0">
           <CardContent className="p-6">
             <div className="text-[10px] font-semibold text-foreground uppercase tracking-widest mb-2">
-              OCR QUALITY
+              {t("ocrQuality")}
             </div>
             <div className="text-2xl font-bold text-foreground">89.2%</div>
           </CardContent>
@@ -112,7 +112,7 @@ export default function CampaignDetail() {
       {/* Influencer Performance */}
       <div className="bg-white rounded-lg border border-[#E2E8F0] space-y-4">
         <h2 className="text-lg font-bold text-foreground p-5">
-          Influencer Performance
+          {t("influencerPerformance")}
         </h2>
         <div className="space-y-4">
           {[
@@ -159,7 +159,7 @@ export default function CampaignDetail() {
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-[#8B5CF6]" />
                 <span className="text-sm font-medium text-foreground">
-                  {influencer.responses} responses
+                  {influencer.responses} {t("responsesLabel")}
                 </span>
               </div>
             </div>

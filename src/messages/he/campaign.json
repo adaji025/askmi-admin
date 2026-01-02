@@ -1,6 +1,17 @@
 {
   "activeCampaign": "קמפיין פעיל",
   "productFeedbackSurvey": "סקר משוב על מוצר",
-  "collectingInsights": "איסוף תובנות ערך לקוחות על תכונות מוצר, שימושיות ורמות שביעות רצון בקרב הדמוגרפיה היעד שלנו דרך Instagram Stories."
+  "collectingInsights": "איסוף תובנות ערך לקוחות על תכונות מוצר, שימושיות ורמות שביעות רצון בקרב הדמוגרפיה היעד שלנו דרך Instagram Stories.",
+  "complete": "הושלם",
+  "completeUppercase": "הושלם",
+  "responses": "תגובות",
+  "influencers": "אינפלואנסרים",
+  "influencersUppercase": "אינפלואנסרים",
+  "left": "נותר",
+  "leftUppercase": "נותר",
+  "responseProgress": "התקדמות תגובות",
+  "influencerPerformance": "ביצועי אינפלואנסרים",
+  "responsesLabel": "תגובות",
+  "ocrQuality": "איכות OCR"
 }
 
