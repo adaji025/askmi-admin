@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 
 import {
   Sidebar,
@@ -22,42 +23,44 @@ import {
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: DashboardSVG,
-    },
-    {
-      title: "Brands",
-      url: "/dashboard/brands",
-      icon: BrandsSVG,
-    },
-    {
-      title: "Influencers",
-      url: "/dashboard/influencers",
-      icon: InfluencersSVG,
-    },
-    {
-      title: "OCR Review",
-      url: "/dashboard/ocr-review",
-      icon: OCRReviewSVG,
-    },
-    {
-      title: "Campaigns",
-      url: "/dashboard/campaigns",
-      icon: CampaignsSVG,
-    },
-  ],
-};
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const t = useTranslations("dashboard.navigation");
+
+  const data = {
+    user: {
+      name: "shadcn",
+      email: "m@example.com",
+      avatar: "/avatars/shadcn.jpg",
+    },
+    navMain: [
+      {
+        title: t("dashboard"),
+        url: "/dashboard",
+        icon: DashboardSVG,
+      },
+      {
+        title: t("brands"),
+        url: "/dashboard/brands",
+        icon: BrandsSVG,
+      },
+      {
+        title: t("influencers"),
+        url: "/dashboard/influencers",
+        icon: InfluencersSVG,
+      },
+      {
+        title: t("ocrReview"),
+        url: "/dashboard/ocr-review",
+        icon: OCRReviewSVG,
+      },
+      {
+        title: t("campaigns"),
+        url: "/dashboard/campaigns",
+        icon: CampaignsSVG,
+      },
+    ],
+  };
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -79,7 +82,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
         <div className="text-center bg-[#302D54] p-1.5 rounded-sm text-[#8B5CF6] text-xs font-bold">
-          CONTROL CENTER
+          {t("controlCenter")}
         </div>
       </SidebarHeader>
       <SidebarContent className="mt-6">

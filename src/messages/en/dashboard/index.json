@@ -36,6 +36,27 @@
   "topPerformers": {
     "title": "Top Over-Performers",
     "subtitle": "Consistently exceeding vote expectations"
+  },
+  "underPerformers": {
+    "title": "Under-Performing Influencers",
+    "subtitle": "Below expected vote performance"
+  },
+  "charts": {
+    "voteCollectionOverTime": "Vote Collection Over Time",
+    "votes": "Votes",
+    "ocrAccuracyTrend": "OCR Accuracy Trend",
+    "ocrAccuracy": "OCR Accuracy"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "brands": "Brands",
+    "influencers": "Influencers",
+    "ocrReview": "OCR Review",
+    "campaigns": "Campaigns",
+    "controlCenter": "CONTROL CENTER",
+    "overview": "OVERVIEW",
+    "userManagement": "USER MANAGEMENT",
+    "operations": "OPERATIONS"
   }
 }
 

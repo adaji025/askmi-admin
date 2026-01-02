@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import {
   SidebarGroup,
@@ -26,6 +27,7 @@ export function NavMain({
 }) {
   const pathname = usePathname();
   const { isRTL } = useLanguageStore();
+  const t = useTranslations("dashboard.navigation");
 
   const isActive = (url: string) => {
     if (url === "/dashboard") {
@@ -42,7 +44,7 @@ export function NavMain({
     <>
       <SidebarGroup>
         <SidebarGroupContent className="flex flex-col gap-2">
-          <SidebarGroupLabel className={cn("md:pl-4 rtl:md:pr-4 rtl:md:pl-0")}>OVERVIEW</SidebarGroupLabel>
+          <SidebarGroupLabel className={cn("md:pl-4 rtl:md:pr-4 rtl:md:pl-0")}>{t("overview")}</SidebarGroupLabel>
           <SidebarMenu className={cn("md:ml-2 rtl:md:mr-2 rtl:md:ml-0")}>
             {items.slice(0, 1).map((item) => {
               const active = isActive(item.url);
@@ -75,7 +77,7 @@ export function NavMain({
 
       <SidebarGroup>
         <SidebarGroupContent className="flex flex-col gap-2">
-          <SidebarGroupLabel className={cn("-mb-2 pl-4 rtl:pr-4 rtl:pl-0")}>USER MANAGEMENT</SidebarGroupLabel>
+          <SidebarGroupLabel className={cn("-mb-2 pl-4 rtl:pr-4 rtl:pl-0")}>{t("userManagement")}</SidebarGroupLabel>
           <SidebarMenu className={cn("md:ml-2 rtl:md:mr-2 rtl:md:ml-0")}>
             {items.slice(1, 3).map((item) => {
               const active = isActive(item.url);
@@ -108,7 +110,7 @@ export function NavMain({
 
       <SidebarGroup>
         <SidebarGroupContent className="flex flex-col gap-2">
-          <SidebarGroupLabel className={cn("-mb-2 pl-4 rtl:pr-4 rtl:pl-0")}>OPERATIONS</SidebarGroupLabel>
+          <SidebarGroupLabel className={cn("-mb-2 pl-4 rtl:pr-4 rtl:pl-0")}>{t("operations")}</SidebarGroupLabel>
           <SidebarMenu className={cn("md:ml-2 rtl:md:mr-2 rtl:md:ml-0")}>
             {items.slice(3).map((item) => {
               const active = isActive(item.url);

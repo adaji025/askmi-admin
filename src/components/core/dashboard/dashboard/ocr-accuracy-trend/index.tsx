@@ -1,6 +1,7 @@
 "use client"
 
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
+import { useTranslations } from "next-intl"
 
 import {
   ChartContainer,
@@ -19,17 +20,19 @@ const chartData = [
   { day: "Sat", accuracy: 80 },
 ]
 
-const chartConfig = {
-  accuracy: {
-    label: "OCR Accuracy",
-    color: "#2563EB",
-  },
-} satisfies ChartConfig
-
 export function OCRAccuracyTrends() {
+  const t = useTranslations("dashboard.charts");
+  
+  const chartConfig = {
+    accuracy: {
+      label: t("ocrAccuracy"),
+      color: "#2563EB",
+    },
+  } satisfies ChartConfig;
+
   return (
     <div className="w-full bg-white rounded-lg p-4">
-      <h3 className="font-bold mb-6 text-slate-900">OCR Accuracy Trend</h3>
+      <h3 className="font-bold mb-6 text-slate-900">{t("ocrAccuracyTrend")}</h3>
       <ChartContainer config={chartConfig} className="h-60 w-full">
         <LineChart
           data={chartData}

@@ -12,7 +12,7 @@ interface Performer {
 }
 
 const UnderOverPerformingInfluencers = () => {
-  const t = useTranslations("dashboard.topPerformers");
+  const t = useTranslations("dashboard.underPerformers");
 
   const performers: Performer[] = [
     {

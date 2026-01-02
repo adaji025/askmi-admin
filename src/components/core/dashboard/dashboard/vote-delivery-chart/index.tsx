@@ -1,6 +1,7 @@
 "use client";
 
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { useTranslations } from "next-intl";
 
 import {
   ChartContainer,
@@ -24,12 +25,6 @@ const chartData = [
   { month: "Dec", votes: 128 },
 ];
 
-const chartConfig = {
-  votes: {
-    label: "Votes",
-    color: "#9333EA", // Purple color
-  },
-} satisfies ChartConfig;
 
 const CustomDot = (props: any) => {
   const { cx, cy, payload } = props;
@@ -49,9 +44,18 @@ const CustomDot = (props: any) => {
 };
 
 export function VoteDeliveryChart() {
+  const t = useTranslations("dashboard.charts");
+  
+  const chartConfig = {
+    votes: {
+      label: t("votes"),
+      color: "#9333EA", // Purple color
+    },
+  } satisfies ChartConfig;
+
   return (
     <div className="w-full bg-white rounded-lg border border-[#E2E8F0] p-6">
-      <h3 className="text-xl font-bold mb-6">Vote Collection Over Time</h3>
+      <h3 className="text-xl font-bold mb-6">{t("voteCollectionOverTime")}</h3>
       <ChartContainer config={chartConfig} className="h-80 w-full">
         <AreaChart
           data={chartData}

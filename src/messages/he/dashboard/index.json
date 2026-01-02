@@ -36,6 +36,27 @@
   "topPerformers": {
     "title": "הביצועים הטובים ביותר",
     "subtitle": "עולה על ציפיות ההצבעה בעקביות"
+  },
+  "underPerformers": {
+    "title": "אינפלואנסרים עם ביצועים נמוכים",
+    "subtitle": "ביצועי הצבעה מתחת לציפיות"
+  },
+  "charts": {
+    "voteCollectionOverTime": "איסוף הצבעות לאורך זמן",
+    "votes": "הצבעות",
+    "ocrAccuracyTrend": "מגמת דיוק OCR",
+    "ocrAccuracy": "דיוק OCR"
+  },
+  "navigation": {
+    "dashboard": "לוח בקרה",
+    "brands": "מותגים",
+    "influencers": "אינפלואנסרים",
+    "ocrReview": "סקירת OCR",
+    "campaigns": "קמפיינים",
+    "controlCenter": "מרכז בקרה",
+    "overview": "סקירה כללית",
+    "userManagement": "ניהול משתמשים",
+    "operations": "פעולות"
   }
 }
 
