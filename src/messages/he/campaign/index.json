@@ -1,0 +1,49 @@
+{
+  "stats": {
+    "totalCampaigns": "סה\"כ קמפיינים",
+    "activeNow": "פעיל כעת",
+    "laggingCampaigns": "קמפיינים מפגרים"
+  },
+  "filters": {
+    "all": "הכל",
+    "active": "פעיל",
+    "lagging": "מפגר",
+    "completed": "הושלם"
+  },
+  "main": {
+    "showingCampaigns": "מציג {count} קמפיינים",
+    "showingCampaigns_one": "מציג {count} קמפיין",
+    "showingCampaigns_other": "מציג {count} קמפיינים",
+    "searchPlaceholder": "חפש קמפיינים...",
+    "sort": "מיין",
+    "page": "עמוד",
+    "of": "מתוך",
+    "jumpToPage": "עבור לעמוד"
+  },
+  "table": {
+    "campaign": "קמפיין",
+    "brand": "מותג",
+    "status": "סטטוס",
+    "targetVotes": "הצבעות יעד",
+    "delivered": "נמסר",
+    "deviation": "סטייה",
+    "ocrAccuracy": "דיוק OCR"
+  },
+  "detail": {
+    "activeCampaign": "קמפיין פעיל",
+    "productFeedbackSurvey": "סקר משוב על מוצר",
+    "collectingInsights": "איסוף תובנות ערך לקוחות על תכונות מוצר, שימושיות ורמות שביעות רצון בקרב הדמוגרפיה היעד שלנו דרך Instagram Stories.",
+    "complete": "הושלם",
+    "completeUppercase": "הושלם",
+    "responses": "תגובות",
+    "influencers": "אינפלואנסרים",
+    "influencersUppercase": "אינפלואנסרים",
+    "left": "נותר",
+    "leftUppercase": "נותר",
+    "responseProgress": "התקדמות תגובות",
+    "influencerPerformance": "ביצועי אינפלואנסרים",
+    "responsesLabel": "תגובות",
+    "ocrQuality": "איכות OCR"
+  }
+}
+

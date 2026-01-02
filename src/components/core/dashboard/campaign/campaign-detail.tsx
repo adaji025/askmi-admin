@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useTranslations } from "next-intl";
 
 export default function CampaignDetail() {
-  const t = useTranslations("influencers.campaignDetail");
+  const t = useTranslations("campaign.detail");
   return (
     <div className="max-w-4xl mx-auto space-y-12">
       {/* Header */}

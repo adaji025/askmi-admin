@@ -6,7 +6,7 @@ import enCommon from "@/messages/en/common.json";
 import enAuth from "@/messages/en/auth/index.json";
 import enLanguage from "@/messages/en/language.json";
 import enProfile from "@/messages/en/profile.json";
-import enCampaign from "@/messages/en/campaign.json";
+import enCampaign from "@/messages/en/campaign/index.json";
 import enSurvey from "@/messages/en/survey.json";
 import enDashboard from "@/messages/en/dashboard/index.json";
 import enBrands from "@/messages/en/brands/index.json";

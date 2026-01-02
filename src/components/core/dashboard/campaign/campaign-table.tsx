@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronLeft, ChevronRight, ChevronDown, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown, ArrowUpRight, ArrowDownRight, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,6 +15,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 interface Campaign {
   id: number;
@@ -52,6 +54,9 @@ const mockCampaigns: Campaign[] = Array(10)
   }));
 
 const CampaignTable = () => {
+  const t = useTranslations("campaign.table");
+  const tMain = useTranslations("campaign.main");
+  const tFilters = useTranslations("campaign.filters");
   const [currentPage, setCurrentPage] = useState(1);
   const [jumpToPage, setJumpToPage] = useState("");
   const totalPages = 100;
@@ -105,19 +110,19 @@ const CampaignTable = () => {
       case "active":
         return (
           <Badge className="bg-[#2AC670] text-white border-0">
-            Active
+            {tFilters("active")}
           </Badge>
         );
       case "lagging":
         return (
           <Badge className="bg-[#EDAE40] text-white border-0">
-            Lagging
+            {tFilters("lagging")}
           </Badge>
         );
       case "completed":
         return (
           <Badge className="bg-[#2563EB] text-white border-0">
-            Completed
+            {tFilters("completed")}
           </Badge>
         );
       default:
@@ -151,25 +156,25 @@ const CampaignTable = () => {
           <TableHeader>
             <TableRow className="bg-[#FAFAFA] hover:bg-[#FAFAFA]">
               <TableHead className="font-semibold text-foreground">
-                CAMPAIGN
+                {t("campaign")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                BRAND
+                {t("brand")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                STATUS
+                {t("status")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                TARGET VOTES
+                {t("targetVotes")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                DELIVERED
+                {t("delivered")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                DEVIATION
+                {t("deviation")}
               </TableHead>
               <TableHead className="font-semibold text-foreground">
-                OCR ACCURACY
+                {t("ocrAccuracy")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -247,6 +252,18 @@ const CampaignTable = () => {
                       {campaign.ocrAccuracy}%
                     </span>
                   </TableCell>
+                  <TableCell>
+                    <Link href={`/dashboard/campaigns/${campaign.id}`}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 rounded-sm border hover:bg-muted"
+                      title={t("view")}
+                    >
+                      <Eye className="h-2 w-2 text-muted-foreground" />
+                    </Button>
+                  </Link>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -257,7 +274,7 @@ const CampaignTable = () => {
       {/* Pagination */}
       <div className="flex items-center justify-between py-4 px-6 border-t border-[#E2E8F0] bg-[#FAFAFA]">
         <div className="text-sm text-muted-foreground">
-          Page {currentPage} of {totalPages}
+          {tMain("page")} {currentPage} {tMain("of")} {totalPages}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -301,7 +318,7 @@ const CampaignTable = () => {
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Jump to page</span>
+          <span className="text-sm text-muted-foreground">{tMain("jumpToPage")}</span>
           <Input
             type="number"
             placeholder="#"

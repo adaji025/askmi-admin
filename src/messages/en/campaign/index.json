@@ -1,0 +1,49 @@
+{
+  "stats": {
+    "totalCampaigns": "Total campaigns",
+    "activeNow": "Active now",
+    "laggingCampaigns": "Lagging campaigns"
+  },
+  "filters": {
+    "all": "All",
+    "active": "Active",
+    "lagging": "Lagging",
+    "completed": "Completed"
+  },
+  "main": {
+    "showingCampaigns": "Showing {count} Campaigns",
+    "showingCampaigns_one": "Showing {count} Campaign",
+    "showingCampaigns_other": "Showing {count} Campaigns",
+    "searchPlaceholder": "Search campaigns...",
+    "sort": "Sort",
+    "page": "Page",
+    "of": "of",
+    "jumpToPage": "Jump to page"
+  },
+  "table": {
+    "campaign": "CAMPAIGN",
+    "brand": "BRAND",
+    "status": "STATUS",
+    "targetVotes": "TARGET VOTES",
+    "delivered": "DELIVERED",
+    "deviation": "DEVIATION",
+    "ocrAccuracy": "OCR ACCURACY"
+  },
+  "detail": {
+    "activeCampaign": "Active Campaign",
+    "productFeedbackSurvey": "Product Feedback Survey",
+    "collectingInsights": "Collecting valuable customer insights about product features, usability, and satisfaction levels across our target demographic through Instagram Stories.",
+    "complete": "Complete",
+    "completeUppercase": "COMPLETE",
+    "responses": "Responses",
+    "influencers": "Influencers",
+    "influencersUppercase": "INFLUENCERS",
+    "left": "Left",
+    "leftUppercase": "LEFT",
+    "responseProgress": "Response Progress",
+    "influencerPerformance": "Influencer Performance",
+    "responsesLabel": "responses",
+    "ocrQuality": "OCR QUALITY"
+  }
+}
+

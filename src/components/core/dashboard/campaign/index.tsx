@@ -12,40 +12,44 @@ const CampaignComp = () => {
   const [status, setStatus] = React.useState<"all" | "active" | "completed" | "lagging">(
     "all"
   );
-  const t = useTranslations("brands.stats");
+  const t = useTranslations("campaign.stats");
+  const tFilters = useTranslations("campaign.filters");
+  const tMain = useTranslations("campaign.main");
+  const tBrands = useTranslations("brands.stats");
+  
   const stats = [
     {
-      title: "Total campaigns",
+      title: t("totalCampaigns"),
       value: "20",
       icon: BrandsSVG,
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#EAF5FF]", // Light Blue
       breakdown: [
-        { label: t("brands"), value: 15 },
-        { label: t("influencers"), value: 5 },
+        { label: tBrands("brands"), value: 15 },
+        { label: tBrands("influencers"), value: 5 },
       ],
     },
     {
-      title: "Active now",
+      title: t("activeNow"),
       value: "20",
       icon: BrandsSVG,
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#F0F2FF]", // Light Lavender
       breakdown: [
-        { label: t("pending"), value: 15 },
-        { label: t("completed"), value: 5 },
+        { label: tBrands("pending"), value: 15 },
+        { label: tBrands("completed"), value: 5 },
       ],
     },
     {
-      title: "Lagging campaigns",
+      title: t("laggingCampaigns"),
       value: "20",
       icon: BrandsSVG,
       trend: "-0.03%",
       trendType: "down" as const,
       bgColor: "bg-[#FDF8E1]",
-      breakdown: [{ label: t("votes delivered this week"), value: 238 }], // Light Blue
+      breakdown: [{ label: tBrands("votes delivered this week"), value: 238 }], // Light Blue
     },
   ];
 
@@ -55,10 +59,10 @@ const CampaignComp = () => {
     count: number;
     color: string;
   }> = [
-    { value: "all", label: "All", count: 12, color: "#2563EB" },
-    { value: "active", label: "Active", count: 5, color: "#2AC670" },
-    { value: "lagging", label: "Lagging", count: 5, color: "#EDAE40" },
-    { value: "completed", label: "Completed", count: 7, color: "#2563EB" },
+    { value: "all", label: tFilters("all"), count: 12, color: "#2563EB" },
+    { value: "active", label: tFilters("active"), count: 5, color: "#2AC670" },
+    { value: "lagging", label: tFilters("lagging"), count: 5, color: "#EDAE40" },
+    { value: "completed", label: tFilters("completed"), count: 7, color: "#2563EB" },
   ];
   return (
     <div>
@@ -91,14 +95,14 @@ const CampaignComp = () => {
       </div>
       <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-10 mt-4">
         <div className="">
-          Showing <span>147</span> Campaigns
+          {tMain("showingCampaigns", { count: 147 })}
         </div>
         <div className="flex items-center justify-between gap-4 order-1 lg:order-2">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search campaigns..."
+              placeholder={tMain("searchPlaceholder")}
               className="pl-9 w-64 h-11.5"
             />
           </div>
@@ -106,7 +110,7 @@ const CampaignComp = () => {
             variant="outline"
             className="h-11.5 px-4 bg-white border-border hover:bg-muted"
           >
-            Sort
+            {tMain("sort")}
             <ChevronDown className="h-4 w-4 ml-2" />
           </Button>
         </div>
