@@ -6,12 +6,8 @@ import {
   ChevronRight,
   Search,
   ChevronDown,
-  Smile,
-  Mail,
-  Shield,
   ArrowUpRight,
   Eye,
-  ShieldX,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -303,22 +299,6 @@ const InfluencersTable = () => {
                       <Eye className="h-2 w-2 text-muted-foreground" />
                     </Button>
                   </Link>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 border rounded-sm hover:bg-muted"
-                    title={t("message")}
-                  >
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 rounded-sm border hover:bg-muted"
-                    title={t("flag")}
-                  >
-                    <ShieldX className="h-4 w-4 text-muted-foreground" />
-                  </Button>
                 </div>
               </TableCell>
             </TableRow>
