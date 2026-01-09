@@ -36,6 +36,36 @@
     "noFlaggedBrands": "אין כרגע מותגים מסומנים",
     "noApprovedBrands": "אין כרגע מותגים מאושרים",
     "noPendingBrands": "אין כרגע מותגים ממתינים"
+  },
+  "detail": {
+    "edit": "ערוך",
+    "save": "שמור",
+    "cancel": "בטל",
+    "resetPassword": "איפוס סיסמה",
+    "brandInformation": "מידע על המותג",
+    "companyName": "שם החברה",
+    "emailAddress": "כתובת אימייל",
+    "phoneNumber": "מספר טלפון",
+    "website": "אתר אינטרנט",
+    "address": "כתובת",
+    "companySize": "גודל החברה",
+    "industry": "תעשייה",
+    "activeCampaigns": "קמפיינים פעילים",
+    "campaignName": "שם הקמפיין",
+    "status": "סטטוס",
+    "progress": "התקדמות",
+    "targetVotes": "הצבעות יעד",
+    "delivered": "נמסר",
+    "startDate": "תאריך התחלה",
+    "endDate": "תאריך סיום",
+    "actions": "פעולות",
+    "view": "צפה",
+    "active": "פעיל",
+    "lagging": "מפגר",
+    "completed": "הושלם",
+    "resetPasswordDescription": "האם אתה בטוח שברצונך לאפס את הסיסמה עבור מותג זה?",
+    "resetPasswordConfirmation": "קישור לאיפוס סיסמה יישלח ל-{email}",
+    "confirmReset": "אשר איפוס"
   }
 }
 

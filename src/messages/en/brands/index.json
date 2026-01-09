@@ -36,6 +36,36 @@
     "noFlaggedBrands": "There are currently no flagged brands",
     "noApprovedBrands": "There are currently no approved brands",
     "noPendingBrands": "There are currently no pending brands"
+  },
+  "detail": {
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "resetPassword": "Reset Password",
+    "brandInformation": "Brand Information",
+    "companyName": "Company Name",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "website": "Website",
+    "address": "Address",
+    "companySize": "Company Size",
+    "industry": "Industry",
+    "activeCampaigns": "Active Campaigns",
+    "campaignName": "Campaign Name",
+    "status": "Status",
+    "progress": "Progress",
+    "targetVotes": "Target Votes",
+    "delivered": "Delivered",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "actions": "Actions",
+    "view": "View",
+    "active": "Active",
+    "lagging": "Lagging",
+    "completed": "Completed",
+    "resetPasswordDescription": "Are you sure you want to reset the password for this brand?",
+    "resetPasswordConfirmation": "A password reset link will be sent to {email}",
+    "confirmReset": "Confirm Reset"
   }
 }
 

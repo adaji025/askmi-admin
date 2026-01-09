@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Eye, Mail, ShieldX, MessageSquare } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Mail,
+  ShieldX,
+  MessageSquare,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -15,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { CampaignsSVG, BrandsSVG } from "../dashboard/layout/svg";
 
 type StatusFilter = "all" | "flagged";
@@ -31,21 +39,28 @@ interface Brand {
   riskLevel: "none" | "low-ocr"; // none = green, low-ocr = orange
 }
 
-const mockBrands: Brand[] = Array(10).fill(null).map((_, index) => ({
-  id: index + 1,
-  name: "TechCo Limited",
-  email: "contact@techco.com",
-  // Mix of statuses: some flagged, some active with different risk levels
-  status: index === 2 || index === 5 ? "flagged" : "active",
-  totalCampaigns: 23,
-  activeCampaigns: 2,
-  totalSpend: 4600,
-  lastActivity: "2 days ago",
-  // For approved: status active + riskLevel none
-  // For pending: status active + riskLevel low-ocr
-  // For flagged: status flagged
-  riskLevel: index === 2 || index === 5 ? "low-ocr" : index === 3 || index === 7 ? "low-ocr" : "none",
-}));
+const mockBrands: Brand[] = Array(10)
+  .fill(null)
+  .map((_, index) => ({
+    id: index + 1,
+    name: "TechCo Limited",
+    email: "contact@techco.com",
+    // Mix of statuses: some flagged, some active with different risk levels
+    status: index === 2 || index === 5 ? "flagged" : "active",
+    totalCampaigns: 23,
+    activeCampaigns: 2,
+    totalSpend: 4600,
+    lastActivity: "2 days ago",
+    // For approved: status active + riskLevel none
+    // For pending: status active + riskLevel low-ocr
+    // For flagged: status flagged
+    riskLevel:
+      index === 2 || index === 5
+        ? "low-ocr"
+        : index === 3 || index === 7
+        ? "low-ocr"
+        : "none",
+  }));
 
 interface BrandsTableProps {
   selectedFilter?: StatusFilter;
@@ -167,97 +182,89 @@ const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
             </TableRow>
           ) : (
             filteredBrands.map((brand, index) => (
-            <TableRow key={index} className="hover:bg-muted/50">
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-3">
+              <TableRow key={index} className="hover:bg-muted/50">
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      {/* Status indicator */}
+                      <div
+                        className={cn(
+                          "h-2 w-2 rounded-full shrink-0",
+                          brand.status === "active"
+                            ? "bg-[#10B981]"
+                            : "bg-[#F59E0B]"
+                        )}
+                      />
+                      {/* Avatar */}
+                      <Avatar className="h-10 w-10 rounded-md bg-[#2563EB]">
+                        <AvatarFallback className="bg-[#2563EB] text-white text-xs font-semibold">
+                          {getInitials(brand.name)}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-semibold text-foreground">
+                        {brand.name}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {brand.email}
+                      </span>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <span className="text-sm text-foreground">
+                    {brand.totalCampaigns}
+                  </span>
+                </TableCell>
+                <TableCell className="py-4 px-6">
                   <div className="flex items-center gap-2">
-                    {/* Status indicator */}
+                    <CampaignsSVG />
+                    <span className="text-sm text-foreground">
+                      {brand.activeCampaigns}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <span className="text-sm text-foreground">
+                    {formatCurrency(brand.totalSpend)}
+                  </span>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <span className="text-sm text-foreground">
+                    {brand.lastActivity}
+                  </span>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center gap-2">
                     <div
                       className={cn(
-                        "h-2 w-2 rounded-full shrink-0",
-                        brand.status === "active"
+                        "h-2 w-2 rounded-full",
+                        brand.riskLevel === "none"
                           ? "bg-[#10B981]"
                           : "bg-[#F59E0B]"
                       )}
                     />
-                    {/* Avatar */}
-                    <Avatar className="h-10 w-10 rounded-md bg-[#2563EB]">
-                      <AvatarFallback className="bg-[#2563EB] text-white text-xs font-semibold">
-                        {getInitials(brand.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-semibold text-foreground">
-                      {brand.name}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {brand.email}
+                    <span className="text-sm text-foreground">
+                      {brand.riskLevel === "none" ? t("none") : t("lowOcr")}
                     </span>
                   </div>
-                </div>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <span className="text-sm text-foreground">{brand.totalCampaigns}</span>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-2">
-                  <CampaignsSVG />
-                  <span className="text-sm text-foreground">{brand.activeCampaigns}</span>
-                </div>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <span className="text-sm text-foreground">
-                  {formatCurrency(brand.totalSpend)}
-                </span>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <span className="text-sm text-foreground">{brand.lastActivity}</span>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-2">
-                  <div
-                    className={cn(
-                      "h-2 w-2 rounded-full",
-                      brand.riskLevel === "none"
-                        ? "bg-[#10B981]"
-                        : "bg-[#F59E0B]"
-                    )}
-                  />
-                  <span className="text-sm text-foreground">
-                    {brand.riskLevel === "none" ? t("none") : t("lowOcr")}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 rounded-sm border hover:bg-muted"
-                    title={t("view")}
-                  >
-                    <Eye className="h-2 w-2 text-muted-foreground" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 border rounded-sm hover:bg-muted"
-                    title={t("message")}
-                  >
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 rounded-sm border hover:bg-muted"
-                    title={t("flag")}
-                  >
-                    <ShieldX className="h-4 w-4 text-muted-foreground" />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
+                </TableCell>
+                 <TableCell className="py-4 px-6">
+                   <div className="flex items-center gap-2">
+                     <Link href={`/dashboard/brands/${brand.id}`}>
+                       <Button
+                         variant="ghost"
+                         size="icon"
+                         className="h-6 w-6 rounded-sm border hover:bg-muted"
+                         title={t("view")}
+                       >
+                         <Eye className="h-2 w-2 text-muted-foreground" />
+                       </Button>
+                     </Link>
+                   </div>
+                 </TableCell>
+              </TableRow>
             ))
           )}
         </TableBody>
@@ -266,68 +273,70 @@ const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
       {/* Pagination - Only show if not empty */}
       {!isEmpty && (
         <div className="flex items-center justify-between py-4 px-6 border-t border-[#E2E8F0] bg-[#FAFAFA]">
-        <div className="text-sm text-muted-foreground">
-          {t("page")} {currentPage} {t("of")} {totalPages}
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="h-8 w-8 bg-white border-border hover:bg-muted"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          {getPageNumbers().map((page, index) => (
-            <div key={index}>
-              {page === "..." ? (
-                <span className="px-2 text-muted-foreground">...</span>
-              ) : (
-                <Button
-                  variant={currentPage === page ? "default" : "outline"}
-                  size="icon"
-                  onClick={() => handlePageChange(page as number)}
-                  className={cn(
-                    "h-8 w-8",
-                    currentPage === page
-                      ? "bg-[#2563EB] text-white hover:bg-[#2563EB]/90"
-                      : "bg-white border-border hover:bg-muted"
-                  )}
-                >
-                  {page}
-                </Button>
-              )}
-            </div>
-          ))}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="h-8 w-8 bg-white border-border hover:bg-muted"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">{t("jumpToPage")}</span>
-          <Input
-            type="number"
-            placeholder="#"
-            value={jumpToPage}
-            onChange={(e) => setJumpToPage(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && jumpToPage) {
-                handlePageChange(parseInt(jumpToPage));
-                setJumpToPage("");
-              }
-            }}
-            className="w-16 h-8 bg-white border-border text-center"
-            min={1}
-            max={totalPages}
-          />
-        </div>
+          <div className="text-sm text-muted-foreground">
+            {t("page")} {currentPage} {t("of")} {totalPages}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="h-8 w-8 bg-white border-border hover:bg-muted"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            {getPageNumbers().map((page, index) => (
+              <div key={index}>
+                {page === "..." ? (
+                  <span className="px-2 text-muted-foreground">...</span>
+                ) : (
+                  <Button
+                    variant={currentPage === page ? "default" : "outline"}
+                    size="icon"
+                    onClick={() => handlePageChange(page as number)}
+                    className={cn(
+                      "h-8 w-8",
+                      currentPage === page
+                        ? "bg-[#2563EB] text-white hover:bg-[#2563EB]/90"
+                        : "bg-white border-border hover:bg-muted"
+                    )}
+                  >
+                    {page}
+                  </Button>
+                )}
+              </div>
+            ))}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="h-8 w-8 bg-white border-border hover:bg-muted"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">
+              {t("jumpToPage")}
+            </span>
+            <Input
+              type="number"
+              placeholder="#"
+              value={jumpToPage}
+              onChange={(e) => setJumpToPage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && jumpToPage) {
+                  handlePageChange(parseInt(jumpToPage));
+                  setJumpToPage("");
+                }
+              }}
+              className="w-16 h-8 bg-white border-border text-center"
+              min={1}
+              max={totalPages}
+            />
+          </div>
         </div>
       )}
     </div>
