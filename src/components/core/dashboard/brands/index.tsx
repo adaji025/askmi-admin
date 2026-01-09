@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import BrandsTable from "./brands-table";
 
-type StatusFilter = "all" | "approved" | "pending" | "flagged";
+type StatusFilter = "all" | "flagged";
 
 const BrandsComponent = () => {
   const t = useTranslations("brands.filters");
@@ -14,8 +14,6 @@ const BrandsComponent = () => {
   // Hardcoded counts
   const counts = {
     all: 892,
-    approved: 847,
-    pending: 45,
     flagged: 0,
   };
 
@@ -25,8 +23,6 @@ const BrandsComponent = () => {
     count: number;
   }> = [
     { value: "all", label: t("all"), count: counts.all },
-    { value: "approved", label: t("approved"), count: counts.approved },
-    { value: "pending", label: t("pending"), count: counts.pending },
     { value: "flagged", label: t("flagged"), count: counts.flagged },
   ];
 
@@ -53,11 +49,7 @@ const BrandsComponent = () => {
                 className={cn(
                   "text-[10px] font-medium px-2 py-0.5 rounded-md text-white",
                   isSelected
-                    ? option.value === "approved"
-                      ? "bg-[#10B981]"
-                      : option.value === "pending"
-                      ? "bg-[#EDAE40]"
-                      : option.value === "flagged"
+                    ? option.value === "flagged"
                       ? "bg-[#EB5757]"
                       : "bg-[#2563EB]"
                     : "bg-[#6B7280]"

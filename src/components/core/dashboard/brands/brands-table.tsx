@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { CampaignsSVG, BrandsSVG } from "../dashboard/layout/svg";
 
-type StatusFilter = "all" | "approved" | "pending" | "flagged";
+type StatusFilter = "all" | "flagged";
 
 interface Brand {
   id: number;
@@ -111,8 +111,6 @@ const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
   // Filter brands based on selected filter
   const filteredBrands = mockBrands.filter((brand) => {
     if (selectedFilter === "all") return true;
-    if (selectedFilter === "approved") return brand.status === "active" && brand.riskLevel === "none";
-    if (selectedFilter === "pending") return brand.status === "active" && brand.riskLevel === "low-ocr";
     if (selectedFilter === "flagged") return brand.status === "flagged";
     return true;
   });
@@ -121,8 +119,6 @@ const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
 
   const getEmptyStateMessage = () => {
     if (selectedFilter === "flagged") return tEmpty("noFlaggedBrands");
-    if (selectedFilter === "approved") return tEmpty("noApprovedBrands");
-    if (selectedFilter === "pending") return tEmpty("noPendingBrands");
     return tEmpty("noBrands");
   };
 
