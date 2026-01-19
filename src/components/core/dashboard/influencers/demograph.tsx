@@ -49,21 +49,21 @@ const Demograph = () => {
   const getStatusBadge = (value: number, type: "votes" | "score" | "accuracy") => {
     if (type === "votes") {
       return (
-        <Badge className="bg-[#10B981] text-white border-0">
+        <Badge className="bg-[#10B981] rounded min-w-20 text-white border-0 py-1.5">
           {t("excellent")}
         </Badge>
       );
     }
     if (type === "score") {
       return (
-        <Badge className="bg-[#EDAE40] text-white border-0">
+        <Badge className="bg-[#EDAE40] text-white border-0 rounded min-w-20 py-1.5">
           {t("okay")}
         </Badge>
       );
     }
     if (type === "accuracy") {
       return (
-        <Badge className="bg-[#10B981] text-white border-0">
+        <Badge className="bg-[#10B981] text-white border-0 rounded min-w-20 py-1.5">
           {t("verified")}
         </Badge>
       );
