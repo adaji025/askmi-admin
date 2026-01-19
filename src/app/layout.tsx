@@ -13,6 +13,7 @@ import enBrands from "@/messages/en/brands/index.json";
 import enInfluencers from "@/messages/en/influencers/index.json";
 import enOcrReview from "@/messages/en/ocr-review/index.json";
 import { routing } from "@/i18n/routing";
+import NextTopLoader from 'nextjs-toploader';
 
 const enMessages = {
   common: enCommon,
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans antialiased`}
       >
+      <NextTopLoader />
         <LanguageProvider locale={locale} messages={enMessages}>
           {children}
         </LanguageProvider>

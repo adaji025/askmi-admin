@@ -8,6 +8,7 @@ import InfluencerInfo from "./influencer-info";
 import VerificationStatus from "./verification-status";
 import CampaignHistory from "./campaign-history";
 import OCRActivity from "./ocr-activity";
+import Demograph from "./demograph";
 
 type TabType = "profile" | "campaign-history" | "ocr-activity";
 
@@ -28,9 +29,21 @@ const InfluencerDetailsComponent = () => {
   };
 
   const verificationStatus = [
-    { label: tProfile("emailAddressLabel"), status: tProfile("verified"), verified: true },
-    { label: tProfile("instagram"), status: tProfile("connected"), verified: true },
-    { label: tProfile("identity"), status: tProfile("verified"), verified: true },
+    {
+      label: tProfile("emailAddressLabel"),
+      status: tProfile("verified"),
+      verified: true,
+    },
+    {
+      label: tProfile("instagram"),
+      status: tProfile("connected"),
+      verified: true,
+    },
+    {
+      label: tProfile("identity"),
+      status: tProfile("verified"),
+      verified: true,
+    },
   ];
 
   const tabs = [
@@ -51,7 +64,7 @@ const InfluencerDetailsComponent = () => {
               "flex-1 flex items-center text-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
               activeTab === tab.id
                 ? "bg-white text-foreground border border-[#E2E8F0]"
-                : "text-muted-foreground hover:text-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             {tab.label}
@@ -61,9 +74,12 @@ const InfluencerDetailsComponent = () => {
 
       {/* Tab Content */}
       {activeTab === "profile" && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <InfluencerInfo influencerInfo={influencerInfo} />
-          <VerificationStatus verificationStatus={verificationStatus} />
+        <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <InfluencerInfo influencerInfo={influencerInfo} />
+            <VerificationStatus verificationStatus={verificationStatus} />
+          </div>
+          <Demograph />
         </div>
       )}
 

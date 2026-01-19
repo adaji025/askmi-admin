@@ -87,6 +87,43 @@
     "influencerPerformance": "Influencer Performance",
     "responsesLabel": "responses",
     "ocrQuality": "OCR QUALITY"
+  },
+  "demographics": {
+    "demographics": "Demographics",
+    "save": "Save",
+    "ageRange": "Age Range",
+    "language": "Language",
+    "gender": "Gender",
+    "primaryLocation": "Primary Location",
+    "english": "English",
+    "hebrew": "Hebrew",
+    "spanish": "Spanish",
+    "french": "French",
+    "arabic": "Arabic",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "preferNotToSay": "Prefer not to say",
+    "israel": "Israel",
+    "usa": "United States",
+    "uk": "United Kingdom",
+    "canada": "Canada",
+    "nigeria": "Nigeria",
+    "performanceStatistics": "Performance Statistics",
+    "averageVotes": "Average Votes",
+    "performanceScore": "Performance Score",
+    "voteAccuracy": "Vote Accuracy",
+    "excellent": "Excellent",
+    "okay": "Okay",
+    "verified": "Verified"
+  },
+  "audienceInterests": {
+    "audienceInterests": "Audience Interests",
+    "save": "Save",
+    "interestCategories": "Interest Categories",
+    "pressEnterToAdd": "(Press enter to add)",
+    "addInterest": "Add interest...",
+    "removeInterest": "Remove {interest}"
   }
 }
 

@@ -87,6 +87,43 @@
     "influencerPerformance": "ביצועי אינפלואנסרים",
     "responsesLabel": "תגובות",
     "ocrQuality": "איכות OCR"
+  },
+  "demographics": {
+    "demographics": "דמוגרפיה",
+    "save": "שמור",
+    "ageRange": "טווח גילאים",
+    "language": "שפה",
+    "gender": "מגדר",
+    "primaryLocation": "מיקום ראשי",
+    "english": "אנגלית",
+    "hebrew": "עברית",
+    "spanish": "ספרדית",
+    "french": "צרפתית",
+    "arabic": "ערבית",
+    "male": "זכר",
+    "female": "נקבה",
+    "other": "אחר",
+    "preferNotToSay": "מעדיף לא לומר",
+    "israel": "ישראל",
+    "usa": "ארצות הברית",
+    "uk": "בריטניה",
+    "canada": "קנדה",
+    "nigeria": "ניגריה",
+    "performanceStatistics": "סטטיסטיקות ביצועים",
+    "averageVotes": "ממוצע הצבעות",
+    "performanceScore": "ציון ביצועים",
+    "voteAccuracy": "דיוק הצבעות",
+    "excellent": "מצוין",
+    "okay": "בסדר",
+    "verified": "מאומת"
+  },
+  "audienceInterests": {
+    "audienceInterests": "תחומי עניין של הקהל",
+    "save": "שמור",
+    "interestCategories": "קטגוריות עניין",
+    "pressEnterToAdd": "(לחץ Enter להוספה)",
+    "addInterest": "הוסף עניין...",
+    "removeInterest": "הסר {interest}"
   }
 }
 
