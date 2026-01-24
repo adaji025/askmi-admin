@@ -91,7 +91,7 @@ const InfluencerInfo = ({ influencerInfo }: IProps) => {
         </div>
       </div>
 
-      <div className="mt-10 p-5 lg:p-6">
+      <div className="p-5 lg:p-6">
         <div className="flex g4 items-center justify-between">
           <div className="font-medium text-[#8A97A0] text-xs">INFLUENCER NICHE ANALYSIS</div>
           <div className="flex gap-2 items-center">
