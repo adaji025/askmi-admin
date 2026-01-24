@@ -124,6 +124,13 @@
     "pressEnterToAdd": "(לחץ Enter להוספה)",
     "addInterest": "הוסף עניין...",
     "removeInterest": "הסר {interest}"
+  },
+  "nicheAnalysis": {
+    "title": "ניתוח נישה של אינפלואנסר",
+    "description": "אתה יכול לספק הקשר איכותי למנוע AI לשימוש בדוחות מחקר",
+    "placeholder": "הכנס טקסט ניתוח נישה...",
+    "save": "שמור",
+    "cancel": "בטל"
   }
 }
 

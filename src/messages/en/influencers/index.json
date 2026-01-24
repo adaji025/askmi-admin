@@ -124,6 +124,13 @@
     "pressEnterToAdd": "(Press enter to add)",
     "addInterest": "Add interest...",
     "removeInterest": "Remove {interest}"
+  },
+  "nicheAnalysis": {
+    "title": "Influencer Niche Analysis",
+    "description": "You can provide qualitative context for the AI engine to use in research reports",
+    "placeholder": "Enter niche analysis text...",
+    "save": "Save",
+    "cancel": "Cancel"
   }
 }
 
