@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -20,54 +20,34 @@ import {
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { formatDistanceToNow } from "date-fns";
 import { CampaignsSVG, BrandsSVG } from "../dashboard/layout/svg";
+import type { AdminBrand } from "@/features/brands/types";
 
 type StatusFilter = "all" | "flagged";
 
-interface Brand {
-  id: number;
-  name: string;
-  email: string;
-  status: "active" | "flagged"; // active = green, flagged = orange
-  totalCampaigns: number;
-  activeCampaigns: number;
-  totalSpend: number;
-  lastActivity: string;
-  riskLevel: "none" | "low-ocr"; // none = green, low-ocr = orange
-}
-
-const mockBrands: Brand[] = Array(10)
-  .fill(null)
-  .map((_, index) => ({
-    id: index + 1,
-    name: "TechCo Limited",
-    email: "contact@techco.com",
-    // Mix of statuses: some flagged, some active with different risk levels
-    status: index === 2 || index === 5 ? "flagged" : "active",
-    totalCampaigns: 23,
-    activeCampaigns: 2,
-    totalSpend: 4600,
-    lastActivity: "2 days ago",
-    // For approved: status active + riskLevel none
-    // For pending: status active + riskLevel low-ocr
-    // For flagged: status flagged
-    riskLevel:
-      index === 2 || index === 5
-        ? "low-ocr"
-        : index === 3 || index === 7
-        ? "low-ocr"
-        : "none",
-  }));
+const PAGE_SIZE = 10;
 
 interface BrandsTableProps {
   selectedFilter?: StatusFilter;
+  brands?: AdminBrand[];
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+  onRetry: () => void;
 }
 
-const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
+const BrandsTable = ({
+  selectedFilter = "all",
+  brands,
+  isLoading,
+  isError,
+  error,
+  onRetry,
+}: BrandsTableProps) => {
   const t = useTranslations("brands.table");
   const tEmpty = useTranslations("brands.emptyStates");
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 100;
   const [jumpToPage, setJumpToPage] = useState("");
 
   const handlePageChange = (page: number) => {
@@ -111,23 +91,43 @@ const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
       .slice(0, 2);
   };
 
-  const formatCurrency = (amount: number) => {
+  const formatSpend = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
+      maximumFractionDigits: 2,
     }).format(amount);
   };
 
-  // Filter brands based on selected filter
-  const filteredBrands = mockBrands.filter((brand) => {
-    if (selectedFilter === "all") return true;
-    if (selectedFilter === "flagged") return brand.status === "flagged";
-    return true;
-  });
+  const list = brands ?? [];
 
-  const isEmpty = filteredBrands.length === 0;
+  const filteredBrands = useMemo(() => {
+    return list.filter((brand) => {
+      if (selectedFilter === "all") return true;
+      if (selectedFilter === "flagged") return !brand.isApproved;
+      return true;
+    });
+  }, [list, selectedFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredBrands.length / PAGE_SIZE));
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedFilter, list.length]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedBrands = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filteredBrands.slice(start, start + PAGE_SIZE);
+  }, [filteredBrands, currentPage]);
+
+  const isEmpty = !isLoading && !isError && filteredBrands.length === 0;
 
   const getEmptyStateMessage = () => {
     if (selectedFilter === "flagged") return tEmpty("noFlaggedBrands");
@@ -164,7 +164,28 @@ const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isEmpty ? (
+          {isError ? (
+            <TableRow>
+              <TableCell colSpan={8} className="py-16 px-6">
+                <div className="flex flex-col items-center justify-center gap-3">
+                  <p className="text-sm text-destructive">
+                    {error?.message ?? "Failed to load brands"}
+                  </p>
+                  <Button type="button" variant="outline" size="sm" onClick={onRetry}>
+                    Retry
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ) : isLoading ? (
+            <TableRow>
+              <TableCell colSpan={8} className="py-16 px-6">
+                <p className="text-center text-sm text-muted-foreground">
+                  Loading brands…
+                </p>
+              </TableCell>
+            </TableRow>
+          ) : isEmpty ? (
             <TableRow>
               <TableCell colSpan={8} className="py-16 px-6">
                 <div className="flex flex-col items-center justify-center">
@@ -178,97 +199,102 @@ const BrandsTable = ({ selectedFilter = "all" }: BrandsTableProps) => {
               </TableCell>
             </TableRow>
           ) : (
-            filteredBrands.map((brand, index) => (
-              <TableRow key={index} className="hover:bg-muted/50">
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center gap-3">
+            paginatedBrands.map((brand) => {
+              const lastActivity = formatDistanceToNow(new Date(brand.updatedAt), {
+                addSuffix: true,
+              });
+              const riskLevel = brand.isApproved ? "none" : "low-ocr";
+
+              return (
+                <TableRow key={brand.id} className="hover:bg-muted/50">
+                  <TableCell className="py-4 px-6">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={cn(
+                            "h-2 w-2 rounded-full shrink-0",
+                            brand.isApproved
+                              ? "bg-[#10B981]"
+                              : "bg-[#F59E0B]"
+                          )}
+                        />
+                        <Avatar className="h-10 w-10 rounded-md bg-[#2563EB]">
+                          <AvatarFallback className="bg-[#2563EB] text-white text-xs font-semibold">
+                            {getInitials(brand.fullName)}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-semibold text-foreground">
+                          {brand.fullName}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {brand.email}
+                        </span>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <span className="text-sm text-foreground">
+                      {brand.totalCampaign}
+                    </span>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
                     <div className="flex items-center gap-2">
-                      {/* Status indicator */}
+                      <CampaignsSVG />
+                      <span className="text-sm text-foreground">
+                        {brand.activeCampaign}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <span className="text-sm text-foreground">
+                      {formatSpend(brand.totalSpend)}
+                    </span>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <span className="text-sm text-foreground">
+                      {lastActivity}
+                    </span>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <div className="flex items-center gap-2">
                       <div
                         className={cn(
-                          "h-2 w-2 rounded-full shrink-0",
-                          brand.status === "active"
+                          "h-2 w-2 rounded-full",
+                          riskLevel === "none"
                             ? "bg-[#10B981]"
                             : "bg-[#F59E0B]"
                         )}
                       />
-                      {/* Avatar */}
-                      <Avatar className="h-10 w-10 rounded-md bg-[#2563EB]">
-                        <AvatarFallback className="bg-[#2563EB] text-white text-xs font-semibold">
-                          {getInitials(brand.name)}
-                        </AvatarFallback>
-                      </Avatar>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-foreground">
-                        {brand.name}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {brand.email}
+                      <span className="text-sm text-foreground">
+                        {riskLevel === "none" ? t("none") : t("lowOcr")}
                       </span>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <span className="text-sm text-foreground">
-                    {brand.totalCampaigns}
-                  </span>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center gap-2">
-                    <CampaignsSVG />
-                    <span className="text-sm text-foreground">
-                      {brand.activeCampaigns}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <span className="text-sm text-foreground">
-                    {formatCurrency(brand.totalSpend)}
-                  </span>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <span className="text-sm text-foreground">
-                    {brand.lastActivity}
-                  </span>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={cn(
-                        "h-2 w-2 rounded-full",
-                        brand.riskLevel === "none"
-                          ? "bg-[#10B981]"
-                          : "bg-[#F59E0B]"
-                      )}
-                    />
-                    <span className="text-sm text-foreground">
-                      {brand.riskLevel === "none" ? t("none") : t("lowOcr")}
-                    </span>
-                  </div>
-                </TableCell>
-                 <TableCell className="py-4 px-6">
-                   <div className="flex items-center gap-2">
-                     <Link href={`/dashboard/brands/${brand.id}`}>
-                       <Button
-                         variant="ghost"
-                         size="icon"
-                         className="h-6 w-6 rounded-sm border hover:bg-muted"
-                         title={t("view")}
-                       >
-                         <Eye className="h-2 w-2 text-muted-foreground" />
-                       </Button>
-                     </Link>
-                   </div>
-                 </TableCell>
-              </TableRow>
-            ))
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <div className="flex items-center gap-2">
+                      <Link href={`/dashboard/brands/${brand.id}`}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 rounded-sm border hover:bg-muted"
+                          title={t("view")}
+                        >
+                          <Eye className="h-2 w-2 text-muted-foreground" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })
           )}
         </TableBody>
       </Table>
 
       {/* Pagination - Only show if not empty */}
-      {!isEmpty && (
+      {!isEmpty && !isLoading && !isError && (
         <div className="flex items-center justify-between py-4 px-6 border-t border-[#E2E8F0] bg-[#FAFAFA]">
           <div className="text-sm text-muted-foreground">
             {t("page")} {currentPage} {t("of")} {totalPages}

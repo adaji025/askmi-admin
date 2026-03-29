@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import LanguageDropdown from "../dashboard/dashboard/layout/lang-dropdown";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useLogin } from "@/features/auth/use-login";
+import { useUserStore } from "@/store/user-store";
 
 export function LoginForm() {
   const t = useTranslations("auth.signIn");
@@ -21,9 +23,9 @@ export function LoginForm() {
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { login, isLoading, error: apiError, resetError } = useLogin();
+  const { login: setUserLogin } = useUserStore();
 
   const validateEmail = (email: string): string => {
     if (!email.trim()) {
@@ -60,36 +62,40 @@ export function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    resetError();
 
     // Validate form before submitting
     if (!validateForm()) {
       return;
     }
 
-    setIsLoading(true);
-
     try {
-      console.log(formData.email, formData.password);
+      const response = await login({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Store user data and token in the store
+      setUserLogin(response.user, response.token);
+
+      // Navigate to dashboard after successful login
       router.push("/dashboard");
-    } catch (err) {
-      setError(t("invalidCredentials"));
-    } finally {
-      setIsLoading(false);
+    } catch {
+      // apiError from useLogin is shown in the form
     }
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    resetError();
     setFormData({ ...formData, email: e.target.value });
-    // Clear error when user starts typing
     if (errors.email) {
       setErrors({ ...errors, email: "" });
     }
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    resetError();
     setFormData({ ...formData, password: e.target.value });
-    // Clear error when user starts typing
     if (errors.password) {
       setErrors({ ...errors, password: "" });
     }
@@ -119,9 +125,9 @@ export function LoginForm() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
-          {error && (
+          {apiError && (
             <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
-              {error}
+              {apiError}
             </div>
           )}
 
@@ -135,11 +141,10 @@ export function LoginForm() {
               placeholder={t("emailPlaceholder")}
               value={formData.email}
               onChange={handleEmailChange}
-              className={`h-11 rounded-[6px] text-white ${
-                errors.email
+              className={`h-11 rounded-[6px] text-white ${errors.email
                   ? "border-destructive focus-visible:ring-destructive"
                   : ""
-              }`}
+                }`}
               disabled={isLoading}
             />
             {errors.email && (
@@ -160,11 +165,10 @@ export function LoginForm() {
               placeholder={t("passwordPlaceholder")}
               value={formData.password}
               onChange={handlePasswordChange}
-              className={`h-11  rounded-[6px] text-white ${
-                errors.password
+              className={`h-11  rounded-[6px] text-white ${errors.password
                   ? "border-destructive focus-visible:ring-destructive"
                   : ""
-              }`}
+                }`}
               disabled={isLoading}
             />
             {errors.password && (

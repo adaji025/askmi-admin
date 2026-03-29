@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/providers/language-provider";
+import { QueryProvider } from "@/components/providers/query-provider";
 import enCommon from "@/messages/en/common.json";
 import enAuth from "@/messages/en/auth/index.json";
 import enLanguage from "@/messages/en/language.json";
@@ -53,9 +54,11 @@ export default function RootLayout({
         className={`${inter.variable} font-sans antialiased`}
       >
       <NextTopLoader />
-        <LanguageProvider locale={locale} messages={enMessages}>
-          {children}
-        </LanguageProvider>
+        <QueryProvider>
+          <LanguageProvider locale={locale} messages={enMessages}>
+            {children}
+          </LanguageProvider>
+        </QueryProvider>
       </body>
     </html>
   );

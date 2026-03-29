@@ -1,21 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import type { AdminBrand } from "@/features/brands/types";
 import BrandsTable from "./brands-table";
 
 type StatusFilter = "all" | "flagged";
 
-const BrandsComponent = () => {
+interface BrandsComponentProps {
+  brands?: AdminBrand[];
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+  onRetry: () => void;
+}
+
+const BrandsComponent = ({
+  brands,
+  isLoading,
+  isError,
+  error,
+  onRetry,
+}: BrandsComponentProps) => {
   const t = useTranslations("brands.filters");
   const [selectedStatus, setSelectedStatus] = useState<StatusFilter>("all");
 
-  // Hardcoded counts
-  const counts = {
-    all: 892,
-    flagged: 0,
-  };
+  const counts = useMemo(() => {
+    const list = brands ?? [];
+    return {
+      all: list.length,
+      flagged: list.filter((b) => !b.isApproved).length,
+    };
+  }, [brands]);
 
   const statusOptions: Array<{
     value: StatusFilter;
@@ -61,7 +78,14 @@ const BrandsComponent = () => {
           );
         })}
       </div>
-      <BrandsTable selectedFilter={selectedStatus} />
+      <BrandsTable
+        selectedFilter={selectedStatus}
+        brands={brands}
+        isLoading={isLoading}
+        isError={isError}
+        error={error}
+        onRetry={onRetry}
+      />
     </div>
   );
 };
