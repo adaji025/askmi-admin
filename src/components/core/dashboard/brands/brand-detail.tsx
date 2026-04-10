@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Check, Edit2, Save, X, Key, Mail, Building2, Phone, MapPin, Globe } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Edit2, Save, X, Key, Mail, Building2, Phone, MapPin, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -25,9 +25,33 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useGetBrand } from "@/features/brands/use-get-brand";
+import type { AdminBrand } from "@/features/brands/types";
 
 interface BrandDetailProps {
   brandId: string;
+}
+
+type FormState = {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  website: string;
+  companySize: string;
+  industry: string;
+};
+
+function mapBrandToFormState(b: AdminBrand): FormState {
+  return {
+    name: b.company,
+    email: b.email,
+    phone: b.phoneNumber,
+    address: "",
+    website: "",
+    companySize: b.companySize,
+    industry: b.industry,
+  };
 }
 
 interface Campaign {
@@ -43,21 +67,23 @@ interface Campaign {
 
 const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
   const t = useTranslations("brands.detail");
+  const { data: brand, isPending, isError, error, refetch } = useGetBrand(
+    brandId,
+  );
+
   const [isEditing, setIsEditing] = useState(false);
   const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
-  const [brandData, setBrandData] = useState({
-    name: "TechCo Limited",
-    email: "contact@techco.com",
-    phone: "+1 (555) 123-4567",
-    address: "123 Business St, San Francisco, CA 94105",
-    website: "https://techco.com",
-    companySize: "50-200",
-    industry: "Technology",
+  const [brandData, setBrandData] = useState<FormState>({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    website: "",
+    companySize: "",
+    industry: "",
   });
-
   const [editedData, setEditedData] = useState(brandData);
 
-  // Mock active campaigns
   const activeCampaigns: Campaign[] = [
     {
       id: 1,
@@ -91,6 +117,13 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
     },
   ];
 
+  useEffect(() => {
+    if (!brand) return;
+    const next = mapBrandToFormState(brand);
+    setBrandData(next);
+    setEditedData(next);
+  }, [brand]);
+
   const handleEdit = () => {
     setIsEditing(true);
     setEditedData(brandData);
@@ -107,13 +140,12 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
   };
 
   const handleResetPassword = () => {
-    // In production, this would call an API
     console.log("Resetting password for brand:", brandId);
     setIsResetPasswordOpen(false);
-    // Show success message
   };
 
   const getInitials = (name: string) => {
+    if (!name.trim()) return "?";
     return name
       .split(" ")
       .map((n) => n[0])
@@ -147,25 +179,56 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
     }
   };
 
+  const display = isEditing ? editedData : brandData;
+
+  if (isPending) {
+    return (
+      <div className="flex justify-center py-20 text-sm text-muted-foreground">
+        Loading…
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center gap-3 py-20">
+        <p className="text-sm text-destructive">
+          {error?.message ?? "Failed to load brand"}
+        </p>
+        <Button type="button" variant="outline" onClick={() => void refetch()}>
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
+  if (!brand) {
+    return null;
+  }
+
   return (
     <>
       <div className="space-y-6">
-        {/* Header Section */}
         <div className="bg-white rounded-lg border border-[#E2E8F0] p-6">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-4">
               <Avatar className="h-16 w-16 rounded-lg bg-[#2563EB]">
                 <AvatarFallback className="bg-[#2563EB] text-white text-xl font-bold">
-                  {getInitials(brandData.name)}
+                  {getInitials(brand.fullName || display.name)}
                 </AvatarFallback>
               </Avatar>
               <div>
                 <h1 className="text-2xl font-bold text-foreground">
-                  {brandData.name}
+                  {display.name}
                 </h1>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {brandData.email}
+                  {display.email}
                 </p>
+                {brand.fullName ? (
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {brand.fullName}
+                  </p>
+                ) : null}
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -211,7 +274,6 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
           </div>
         </div>
 
-        {/* Brand Information Section */}
         <div className="bg-white rounded-lg border border-[#E2E8F0]">
           <div className="p-6 border-b border-[#E2E8F0]">
             <h2 className="text-lg font-bold text-foreground">
@@ -303,14 +365,18 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
               ) : (
                 <div className="flex items-center gap-2">
                   <Globe className="h-4 w-4 text-muted-foreground" />
-                  <a
-                    href={brandData.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium text-[#2563EB] hover:underline"
-                  >
-                    {brandData.website}
-                  </a>
+                  {brandData.website ? (
+                    <a
+                      href={brandData.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-[#2563EB] hover:underline"
+                    >
+                      {brandData.website}
+                    </a>
+                  ) : (
+                    <span className="text-sm text-muted-foreground">—</span>
+                  )}
                 </div>
               )}
             </div>
@@ -331,7 +397,7 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm font-medium text-foreground">
-                    {brandData.address}
+                    {brandData.address || "—"}
                   </span>
                 </div>
               )}
@@ -357,7 +423,6 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
           </div>
         </div>
 
-        {/* Active Campaigns Section */}
         <div className="bg-white rounded-lg border border-[#E2E8F0]">
           <div className="p-6 border-b border-[#E2E8F0]">
             <h2 className="text-lg font-bold text-foreground">
@@ -412,8 +477,8 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
                               campaign.status === "active"
                                 ? "bg-[#2AC670]"
                                 : campaign.status === "lagging"
-                                ? "bg-[#EDAE40]"
-                                : "bg-[#2563EB]"
+                                  ? "bg-[#EDAE40]"
+                                  : "bg-[#2563EB]"
                             )}
                             style={{ width: `${campaign.progress}%` }}
                           />
@@ -454,7 +519,6 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
         </div>
       </div>
 
-      {/* Reset Password Dialog */}
       <Dialog open={isResetPasswordOpen} onOpenChange={setIsResetPasswordOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
@@ -489,4 +553,3 @@ const BrandDetail: React.FC<BrandDetailProps> = ({ brandId }) => {
 };
 
 export default BrandDetail;
-

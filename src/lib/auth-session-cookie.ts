@@ -1,5 +1,7 @@
-/** Cookie read by middleware; presence mirrors persisted Zustand session (client-only). */
-export const AUTH_SESSION_COOKIE = "askmi_admin_auth";
+import { AUTH_SESSION_COOKIE } from "./auth-session-constants";
+
+/** Client-only helpers; cookie name is shared via auth-session-constants (safe for proxy). */
+export { AUTH_SESSION_COOKIE };
 
 const MAX_AGE_SEC = 60 * 60 * 24 * 7;
 

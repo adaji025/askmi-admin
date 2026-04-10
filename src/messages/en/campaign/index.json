@@ -27,7 +27,8 @@
     "targetVotes": "TARGET VOTES",
     "delivered": "DELIVERED",
     "deviation": "DEVIATION",
-    "ocrAccuracy": "OCR ACCURACY"
+    "ocrAccuracy": "OCR ACCURACY",
+    "view": "View"
   },
   "detail": {
     "activeCampaign": "Active Campaign",

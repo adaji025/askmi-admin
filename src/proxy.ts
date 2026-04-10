@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { AUTH_SESSION_COOKIE } from "@/lib/auth-session-cookie";
+import { AUTH_SESSION_COOKIE } from "./lib/auth-session-constants";
 
 function hasSession(request: NextRequest): boolean {
   return request.cookies.get(AUTH_SESSION_COOKIE)?.value === "1";
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const signedIn = hasSession(request);
 

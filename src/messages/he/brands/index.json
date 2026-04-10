@@ -52,6 +52,7 @@
     "industry": "תעשייה",
     "activeCampaigns": "קמפיינים פעילים",
     "campaignName": "שם הקמפיין",
+    "campaignId": "מזהה קמפיין",
     "status": "סטטוס",
     "progress": "התקדמות",
     "targetVotes": "הצבעות יעד",

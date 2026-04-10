@@ -52,6 +52,7 @@
     "industry": "Industry",
     "activeCampaigns": "Active Campaigns",
     "campaignName": "Campaign Name",
+    "campaignId": "Campaign ID",
     "status": "Status",
     "progress": "Progress",
     "targetVotes": "Target Votes",

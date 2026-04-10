@@ -1,15 +1,17 @@
 import BrandDetail from "@/components/core/dashboard/brands/brand-detail";
 
 interface BrandsDetailsProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-const BrandsDetails = ({ params }: BrandsDetailsProps) => {
+const BrandsDetails = async ({ params }: BrandsDetailsProps) => {
+  const { id } = await params;
+
   return (
     <div className="p-6">
-      <BrandDetail brandId={params.id} />
+      <BrandDetail brandId={id} />
     </div>
   );
 };

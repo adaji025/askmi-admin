@@ -26,7 +26,7 @@ export function useLogin(): UseLoginReturn {
       try {
         const apiBaseUrl =
           process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000";
-        const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
+        const response = await fetch(`${apiBaseUrl}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

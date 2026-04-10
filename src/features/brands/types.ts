@@ -7,6 +7,18 @@ export interface AdminBrandStatistics {
   totalVotes: number;
 }
 
+/** Normalized campaign ref for UI (maps API `campaignName` → `name`). */
+export interface AdminBrandCampaignRef {
+  id: string;
+  name: string;
+}
+
+/** Campaign item as returned by GET /api/admin/brands/:id */
+export interface AdminBrandCampaignApi {
+  id: string;
+  campaignName: string;
+}
+
 export interface AdminBrand {
   id: string;
   email: string;
@@ -25,7 +37,12 @@ export interface AdminBrand {
   totalCampaign: number;
   activeCampaign: number;
   totalSpend: number;
+  campaigns?: AdminBrandCampaignRef[];
 }
+
+export type AdminBrandDetailPayload = Omit<AdminBrand, "campaigns"> & {
+  campaigns?: AdminBrandCampaignApi[];
+};
 
 export interface AdminBrandsApiResponse {
   success: boolean;
@@ -36,4 +53,9 @@ export interface AdminBrandsApiResponse {
 export interface AdminBrandsData {
   brands: AdminBrand[];
   statistics: AdminBrandStatistics;
+}
+
+export interface AdminBrandDetailApiResponse {
+  success: boolean;
+  brand: AdminBrandDetailPayload;
 }

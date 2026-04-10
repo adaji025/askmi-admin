@@ -27,7 +27,8 @@
     "targetVotes": "הצבעות יעד",
     "delivered": "נמסר",
     "deviation": "סטייה",
-    "ocrAccuracy": "דיוק OCR"
+    "ocrAccuracy": "דיוק OCR",
+    "view": "צפה"
   },
   "detail": {
     "activeCampaign": "קמפיין פעיל",
