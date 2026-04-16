@@ -77,15 +77,15 @@ const InfluencersTable = () => {
     label: string;
     count: number;
   }> = [
-    { value: "all", label: tFilters("all"), count: counts.all },
-    { value: "active", label: tFilters("active"), count: counts.active },
-    { value: "pending", label: tFilters("pending"), count: counts.pending },
-    {
-      value: "suspended",
-      label: tFilters("suspended"),
-      count: counts.suspended,
-    },
-  ];
+      { value: "all", label: tFilters("all"), count: counts.all },
+      { value: "active", label: tFilters("active"), count: counts.active },
+      { value: "pending", label: tFilters("pending"), count: counts.pending },
+      {
+        value: "suspended",
+        label: tFilters("suspended"),
+        count: counts.suspended,
+      },
+    ];
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -134,11 +134,11 @@ const InfluencersTable = () => {
   });
 
   return (
-    <div className="w-full mt-10 max-w-[calc(100vw-300px)] 2xl:max-w-[calc(100vw-280px)] min-w-0 bg-white rounded-lg">
+    <div className="w-full mt-10 min-w-0 max-w-full overflow-x-hidden bg-white rounded-lg">
       {/* Top Section: Filters, Search, Sort */}
       <div className="flex flex-col gap-4 p-4 border-b border-[#E2E8F0]">
         {/* Filter Tabs */}
-        <div className="flex gap-2 bg-[#F5F5F5] rounded-lg p-1">
+        <div className="flex overflow-x-auto gap-2 bg-[#F5F5F5] rounded-lg p-1">
           {statusOptions.map((option) => {
             const isSelected = selectedFilter === option.value;
             return (
@@ -199,119 +199,121 @@ const InfluencersTable = () => {
       </div>
 
       {/* Table */}
-      <Table>
-        <TableHeader className="bg-[#FAFAFA] border-b border-[#E2E8F0]">
-          <TableRow className="hover:bg-transparent">
-            <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              {t("influencer")}
-            </TableHead>
-            <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              {t("totalCampaigns")}
-            </TableHead>
-            <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              {t("avgVotesDelivered")}
-            </TableHead>
-            <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              {t("performanceScore")}
-            </TableHead>
-            <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              {t("deviationTrend")}
-            </TableHead>
-            <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
-              {t("ocrAccuracy")}
-            </TableHead>
-            <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground w-24">
-              {/* Actions column */}
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredInfluencers.map((influencer, index) => (
-            <TableRow
-              key={index}
-              className={cn(
-                "border-b border-[#E2E8F0] hover:bg-[#FAFAFA] transition-colors",
-                index % 2 === 0 ? "bg-white" : "bg-[#FAFAFA]"
-              )}
-            >
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    {/* Status indicator */}
-                    <div className="h-2 w-2 rounded-full bg-[#10B981] shrink-0" />
-                    {/* Avatar */}
-                    <Avatar className="h-10 w-10 bg-[#8B5CF6]">
-                      <AvatarFallback className="bg-[#8B5CF6] text-white text-xs font-semibold">
-                        {getInitials(influencer.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm text-black">
-                      {influencer.name}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      @{influencer.username}
-                    </div>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <span className="text-sm text-foreground">
-                  {influencer.totalCampaigns}
-                </span>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-2">
-                  <BagSVG />
-                  <span className="text-sm text-foreground font-medium">
-                    {influencer.avgVotesDelivered.toLocaleString()}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#8B5CF60D] border border-[#8B5CF626]">
-                  <span className="text-sm font-medium text-[#8B5CF6]">
-                    {influencer.performanceScore}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-1 text-sm text-[#10B981] font-medium">
-                  <span>+{influencer.deviationTrend}%</span>
-                  <ArrowUpRight className="h-4 w-4" />
-                </div>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <span className="text-sm text-[#10B981] font-medium">
-                  {influencer.ocrAccuracy}%
-                </span>
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                <div className="flex items-center gap-2">
-                  <Link href={`/dashboard/influencers/${influencer.id}`}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-6 w-6 rounded-sm border hover:bg-muted"
-                      title={t("view")}
-                    >
-                      <Eye className="h-2 w-2 text-muted-foreground" />
-                    </Button>
-                  </Link>
-                </div>
-              </TableCell>
+      <div className="w-full max-w-full overflow-x-auto">
+        <Table className="min-w-max">
+          <TableHeader className="bg-[#FAFAFA] border-b border-[#E2E8F0]">
+            <TableRow className="hover:bg-transparent">
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
+                {t("influencer")}
+              </TableHead>
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
+                {t("totalCampaigns")}
+              </TableHead>
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
+                {t("avgVotesDelivered")}
+              </TableHead>
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
+                {t("performanceScore")}
+              </TableHead>
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
+                {t("deviationTrend")}
+              </TableHead>
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
+                {t("ocrAccuracy")}
+              </TableHead>
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground w-24">
+                {/* Actions column */}
+              </TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {filteredInfluencers.map((influencer, index) => (
+              <TableRow
+                key={index}
+                className={cn(
+                  "border-b border-[#E2E8F0] hover:bg-[#FAFAFA] transition-colors",
+                  index % 2 === 0 ? "bg-white" : "bg-[#FAFAFA]"
+                )}
+              >
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      {/* Status indicator */}
+                      <div className="h-2 w-2 rounded-full bg-[#10B981] shrink-0" />
+                      {/* Avatar */}
+                      <Avatar className="h-10 w-10 bg-[#8B5CF6]">
+                        <AvatarFallback className="bg-[#8B5CF6] text-white text-xs font-semibold">
+                          {getInitials(influencer.name)}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-sm text-black">
+                        {influencer.name}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        @{influencer.username}
+                      </div>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <span className="text-sm text-foreground">
+                    {influencer.totalCampaigns}
+                  </span>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center gap-2">
+                    <BagSVG />
+                    <span className="text-sm text-foreground font-medium">
+                      {influencer.avgVotesDelivered.toLocaleString()}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#8B5CF60D] border border-[#8B5CF626]">
+                    <span className="text-sm font-medium text-[#8B5CF6]">
+                      {influencer.performanceScore}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center gap-1 text-sm text-[#10B981] font-medium">
+                    <span>+{influencer.deviationTrend}%</span>
+                    <ArrowUpRight className="h-4 w-4" />
+                  </div>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <span className="text-sm text-[#10B981] font-medium">
+                    {influencer.ocrAccuracy}%
+                  </span>
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center gap-2">
+                    <Link href={`/dashboard/influencers/${influencer.id}`}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 rounded-sm border hover:bg-muted"
+                        title={t("view")}
+                      >
+                        <Eye className="h-2 w-2 text-muted-foreground" />
+                      </Button>
+                    </Link>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between py-4 px-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 py-4 px-6">
         <div className="text-sm text-muted-foreground">
           {t("page")} {currentPage} {t("of")} {totalPages}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 overflow-x-auto max-w-full">
           <Button
             variant="outline"
             size="icon"

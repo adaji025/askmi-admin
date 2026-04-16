@@ -24,7 +24,7 @@ export default function DashboardLayout({
       <AppSidebar variant="inset" side={isRTL ? "right" : "left"} />
       <SidebarInset>
         <SiteHeader />
-        <div className="flex flex-1 flex-col p-3 sm:p-5">
+        <div className="flex min-w-0 flex-1 flex-col p-3 sm:p-5">
           {children}
         </div>
       </SidebarInset>

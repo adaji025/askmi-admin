@@ -11,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,12 @@ export function NavMain({
   const pathname = usePathname();
   const { isRTL } = useLanguageStore();
   const t = useTranslations("dashboard.navigation");
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleNavItemClick = () => {
+    if (!isMobile) return;
+    setOpenMobile(false);
+  };
 
   const isActive = (url: string) => {
     if (url === "/dashboard") {
@@ -49,7 +56,7 @@ export function NavMain({
             {items.slice(0, 1).map((item) => {
               const active = isActive(item.url);
               return (
-                <Link href={item.url} key={item.title}>
+                <Link href={item.url} key={item.title} onClick={handleNavItemClick}>
                   <SidebarMenuItem>
                     <SidebarMenuButton
                       tooltip={item.title}
@@ -82,7 +89,7 @@ export function NavMain({
             {items.slice(1, 3).map((item) => {
               const active = isActive(item.url);
               return (
-                <Link href={item.url} key={item.title}>
+                <Link href={item.url} key={item.title} onClick={handleNavItemClick}>
                   <SidebarMenuItem>
                     <SidebarMenuButton
                       tooltip={item.title}
@@ -115,7 +122,7 @@ export function NavMain({
             {items.slice(3).map((item) => {
               const active = isActive(item.url);
               return (
-                <Link href={item.url} key={item.title}>
+                <Link href={item.url} key={item.title} onClick={handleNavItemClick}>
                   <SidebarMenuItem>
                     <SidebarMenuButton
                       tooltip={item.title}

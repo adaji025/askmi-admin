@@ -8,10 +8,14 @@ import {
   InboxSVG,
   ShieldUserSVG,
 } from "@/components/core/dashboard/svg";
+import { useGetInfluencers } from "@/features/influencers/use-get-influencers";
 import { useTranslations } from "next-intl";
 
 const Influencers = () => {
+  const { data: influencers, isPending, isError, error, refetch } = useGetInfluencers();
+ 
   const t = useTranslations("influencers.stats");
+  console.log('influencers ==>', influencers);
 
   const stats = [
     {
@@ -41,7 +45,7 @@ const Influencers = () => {
   ] as const;
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
