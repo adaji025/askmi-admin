@@ -2,51 +2,113 @@
 
 import React from "react";
 import { Mail, Calendar, MapPin, ArrowUpRight } from "lucide-react";
+import { useParams } from "next/navigation";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import InfluencerDetailsComponent from "@/components/core/dashboard/influencers";
+import { useGetInfluencer } from "@/features/influencers/use-get-influencer";
 
 const InfluencerDetails = () => {
-  // Mock data - in production, this would be fetched based on the ID from route params
+  const params = useParams<{ id: string }>();
+  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  const {
+    data: influencer,
+    isPending,
+    isError,
+    error,
+  } = useGetInfluencer(id);
+
+  const fullName =
+    typeof influencer?.fullName === "string"
+      ? influencer.fullName
+      : "Unknown Influencer";
+  const usernameRaw =
+    influencer?.username ??
+    influencer?.handle ??
+    influencer?.userName ??
+    influencer?.email;
+  const username =
+    typeof usernameRaw === "string" && usernameRaw.length > 0
+      ? usernameRaw.startsWith("@")
+        ? usernameRaw
+        : `@${usernameRaw.split("@")[0]}`
+      : "@unknown";
+  const createdAtRaw = influencer?.createdAt;
+  const joinDate =
+    typeof createdAtRaw === "string"
+      ? new Date(createdAtRaw).toLocaleDateString(undefined, {
+          month: "long",
+          year: "numeric",
+        })
+      : "N/A";
+  const location =
+    (typeof influencer?.location === "string" && influencer.location) ||
+    (typeof influencer?.country === "string" && influencer.country) ||
+    "N/A";
+  const avatar =
+    (typeof influencer?.avatar === "string" && influencer.avatar) || "";
+
+  const getInitials = (name: string) =>
+    name
+      .split(" ")
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2) || "IN";
+
   const influencerData = {
-    username: "@sarah_lifestyle",
-    email: "sarah.j@example.com",
-    joinDate: "March 2024",
-    location: "Lagos, Nigeria",
-    avatar: "/avatars/sarah.jpg", // You can add a default avatar image
+    fullName,
+    username,
+    email: typeof influencer?.email === "string" ? influencer.email : "N/A",
+    joinDate,
+    location,
+    avatar,
   };
 
   const stats = [
     {
       title: "Average Votes",
-      value: "3,567",
-      trend: "+4.2%",
+      value: `${Number(influencer?.averageVote ?? 0).toLocaleString()}`,
+      trend: null,
       trendType: "up" as const,
       description: "All time",
     },
     {
-      title: "Delivery Accuracy",
-      value: "110%",
-      trend: "+4.2%",
+      title: "Total Campaigns",
+      value: `${Number(influencer?.totalCampaign ?? 0).toLocaleString()}`,
+      trend: null,
       trendType: "up" as const,
-      description: "Above average",
+      description: "Campaigns run",
     },
     {
       title: "OCR Accuracy",
-      value: "97%",
-      trend: "+4.2%",
+      value: `${Number(influencer?.ocrAccuracy ?? 0).toFixed(0)}%`,
+      trend: null,
       trendType: "up" as const,
       description: "Above average",
     },
     {
-      title: "Total Earnings",
-      value: "$567",
-      trend: "+4.2%",
+      title: "Performance Score",
+      value: `${Number(influencer?.performanceScore ?? 0).toFixed(0)}`,
+      trend: null,
       trendType: "up" as const,
-      description: "No outstanding payment",
+      description: "Current score",
     },
   ];
+
+  if (isPending) {
+    return <div className="py-10 text-sm text-muted-foreground">Loading influencer...</div>;
+  }
+
+  if (isError) {
+    return (
+      <div className="py-10 text-sm text-destructive">
+        {error?.message ?? "Failed to load influencer"}
+      </div>
+    );
+  }
 
   return (
     <>
@@ -63,13 +125,14 @@ const InfluencerDetails = () => {
                     alt={influencerData.username}
                   />
                   <AvatarFallback className="bg-[#8B5CF6] text-white text-base font-bold">
-                    SL
+                    {getInitials(influencerData.fullName)}
                   </AvatarFallback>
                 </Avatar>
               </div>
               <h2 className="text-base font-bold text-foreground">
-                {influencerData.username}
+                {influencerData.fullName}
               </h2>
+              <p className="text-xs text-muted-foreground mt-1">{influencerData.username}</p>
             </div>
 
             {/* User Details */}

@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
   Search,
   ChevronDown,
   ArrowUpRight,
-  Eye,
+  MoreHorizontal,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -24,12 +25,19 @@ import { cn } from "@/lib/utils";
 import { BagSVG } from "../svg";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import type { AdminInfluencer } from "@/features/influencers/use-get-influencers";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Influencer {
-  id: number;
+  id: string;
   name: string;
   username: string;
-  avatar: string;
+  isApproved: boolean;
   status: "active" | "pending" | "suspended";
   totalCampaigns: number;
   avgVotesDelivered: number;
@@ -38,39 +46,87 @@ interface Influencer {
   ocrAccuracy: number; // percentage
 }
 
-const mockInfluencers: Influencer[] = Array(10)
-  .fill(null)
-  .map((_, index) => ({
-    id: index + 1,
-    name: "Sarah Johnson",
-    username: "sarah_lifestyle",
-    avatar: "",
-    status: "active",
-    totalCampaigns: 23,
-    avgVotesDelivered: 32056,
-    performanceScore: 1,
-    deviationTrend: 4.2,
-    ocrAccuracy: 96.2,
-  }));
-
 type StatusFilter = "all" | "active" | "pending" | "suspended";
 
-const InfluencersTable = () => {
+type InfluencersTableProps = {
+  influencers?: AdminInfluencer[];
+  isLoading?: boolean;
+  onApprove?: (influencerId: string) => void | Promise<void>;
+};
+
+const InfluencersTable = ({
+  influencers = [],
+  isLoading = false,
+  onApprove,
+}: InfluencersTableProps) => {
   const t = useTranslations("influencers.table");
   const tFilters = useTranslations("influencers.filters");
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 100;
+  const pageSize = 10;
   const [jumpToPage, setJumpToPage] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<StatusFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Hardcoded counts
-  const counts = {
-    all: 133,
-    active: 127,
-    pending: 20,
-    suspended: 13,
+  const normalizeStatus = (value: unknown): Influencer["status"] => {
+    const parsed = typeof value === "string" ? value.toLowerCase() : "";
+    if (parsed === "pending" || parsed === "suspended") {
+      return parsed;
+    }
+    return "active";
   };
+
+  const mappedInfluencers = useMemo<Influencer[]>(() => {
+    return influencers.map((item, index) => {
+      const nameValue =
+        item.name ?? item.fullName ?? item.displayName ?? item.userName;
+      const name = typeof nameValue === "string" ? nameValue : `Influencer ${index + 1}`;
+      const usernameValue = item.username ?? item.handle ?? item.userName;
+      const username =
+        typeof usernameValue === "string" && usernameValue.length > 0
+          ? usernameValue
+          : typeof item.email === "string" && item.email.includes("@")
+            ? item.email.split("@")[0]
+            : name.toLowerCase().replace(/\s+/g, "_");
+      const id = typeof item.id === "string" ? item.id : String(item.id ?? index + 1);
+      const statusValue =
+        item.status ??
+        item.accountStatus ??
+        item.verificationStatus ??
+        (item.isApproved === false ? "pending" : "active");
+      const rawDeviation = item.deviationTrend;
+      const deviationTrend =
+        typeof rawDeviation === "number"
+          ? rawDeviation
+          : typeof rawDeviation === "string"
+            ? rawDeviation.toLowerCase() === "up"
+              ? 1
+              : rawDeviation.toLowerCase() === "down"
+                ? -1
+                : 0
+            : 0;
+
+      return {
+        id,
+        name,
+        username,
+        isApproved: item.isApproved === true,
+        status: normalizeStatus(statusValue),
+        totalCampaigns: Number(item.totalCampaigns ?? item.totalCampaign ?? item.campaignsCount ?? 0),
+        avgVotesDelivered: Number(item.avgVotesDelivered ?? item.averageVote ?? item.avgVotes ?? 0),
+        performanceScore: Number(item.performanceScore ?? 0),
+        deviationTrend,
+        ocrAccuracy: Number(item.ocrAccuracy ?? 0),
+      };
+    });
+  }, [influencers]);
+
+  const counts = useMemo(() => {
+    const base = { all: mappedInfluencers.length, active: 0, pending: 0, suspended: 0 };
+    for (const influencer of mappedInfluencers) {
+      base[influencer.status] += 1;
+    }
+    return base;
+  }, [mappedInfluencers]);
 
   const statusOptions: Array<{
     value: StatusFilter;
@@ -86,6 +142,16 @@ const InfluencersTable = () => {
         count: counts.suspended,
       },
     ];
+
+  const getStatusBadgeClassName = (status: StatusFilter) => {
+    if (status === "pending") {
+      return "bg-[#FDF8E1] text-[#B7791F] border-[#F6E4B0]";
+    }
+    if (status === "suspended") {
+      return "bg-[#FEECEC] text-[#C53030] border-[#F6C9C9]";
+    }
+    return "bg-[#EAF8EF] text-[#0F9F6E] border-[#BDE9D1]";
+  };
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -127,11 +193,36 @@ const InfluencersTable = () => {
       .toUpperCase();
   };
 
-  // Filter influencers based on selected filter
-  const filteredInfluencers = mockInfluencers.filter((influencer) => {
-    if (selectedFilter === "all") return true;
-    return influencer.status === selectedFilter;
-  });
+  const filteredInfluencers = useMemo(() => {
+    const lowered = searchQuery.trim().toLowerCase();
+    return mappedInfluencers.filter((influencer) => {
+      const matchesFilter =
+        selectedFilter === "all" ? true : influencer.status === selectedFilter;
+      const matchesSearch =
+        lowered.length === 0
+          ? true
+          : influencer.name.toLowerCase().includes(lowered) ||
+            influencer.username.toLowerCase().includes(lowered);
+      return matchesFilter && matchesSearch;
+    });
+  }, [mappedInfluencers, searchQuery, selectedFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredInfluencers.length / pageSize));
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedFilter, searchQuery]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedInfluencers = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filteredInfluencers.slice(start, start + pageSize);
+  }, [currentPage, filteredInfluencers]);
 
   return (
     <div className="w-full mt-10 min-w-0 max-w-full overflow-x-hidden bg-white rounded-lg">
@@ -207,6 +298,9 @@ const InfluencersTable = () => {
                 {t("influencer")}
               </TableHead>
               <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
+                {t("status")}
+              </TableHead>
+              <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
                 {t("totalCampaigns")}
               </TableHead>
               <TableHead className="py-4 px-6 text-xs font-semibold text-muted-foreground">
@@ -227,83 +321,137 @@ const InfluencersTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredInfluencers.map((influencer, index) => (
-              <TableRow
-                key={index}
-                className={cn(
-                  "border-b border-[#E2E8F0] hover:bg-[#FAFAFA] transition-colors",
-                  index % 2 === 0 ? "bg-white" : "bg-[#FAFAFA]"
-                )}
-              >
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center gap-3">
+            {isLoading &&
+              Array.from({ length: 6 }).map((_, index) => (
+                <TableRow key={`loading-${index}`}>
+                  <TableCell className="py-4 px-6">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="h-10 w-10 rounded-full" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-28" />
+                        <Skeleton className="h-3 w-20" />
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-4 px-6"><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
+                  <TableCell className="py-4 px-6"><Skeleton className="h-4 w-12" /></TableCell>
+                  <TableCell className="py-4 px-6"><Skeleton className="h-4 w-20" /></TableCell>
+                  <TableCell className="py-4 px-6"><Skeleton className="h-8 w-8 rounded-full" /></TableCell>
+                  <TableCell className="py-4 px-6"><Skeleton className="h-4 w-14" /></TableCell>
+                  <TableCell className="py-4 px-6"><Skeleton className="h-4 w-14" /></TableCell>
+                  <TableCell className="py-4 px-6"><Skeleton className="h-6 w-6" /></TableCell>
+                </TableRow>
+              ))}
+            {!isLoading &&
+              paginatedInfluencers.map((influencer, index) => (
+                <TableRow
+                  key={influencer.id}
+                  className={cn(
+                    "border-b border-[#E2E8F0] hover:bg-[#FAFAFA] transition-colors",
+                    index % 2 === 0 ? "bg-white" : "bg-[#FAFAFA]"
+                  )}
+                >
+                  <TableCell className="py-4 px-6">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        {/* Status indicator */}
+                        <div className="h-2 w-2 rounded-full bg-[#10B981] shrink-0" />
+                        {/* Avatar */}
+                        <Avatar className="h-10 w-10 bg-[#8B5CF6]">
+                          <AvatarFallback className="bg-[#8B5CF6] text-white text-xs font-semibold">
+                            {getInitials(influencer.name)}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm text-black">
+                          {influencer.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          @{influencer.username}
+                        </div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedFilter(influencer.status)}
+                      className={cn(
+                        "rounded-full border px-2.5 py-1 text-xs font-semibold capitalize transition-colors hover:opacity-90",
+                        getStatusBadgeClassName(influencer.status)
+                      )}
+                    >
+                      {tFilters(influencer.status)}
+                    </button>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <span className="text-sm text-foreground">
+                      {influencer.totalCampaigns}
+                    </span>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
                     <div className="flex items-center gap-2">
-                      {/* Status indicator */}
-                      <div className="h-2 w-2 rounded-full bg-[#10B981] shrink-0" />
-                      {/* Avatar */}
-                      <Avatar className="h-10 w-10 bg-[#8B5CF6]">
-                        <AvatarFallback className="bg-[#8B5CF6] text-white text-xs font-semibold">
-                          {getInitials(influencer.name)}
-                        </AvatarFallback>
-                      </Avatar>
+                      <BagSVG />
+                      <span className="text-sm text-foreground font-medium">
+                        {influencer.avgVotesDelivered.toLocaleString()}
+                      </span>
                     </div>
-                    <div>
-                      <div className="font-semibold text-sm text-black">
-                        {influencer.name}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        @{influencer.username}
-                      </div>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#8B5CF60D] border border-[#8B5CF626]">
+                      <span className="text-sm font-medium text-[#8B5CF6]">
+                        {influencer.performanceScore}
+                      </span>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <span className="text-sm text-foreground">
-                    {influencer.totalCampaigns}
-                  </span>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center gap-2">
-                    <BagSVG />
-                    <span className="text-sm text-foreground font-medium">
-                      {influencer.avgVotesDelivered.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <div className="flex items-center gap-1 text-sm text-[#10B981] font-medium">
+                      <span>+{influencer.deviationTrend}%</span>
+                      <ArrowUpRight className="h-4 w-4" />
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <span className="text-sm text-[#10B981] font-medium">
+                      {influencer.ocrAccuracy}%
                     </span>
-                  </div>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#8B5CF60D] border border-[#8B5CF626]">
-                    <span className="text-sm font-medium text-[#8B5CF6]">
-                      {influencer.performanceScore}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center gap-1 text-sm text-[#10B981] font-medium">
-                    <span>+{influencer.deviationTrend}%</span>
-                    <ArrowUpRight className="h-4 w-4" />
-                  </div>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <span className="text-sm text-[#10B981] font-medium">
-                    {influencer.ocrAccuracy}%
-                  </span>
-                </TableCell>
-                <TableCell className="py-4 px-6">
-                  <div className="flex items-center gap-2">
-                    <Link href={`/dashboard/influencers/${influencer.id}`}>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 rounded-sm border hover:bg-muted"
-                        title={t("view")}
-                      >
-                        <Eye className="h-2 w-2 text-muted-foreground" />
-                      </Button>
-                    </Link>
-                  </div>
+                  </TableCell>
+                  <TableCell className="py-4 px-6">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 rounded-sm border hover:bg-muted"
+                          title="More actions"
+                        >
+                          <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-32">
+                        <DropdownMenuItem asChild>
+                          <Link href={`/dashboard/influencers/${encodeURIComponent(influencer.id)}`}>
+                            {t("view")}
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => onApprove?.(influencer.id)}
+                          disabled={influencer?.isApproved}
+                        >
+                          Approve
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            {!isLoading && paginatedInfluencers.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={8} className="py-8 text-center text-sm text-muted-foreground">
+                  No influencers found
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>

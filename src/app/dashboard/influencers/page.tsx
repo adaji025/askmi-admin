@@ -8,49 +8,71 @@ import {
   InboxSVG,
   ShieldUserSVG,
 } from "@/components/core/dashboard/svg";
+import { useApproveInfluencer } from "@/features/influencers/use-approve-inflencer";
 import { useGetInfluencers } from "@/features/influencers/use-get-influencers";
+import { useConfirm } from "@/hooks/use-confirm";
 import { useTranslations } from "next-intl";
 
 const Influencers = () => {
-  const { data: influencers, isPending, isError, error, refetch } = useGetInfluencers();
- 
+  const { data, isPending } = useGetInfluencers();
+  const [ConfirmDialog, confirm] = useConfirm();
+  const approveMutation = useApproveInfluencer();
   const t = useTranslations("influencers.stats");
-  console.log('influencers ==>', influencers);
+
+  const statistics = data?.statistics;
+  const influencers = data?.influencers ?? [];
+
+  const handleApprove = async (influencerId: string) => {
+    const accepted = await confirm("Are you sure you want to approve this influencer?", "Approve influencer", {
+      confirmLabel: "Approve",
+      loadingLabel: "Approving...",
+      onConfirm: async () => {
+        await approveMutation.mutateAsync(influencerId);
+      },
+    });
+
+    if (!accepted) return;
+  };
 
   const stats = [
     {
       title: t("totalInfluencers"),
-      value: "20",
+      value: String(statistics?.totalInfluencers ?? influencers.length),
       icon: InfluencersSVG,
       bgColor: "bg-[#E7F2FD]", // Light Blue
     },
     {
       title: t("pendingApprovals"),
-      value: "20",
+      value: String(statistics?.pendingApprovals ?? 0),
       icon: InboxSVG,
       bgColor: "bg-[#FDF8E1]", // Light Lavender
     },
     {
       title: t("flaggedForRisk"),
-      value: "20",
+      value: String(statistics?.flaggedRisk ?? 0),
       icon: ShieldUserSVG,
       bgColor: "bg-[#EEEFFC]", // Light Blue
     },
     {
       title: t("topPerformers"),
-      value: "20",
+      value: statistics?.topPerformer ? "1" : "0",
       icon: HeartUserSVG,
       bgColor: "bg-[#E5F7E8]", // Light Blue
     },
   ] as const;
   return (
     <div>
+      <ConfirmDialog />
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
-      <InfluencersTable />
+      <InfluencersTable
+        influencers={influencers}
+        isLoading={isPending}
+        onApprove={handleApprove}
+      />
     </div>
   );
 };
