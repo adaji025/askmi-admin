@@ -1,14 +1,16 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronDown, PlusCircle, Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import React from "react";
 import { BrandsSVG } from "../dashboard/layout/svg";
 import { useTranslations } from "next-intl";
 import { StatCard } from "../dashboard/stat-card";
 import CampaignTable from "./campaign-table";
+import { useGetAllCampaign } from "@/features/campaigns/use-get-all-campaign";
 
 const CampaignComp = () => {
+  const { data: allCampaigns } = useGetAllCampaign();
   const [status, setStatus] = React.useState<"all" | "active" | "completed" | "lagging">(
     "all"
   );
@@ -16,35 +18,54 @@ const CampaignComp = () => {
   const tFilters = useTranslations("campaign.filters");
   const tMain = useTranslations("campaign.main");
   const tBrands = useTranslations("brands.stats");
-  
+
+  const campaigns = allCampaigns?.campaigns ?? [];
+  const statistics = allCampaigns?.statistics ?? {};
+
+  const totalCampaigns = allCampaigns?.count ?? campaigns.length;
+  const activeCampaigns = campaigns.filter(
+    (campaign) => campaign.isActive && !campaign.isCompleted
+  ).length;
+  const completedCampaigns = campaigns.filter((campaign) => campaign.isCompleted).length;
+  const laggingCampaigns =
+    typeof statistics.laggingCampaigns === "number"
+      ? statistics.laggingCampaigns
+      : typeof statistics.lagging === "number"
+        ? statistics.lagging
+        : 0;
+  const totalInfluencers = campaigns.reduce(
+    (sum, campaign) => sum + (campaign.numberOfInfluencer ?? 0),
+    0
+  );
+
   const stats = [
     {
       title: t("totalCampaigns"),
-      value: "20",
+      value: String(totalCampaigns),
       icon: BrandsSVG,
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#EAF5FF]", // Light Blue
       breakdown: [
-        { label: tBrands("brands"), value: 15 },
-        { label: tBrands("influencers"), value: 5 },
+        { label: tBrands("influencers"), value: totalInfluencers },
+        { label: tFilters("active"), value: activeCampaigns },
       ],
     },
     {
       title: t("activeNow"),
-      value: "20",
+      value: String(activeCampaigns),
       icon: BrandsSVG,
       trend: "+4.2%",
       trendType: "up" as const,
       bgColor: "bg-[#F0F2FF]", // Light Lavender
       breakdown: [
-        { label: tBrands("pending"), value: 15 },
-        { label: tBrands("completed"), value: 5 },
+        { label: tFilters("completed"), value: completedCampaigns },
+        { label: tFilters("lagging"), value: laggingCampaigns },
       ],
     },
     {
       title: t("laggingCampaigns"),
-      value: "20",
+      value: String(laggingCampaigns),
       icon: BrandsSVG,
       trend: "-0.03%",
       trendType: "down" as const,
@@ -59,11 +80,11 @@ const CampaignComp = () => {
     count: number;
     color: string;
   }> = [
-    { value: "all", label: tFilters("all"), count: 12, color: "#2563EB" },
-    { value: "active", label: tFilters("active"), count: 5, color: "#2AC670" },
-    { value: "lagging", label: tFilters("lagging"), count: 5, color: "#EDAE40" },
-    { value: "completed", label: tFilters("completed"), count: 7, color: "#2563EB" },
-  ];
+      { value: "all", label: tFilters("all"), count: totalCampaigns, color: "#2563EB" },
+      { value: "active", label: tFilters("active"), count: activeCampaigns, color: "#2AC670" },
+      { value: "lagging", label: tFilters("lagging"), count: laggingCampaigns, color: "#EDAE40" },
+      { value: "completed", label: tFilters("completed"), count: completedCampaigns, color: "#2563EB" },
+    ];
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -75,11 +96,10 @@ const CampaignComp = () => {
         {campaignStatus.map((item) => (
           <button
             onClick={() => setStatus(item.value)}
-            className={`flex-1 flex items-center gap-1 justify-center py-2.5 px-4 rounded-md text-sm font-medium transition-all xl:min-w-32 w-full ${
-              status === item.value
+            className={`flex-1 flex items-center gap-1 justify-center py-2.5 px-4 rounded-md text-sm font-medium transition-all xl:min-w-32 w-full ${status === item.value
                 ? "bg-white text-foreground border border-[#E2E8F0]"
                 : "text-muted-foreground hover:text-foreground "
-            }`}
+              }`}
           >
             <div>{item.label}</div>{" "}
             <div
@@ -95,7 +115,7 @@ const CampaignComp = () => {
       </div>
       <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-10 mt-4">
         <div className="">
-          {tMain("showingCampaigns", { count: 147 })}
+          {tMain("showingCampaigns", { count: totalCampaigns })}
         </div>
         <div className="flex items-center justify-between gap-4 order-1 lg:order-2">
           <div className="relative">
@@ -116,7 +136,7 @@ const CampaignComp = () => {
         </div>
       </div>
       <div className="mt-6">
-        <CampaignTable />
+        <CampaignTable campaigns={campaigns} selectedStatus={status} />
       </div>
     </div>
   );

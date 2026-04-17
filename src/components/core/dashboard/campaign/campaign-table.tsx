@@ -17,9 +17,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import type { UserCampaign } from "@/features/campaigns/types";
 
 interface Campaign {
-  id: number;
+  id: string;
   campaign: string;
   brand: {
     name: string;
@@ -32,35 +33,63 @@ interface Campaign {
   ocrAccuracy: number;
 }
 
-const mockCampaigns: Campaign[] = Array(10)
-  .fill(null)
-  .map((_, index) => ({
-    id: index + 1,
-    campaign: "TechCo Market Research Q4",
-    brand: {
-      name: "TechCo Limited",
-      initials: "TC",
-    },
-    status:
-      index % 3 === 0
-        ? "completed"
-        : index % 3 === 1
-          ? "lagging"
-          : "active",
-    targetVotes: 10000,
-    delivered: index % 3 === 0 ? 10000 : 6549,
-    deviation: index % 3 === 1 ? -0.03 : 4.2,
-    ocrAccuracy: 96.2,
-  }));
+type CampaignTableProps = {
+  campaigns?: UserCampaign[];
+  selectedStatus?: "all" | "active" | "completed" | "lagging";
+};
 
-const CampaignTable = () => {
+const CampaignTable = ({
+  campaigns = [],
+  selectedStatus = "all",
+}: CampaignTableProps) => {
   const t = useTranslations("campaign.table");
   const tMain = useTranslations("campaign.main");
   const tFilters = useTranslations("campaign.filters");
   const [currentPage, setCurrentPage] = useState(1);
   const [jumpToPage, setJumpToPage] = useState("");
-  const totalPages = 100;
   const itemsPerPage = 10;
+
+  const mappedCampaigns: Campaign[] = campaigns.map((campaign) => {
+    const status: Campaign["status"] = campaign.isCompleted
+      ? "completed"
+      : campaign.isActive
+        ? "active"
+        : "lagging";
+    const delivered = Number(campaign.response ?? 0);
+    const targetVotes = Number(campaign.totalVoteNeeded ?? 0);
+    const deviation =
+      targetVotes > 0 ? Number((((delivered - targetVotes) / targetVotes) * 100).toFixed(2)) : 0;
+    const brandName =
+      typeof campaign.userId === "string" && campaign.userId.length > 0
+        ? `User ${campaign.userId.slice(0, 6)}`
+        : "Unknown";
+    const initials = brandName
+      .split(" ")
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+
+    return {
+      id: campaign.id,
+      campaign: campaign.campaignName ?? campaign.name ?? "Untitled Campaign",
+      brand: {
+        name: brandName,
+        initials: initials || "UN",
+      },
+      status,
+      targetVotes,
+      delivered,
+      deviation,
+      ocrAccuracy: Number(campaign.ocrAccuracy ?? 0),
+    };
+  });
+
+  const filteredCampaigns = mappedCampaigns.filter((campaign) =>
+    selectedStatus === "all" ? true : campaign.status === selectedStatus
+  );
+  const totalPages = Math.max(1, Math.ceil(filteredCampaigns.length / itemsPerPage));
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -146,7 +175,7 @@ const CampaignTable = () => {
   // Calculate paginated campaigns
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedCampaigns = mockCampaigns.slice(startIndex, endIndex);
+  const paginatedCampaigns = filteredCampaigns.slice(startIndex, endIndex);
 
   return (
     <div className="bg-white rounded-lg border border-[#E2E8F0]">
@@ -181,7 +210,9 @@ const CampaignTable = () => {
           <TableBody>
             {paginatedCampaigns.map((campaign) => {
               const progressPercentage =
-                (campaign.delivered / campaign.targetVotes) * 100;
+                campaign.targetVotes > 0
+                  ? (campaign.delivered / campaign.targetVotes) * 100
+                  : 0;
               const isPositiveDeviation = campaign.deviation > 0;
 
               return (
@@ -267,6 +298,13 @@ const CampaignTable = () => {
                 </TableRow>
               );
             })}
+            {paginatedCampaigns.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={8} className="py-8 text-center text-sm text-muted-foreground">
+                  No campaigns found
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>
