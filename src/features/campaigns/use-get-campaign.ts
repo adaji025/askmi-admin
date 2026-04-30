@@ -8,7 +8,9 @@ export const adminCampaignQueryKey = (id: string) =>
   ["campaign", "admin", id] as const;
 
 async function fetchAdminCampaign(id: string): Promise<UserCampaign> {
-  const { data } = await apiClient.get<CampaignDetailApiResponse | UserCampaign>(
+  const { data } = await apiClient.get<
+    CampaignDetailApiResponse | UserCampaign
+  >(
     `/admin/campaigns/${encodeURIComponent(id)}`,
   );
 

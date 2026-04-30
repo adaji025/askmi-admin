@@ -28,6 +28,23 @@ export interface CampaignSurvey {
   id: string;
   title: string;
   questions?: CampaignQuestion[];
+  campaignId?: string;
+  userId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CampaignParty {
+  id: string;
+  fullName?: string;
+  company?: string;
+  email?: string;
+}
+
+export interface CampaignInfluencer {
+  fullName?: string;
+  email?: string;
+  responses?: number;
 }
 
 /** Campaign item used by campaign list/detail APIs. */
@@ -51,6 +68,15 @@ export interface UserCampaign {
   surveys?: CampaignSurvey[];
   response?: number;
   totalQuestions?: number;
+  status?: "active" | "completed" | "lagging" | string;
+  targetVotes?: number;
+  deliveredVote?: number;
+  deviation?: number;
+  estimatedPrice?: number;
+  influencerEstimatedPrice?: number;
+  influencers?: CampaignInfluencer[];
+  user?: CampaignParty;
+  brand?: CampaignParty;
 }
 
 export interface CampaignsByUserApiResponse {
@@ -63,7 +89,12 @@ export interface AllCampaignsApiResponse {
   message?: string;
   campaigns: UserCampaign[];
   count?: number;
-  statistics?: Record<string, number>;
+  statistics?: {
+    totalCampaign?: number;
+    active?: number;
+    lagging?: number;
+    [key: string]: number | undefined;
+  };
 }
 
 export interface CampaignDetailApiResponse {

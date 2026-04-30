@@ -28,8 +28,18 @@ async function fetchAllCampaigns(): Promise<AllCampaignsApiResponse> {
     success: true,
     message: data.message,
     campaigns: data.campaigns ?? [],
-    count: data.count ?? data.campaigns?.length ?? 0,
-    statistics: data.statistics ?? {},
+    count:
+      data.count ??
+      data.statistics?.totalCampaign ??
+      data.campaigns?.length ??
+      0,
+    statistics: {
+      totalCampaign:
+        data.statistics?.totalCampaign ?? data.count ?? data.campaigns?.length ?? 0,
+      active: data.statistics?.active ?? 0,
+      lagging: data.statistics?.lagging ?? 0,
+      ...data.statistics,
+    },
   };
 }
 
