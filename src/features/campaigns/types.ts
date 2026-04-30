@@ -72,6 +72,7 @@ export interface UserCampaign {
   targetVotes?: number;
   deliveredVote?: number;
   deviation?: number;
+  ocrAccuracy?: number;
   estimatedPrice?: number;
   influencerEstimatedPrice?: number;
   influencers?: CampaignInfluencer[];
