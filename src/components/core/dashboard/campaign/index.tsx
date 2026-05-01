@@ -10,7 +10,7 @@ import CampaignTable from "./campaign-table";
 import { useGetAllCampaign } from "@/features/campaigns/use-get-all-campaign";
 
 const CampaignComp = () => {
-  const { data: allCampaigns } = useGetAllCampaign();
+  const { data: allCampaigns, isPending: isCampaignsLoading } = useGetAllCampaign();
   const [status, setStatus] = React.useState<"all" | "active" | "completed" | "lagging">(
     "all"
   );
@@ -136,7 +136,11 @@ const CampaignComp = () => {
         </div>
       </div>
       <div className="mt-6">
-        <CampaignTable campaigns={campaigns} selectedStatus={status} />
+        <CampaignTable
+          campaigns={campaigns}
+          selectedStatus={status}
+          isLoading={isCampaignsLoading}
+        />
       </div>
     </div>
   );

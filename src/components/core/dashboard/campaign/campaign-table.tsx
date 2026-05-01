@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, ChevronDown, ArrowUpRight, ArrowDownRight, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -36,11 +37,13 @@ interface Campaign {
 type CampaignTableProps = {
   campaigns?: UserCampaign[];
   selectedStatus?: "all" | "active" | "completed" | "lagging";
+  isLoading?: boolean;
 };
 
 const CampaignTable = ({
   campaigns = [],
   selectedStatus = "all",
+  isLoading = false,
 }: CampaignTableProps) => {
   const t = useTranslations("campaign.table");
   const tMain = useTranslations("campaign.main");
@@ -208,6 +211,41 @@ const CampaignTable = ({
             </TableRow>
           </TableHeader>
           <TableBody>
+            {isLoading &&
+              Array.from({ length: itemsPerPage }).map((_, index) => (
+                <TableRow key={`skeleton-${index}`}>
+                  <TableCell>
+                    <Skeleton className="h-4 w-36" />
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Skeleton className="h-8 w-8 rounded-md" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-20 rounded-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-4 w-16" />
+                  </TableCell>
+                  <TableCell>
+                    <div className="space-y-2 min-w-30">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-2 w-full" />
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-4 w-16" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-4 w-12" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-6 rounded-sm" />
+                  </TableCell>
+                </TableRow>
+              ))}
             {paginatedCampaigns.map((campaign) => {
               const progressPercentage =
                 campaign.targetVotes > 0
@@ -298,7 +336,7 @@ const CampaignTable = ({
                 </TableRow>
               );
             })}
-            {paginatedCampaigns.length === 0 && (
+            {!isLoading && paginatedCampaigns.length === 0 && (
               <TableRow>
                 <TableCell colSpan={8} className="py-8 text-center text-sm text-muted-foreground">
                   No campaigns found
@@ -312,19 +350,29 @@ const CampaignTable = ({
       {/* Pagination */}
       <div className="flex items-center justify-between py-4 px-6 border-t border-[#E2E8F0] bg-[#FAFAFA]">
         <div className="text-sm text-muted-foreground">
-          {tMain("page")} {currentPage} {tMain("of")} {totalPages}
+          {isLoading ? (
+            <Skeleton className="h-4 w-24" />
+          ) : (
+            <>
+              {tMain("page")} {currentPage} {tMain("of")} {totalPages}
+            </>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="icon"
             onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+            disabled={isLoading || currentPage === 1}
             className="h-8 w-8 bg-white border-border hover:bg-muted"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          {getPageNumbers().map((page, index) => (
+          {isLoading
+            ? Array.from({ length: 5 }).map((_, index) => (
+              <Skeleton key={`page-skeleton-${index}`} className="h-8 w-8" />
+            ))
+            : getPageNumbers().map((page, index) => (
             <div key={index}>
               {page === "..." ? (
                 <span className="px-2 text-muted-foreground">...</span>
@@ -349,7 +397,7 @@ const CampaignTable = ({
             variant="outline"
             size="icon"
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={isLoading || currentPage === totalPages}
             className="h-8 w-8 bg-white border-border hover:bg-muted"
           >
             <ChevronRight className="h-4 w-4" />
@@ -371,6 +419,7 @@ const CampaignTable = ({
             className="w-16 h-8 bg-white border-border text-center"
             min={1}
             max={totalPages}
+            disabled={isLoading}
           />
         </div>
       </div>

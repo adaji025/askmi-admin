@@ -15,6 +15,7 @@ import enInfluencers from "@/messages/en/influencers/index.json";
 import enOcrReview from "@/messages/en/ocr-review/index.json";
 import { routing } from "@/i18n/routing";
 import NextTopLoader from 'nextjs-toploader';
+import { Toaster } from "sonner";
 
 const enMessages = {
   common: enCommon,
@@ -57,6 +58,7 @@ export default function RootLayout({
         <QueryProvider>
           <LanguageProvider locale={locale} messages={enMessages}>
             {children}
+            <Toaster richColors position="top-right" />
           </LanguageProvider>
         </QueryProvider>
       </body>
