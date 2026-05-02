@@ -59,6 +59,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: CampaignsSVG,
       },
       {
+        title: t("campaignApplications"),
+        url: "/dashboard/campaign-applications",
+        icon: CampaignsSVG,
+      },
+      {
         title: t("config"),
         url: "/dashboard/config",
         icon: DashboardSVG,
