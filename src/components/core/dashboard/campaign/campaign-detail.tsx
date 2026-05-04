@@ -15,6 +15,9 @@ import { CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useGetCampaign } from "@/features/campaigns/use-get-campaign";
 import { useExtendCampaignEndDate } from "@/features/campaigns/use-extend-campaign-end-date";
+import { useReviewCampaignResultImage } from "@/features/campaigns/use-review-campaign-result-image";
+import type { CampaignResultImage } from "@/features/campaigns/types";
+import ResultReviewDrawer from "./result-review-drawer";
 
 export default function CampaignDetail() {
   const params = useParams<{ id: string }>();
@@ -27,17 +30,40 @@ export default function CampaignDetail() {
     error: extendEndDateError,
     reset: resetExtendEndDateState,
   } = useExtendCampaignEndDate();
+  const {
+    mutateAsync: reviewResultImage,
+    isPending: isReviewingResultImage,
+  } = useReviewCampaignResultImage();
   const t = useTranslations("campaign.detail");
   const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(undefined);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [dateValidationError, setDateValidationError] = useState<string | null>(null);
+  const [isReviewDrawerOpen, setIsReviewDrawerOpen] = useState(false);
+  const [activeImage, setActiveImage] = useState<CampaignResultImage | null>(null);
 
   const delivered = Number(campaign?.deliveredVote ?? campaign?.response ?? 0);
   const targetVotes = Number(campaign?.targetVotes ?? campaign?.totalVoteNeeded ?? 0);
   const progress = targetVotes > 0 ? Math.min((delivered / targetVotes) * 100, 100) : 0;
   const completionPercentage = `${Math.round(progress)}%`;
   const responsesCount = Number(campaign?.response ?? campaign?.deliveredVote ?? 0);
-  const estimatedPrice = Number(campaign?.estimatedPrice ?? 0);
+  const displayPrice = Number(
+    campaign?.influencerEstimatedPrice ?? campaign?.estimatedPrice ?? 0,
+  );
+  const resultImages = useMemo(() => {
+    const directImages = campaign?.myResultImages ?? [];
+    if (directImages.length > 0) return directImages;
+    const directResultImages = campaign?.resultImages ?? [];
+    if (directResultImages.length > 0) return directResultImages;
+
+    const fromInfluencers = (campaign?.influencers ?? []).flatMap((influencer) =>
+      (influencer.resultImages ?? []).map((img) => ({
+        ...img,
+        influencerId: img.influencerId ?? influencer.influencerId,
+      })),
+    );
+
+    return fromInfluencers;
+  }, [campaign?.myResultImages, campaign?.resultImages, campaign?.influencers]);
   const currentEndDate = useMemo(() => {
     if (!campaign?.endDate) return undefined;
     const parsed = new Date(campaign.endDate);
@@ -56,6 +82,22 @@ export default function CampaignDetail() {
   const daysLeftLabel =
     daysLeft === null ? "N/A" : `${daysLeft} day${daysLeft === 1 ? "" : "s"}`;
   const influencers = campaign?.influencers ?? [];
+  const influencerNameById = useMemo(() => {
+    const entries = influencers
+      .filter(
+        (influencer): influencer is typeof influencer & {
+          influencerId: string;
+          fullName: string;
+        } =>
+          typeof influencer.influencerId === "string" &&
+          influencer.influencerId.length > 0 &&
+          typeof influencer.fullName === "string" &&
+          influencer.fullName.length > 0,
+      )
+      .map((influencer) => [influencer.influencerId, influencer.fullName] as const);
+
+    return new Map(entries);
+  }, [influencers]);
   const influencerCount =
     influencers.length > 0 ? influencers.length : Number(campaign?.numberOfInfluencer ?? 0);
   const allQuestions =
@@ -83,6 +125,55 @@ export default function CampaignDetail() {
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  const renderReviewedResponseObject = (value: unknown) => {
+    if (!value || typeof value !== "object") return null;
+    const payload = value as {
+      questionType?: string;
+      totalResponses?: number;
+      options?: Array<{ optionId?: string; optionText?: string; votes?: number }>;
+      votesByYesOrNo?: { yesVotes?: number; noVotes?: number };
+      votesByRating?: Record<string, number>;
+    };
+    const questionType = String(payload.questionType ?? "").toLowerCase();
+
+    if (questionType === "multi_choice") {
+      return (
+        <div className="space-y-1 text-xs text-muted-foreground">
+          {(payload.options ?? []).map((option, index) => (
+            <p key={`${option.optionId ?? index}`}>
+              {option.optionText ?? option.optionId ?? `Option ${index + 1}`}:{" "}
+              {Number(option.votes ?? 0).toLocaleString()}
+            </p>
+          ))}
+        </div>
+      );
+    }
+
+    if (questionType === "yes_no") {
+      const yesNoVotes = payload.votesByYesOrNo;
+      return (
+        <div className="space-y-1 text-xs text-muted-foreground">
+          <p>Yes: {Number(yesNoVotes?.yesVotes ?? 0).toLocaleString()}</p>
+          <p>No: {Number(yesNoVotes?.noVotes ?? 0).toLocaleString()}</p>
+        </div>
+      );
+    }
+
+    if (questionType === "rating_scale") {
+      return (
+        <div className="space-y-1 text-xs text-muted-foreground">
+          {Object.entries(payload.votesByRating ?? {}).map(([rating, votes]) => (
+            <p key={rating}>
+              Rating {rating}: {Number(votes ?? 0).toLocaleString()}
+            </p>
+          ))}
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   const handleExtendEndDate = async () => {
     if (!id) return;
@@ -114,6 +205,11 @@ export default function CampaignDetail() {
       endDate: normalizedEndDate.toISOString(),
     });
     setIsCalendarOpen(false);
+  };
+
+  const handleOpenReviewDrawer = (img: CampaignResultImage) => {
+    setActiveImage(img);
+    setIsReviewDrawerOpen(true);
   };
 
   if (isPending) {
@@ -333,10 +429,10 @@ export default function CampaignDetail() {
         <Card className="bg-[#E7F2FD] border-none shadow-none p-0">
           <CardContent className="p-6">
             <div className="text-[10px] font-semibold text-foreground uppercase tracking-widest mb-2">
-              ESTIMATED PRICE
+              INFLUENCER EST. PRICE
             </div>
             <div className="text-2xl font-bold text-foreground">
-              ${estimatedPrice.toLocaleString()}
+              ${displayPrice.toLocaleString()}
             </div>
           </CardContent>
         </Card>
@@ -367,6 +463,104 @@ export default function CampaignDetail() {
                 )}
               </div>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* Result images / proof submissions */}
+      <div className="bg-white rounded-lg border border-[#E2E8F0] space-y-4">
+        <h2 className="text-lg font-bold text-foreground p-5 border-b">Result images</h2>
+        {resultImages.length === 0 ? (
+          <div className="px-5 pb-5 text-sm text-muted-foreground">
+            No result images submitted for this campaign yet.
+          </div>
+        ) : (
+          <div className="grid gap-4 p-5 sm:grid-cols-2">
+            {resultImages.map((img) => {
+              const status = String(img.reviewStatus ?? "pending").toLowerCase();
+              const statusClass =
+                status === "approved"
+                  ? "bg-[#2AC670] text-white border-0"
+                  : status === "rejected"
+                    ? "bg-destructive text-white border-0"
+                    : "bg-[#EDAE40] text-white border-0";
+              return (
+                <div
+                  key={img.id}
+                  className="rounded-lg border border-[#E2E8F0] overflow-hidden flex flex-col"
+                >
+                  <a
+                    href={img.imageUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block aspect-video bg-muted"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={img.imageUrl}
+                      alt={img.caption ?? "Campaign result proof"}
+                      className="max-h-50 h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </a>
+                  <div className="p-4 space-y-2 flex-1 flex flex-col">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge className={statusClass}>{status}</Badge>
+                      {typeof img.reviewedVotes === "number" && (
+                        <span className="text-xs text-muted-foreground">
+                          Reviewed votes: {img.reviewedVotes}
+                        </span>
+                      )}
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleOpenReviewDrawer(img)}
+                    >
+                      Add result from screenshot
+                    </Button>
+                    {img.caption && (
+                      <p className="text-sm text-foreground">{img.caption}</p>
+                    )}
+                    {img.influencerId && (
+                      <p className="text-xs text-muted-foreground truncate">
+                        Influencer:{" "}
+                        {influencerNameById.get(img.influencerId) ?? "Unknown Influencer"}
+                      </p>
+                    )}
+                    {img.createdAt && (
+                      <p className="text-xs text-muted-foreground">
+                        Submitted{" "}
+                        {new Date(img.createdAt).toLocaleString(undefined, {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                        })}
+                      </p>
+                    )}
+                    {img.reviewerName && img.reviewedAt && (
+                      <p className="text-xs text-muted-foreground mt-auto pt-2 border-t border-[#E2E8F0]">
+                        Reviewed by {img.reviewerName} on{" "}
+                        {new Date(img.reviewedAt).toLocaleString(undefined, {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                        })}
+                      </p>
+                    )}
+                    {img.reviewNotes && (
+                      <p className="text-xs text-muted-foreground italic">{img.reviewNotes}</p>
+                    )}
+                    {img.reviewedResponseObject && (
+                      <div className="mt-2 rounded-md border border-[#E2E8F0] bg-[#FAFAFA] p-2">
+                        <p className="mb-1 text-xs font-semibold text-foreground">
+                          Reviewed response
+                        </p>
+                        {renderReviewedResponseObject(img.reviewedResponseObject)}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -424,6 +618,37 @@ export default function CampaignDetail() {
           </div>
         )}
       </div>
+
+      <ResultReviewDrawer
+        open={isReviewDrawerOpen}
+        onOpenChange={(open) => {
+          setIsReviewDrawerOpen(open);
+          if (!open) setActiveImage(null);
+        }}
+        image={activeImage}
+        isSubmitting={isReviewingResultImage}
+        onSubmit={async ({ reviewStatus, reviewedResponseObject, reviewNotes }) => {
+          if (!activeImage?.id || !campaign?.id) return;
+          try {
+            await reviewResultImage({
+              imageId: activeImage.id,
+              campaignId: campaign.id,
+              reviewStatus,
+              reviewedResponseObject,
+              reviewNotes,
+            });
+            toast.success("Screenshot result saved.");
+            setIsReviewDrawerOpen(false);
+            setActiveImage(null);
+          } catch (submitError) {
+            toast.error(
+              submitError instanceof Error
+                ? submitError.message
+                : "Failed to save screenshot result",
+            );
+          }
+        }}
+      />
     </div>
   );
 }

@@ -42,9 +42,70 @@ export interface CampaignParty {
 }
 
 export interface CampaignInfluencer {
+  influencerId?: string;
   fullName?: string;
   email?: string;
   responses?: number;
+  reviewedVotesTotal?: number;
+  resultImages?: CampaignResultImage[];
+}
+
+export interface ReviewedMultiChoiceOption {
+  optionText?: string;
+  votes?: number;
+}
+
+export interface ReviewedResponseObjectMultiChoice {
+  questionType: "multi_choice";
+  options?: ReviewedMultiChoiceOption[];
+}
+
+export interface ReviewedResponseObjectYesNo {
+  questionType: "yes_no";
+  votesByYesOrNo?: {
+    yesVotes?: number;
+    noVotes?: number;
+  };
+}
+
+export interface ReviewedResponseObjectRatingScale {
+  questionType: "rating_scale";
+  votesByRating?: Record<string, number>;
+}
+
+export type ReviewedResponseObject =
+  | ReviewedResponseObjectMultiChoice
+  | ReviewedResponseObjectYesNo
+  | ReviewedResponseObjectRatingScale
+  | {
+      questionType?: string;
+      [key: string]: unknown;
+    };
+
+/** Proof / result image submitted for a campaign (admin GET campaign detail). */
+export interface CampaignResultImage {
+  id: string;
+  campaignId?: string;
+  influencerId?: string;
+  surveyQuestionId?: string;
+  imageUrl: string;
+  fileKey?: string;
+  caption?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+  reviewStatus?: "pending" | "approved" | "rejected" | string;
+  reviewedVotes?: number | null;
+  reviewedResponseObject?: ReviewedResponseObject;
+  reviewNotes?: string | null;
+  reviewedAt?: string | null;
+  reviewedByAdminId?: string | null;
+  reviewerName?: string | null;
+  influencer?: CampaignParty;
+  reviewedByAdmin?: CampaignParty;
+  campaign?: {
+    id?: string;
+    campaignName?: string;
+  };
 }
 
 /** Campaign item used by campaign list/detail APIs. */
@@ -75,6 +136,10 @@ export interface UserCampaign {
   ocrAccuracy?: number;
   estimatedPrice?: number;
   influencerEstimatedPrice?: number;
+  /** Submitted result screenshots / proofs linked to this campaign. */
+  myResultImages?: CampaignResultImage[];
+  /** Alternate payload shape for campaign proof images. */
+  resultImages?: CampaignResultImage[];
   influencers?: CampaignInfluencer[];
   user?: CampaignParty;
   brand?: CampaignParty;

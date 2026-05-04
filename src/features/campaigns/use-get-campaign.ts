@@ -20,7 +20,7 @@ async function fetchAdminCampaign(id: string): Promise<UserCampaign> {
 
   const responseData = data as CampaignDetailApiResponse;
   if (!responseData?.success || !responseData.campaign) {
-    throw new Error("Failed to load campaign");
+    throw new Error(responseData?.message ?? "Failed to load campaign");
   }
 
   return responseData.campaign;
