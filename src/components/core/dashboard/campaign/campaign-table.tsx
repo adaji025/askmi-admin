@@ -58,7 +58,7 @@ const CampaignTable = ({
       : campaign.isActive
         ? "active"
         : "lagging";
-    const delivered = Number(campaign.response ?? 0);
+    const delivered = Number(campaign.deliveredVote ?? 0);
     const targetVotes = Number(campaign.totalVoteNeeded ?? 0);
     const deviation =
       targetVotes > 0 ? Number((((delivered - targetVotes) / targetVotes) * 100).toFixed(2)) : 0;

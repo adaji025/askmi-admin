@@ -132,6 +132,7 @@ export interface UserCampaign {
   status?: "active" | "completed" | "lagging" | string;
   targetVotes?: number;
   deliveredVote?: number;
+  reviewedDeliveredVote?: number;
   deviation?: number;
   ocrAccuracy?: number;
   estimatedPrice?: number;

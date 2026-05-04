@@ -41,11 +41,13 @@ export default function CampaignDetail() {
   const [isReviewDrawerOpen, setIsReviewDrawerOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<CampaignResultImage | null>(null);
 
-  const delivered = Number(campaign?.deliveredVote ?? campaign?.response ?? 0);
+  const delivered = Number(campaign?.reviewedDeliveredVote ?? campaign?.deliveredVote ?? campaign?.response ?? 0);
   const targetVotes = Number(campaign?.targetVotes ?? campaign?.totalVoteNeeded ?? 0);
   const progress = targetVotes > 0 ? Math.min((delivered / targetVotes) * 100, 100) : 0;
   const completionPercentage = `${Math.round(progress)}%`;
-  const responsesCount = Number(campaign?.response ?? campaign?.deliveredVote ?? 0);
+  const responsesCount = Number(
+    campaign?.reviewedDeliveredVote ?? campaign?.response ?? campaign?.deliveredVote ?? 0,
+  );
   const displayPrice = Number(
     campaign?.influencerEstimatedPrice ?? campaign?.estimatedPrice ?? 0,
   );
@@ -537,9 +539,9 @@ export default function CampaignDetail() {
                         })}
                       </p>
                     )}
-                    {img.reviewerName && img.reviewedAt && (
+                    {(img.reviewerName || img.reviewedByAdminId) && img.reviewedAt && (
                       <p className="text-xs text-muted-foreground mt-auto pt-2 border-t border-[#E2E8F0]">
-                        Reviewed by {img.reviewerName} on{" "}
+                        Reviewed by {img.reviewerName ?? img.reviewedByAdminId} on{" "}
                         {new Date(img.reviewedAt).toLocaleString(undefined, {
                           dateStyle: "medium",
                           timeStyle: "short",
@@ -609,7 +611,8 @@ export default function CampaignDetail() {
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[#8B5CF6]" />
                     <span className="text-sm font-medium text-foreground">
-                      {Number(influencer.responses ?? 0).toLocaleString()} {t("responsesLabel")}
+                      {Number(influencer.reviewedVotesTotal ?? influencer.responses ?? 0).toLocaleString()}{" "}
+                      {t("responsesLabel")}
                     </span>
                   </div>
                 </div>
