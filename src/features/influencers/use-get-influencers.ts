@@ -3,6 +3,24 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import apiClient from "@/lib/axios";
 
+export interface InstagramDemographicSlice {
+  label: string;
+  percentage: number;
+}
+
+export interface InstagramPrimaryLocationSlice {
+  countryCode?: string;
+  countryName?: string;
+  percentage: number;
+}
+
+export interface InstagramDemographics {
+  ageRange?: InstagramDemographicSlice[];
+  language?: InstagramDemographicSlice[];
+  gender?: InstagramDemographicSlice[];
+  primaryLocation?: InstagramPrimaryLocationSlice[];
+}
+
 export interface AdminInfluencer {
   id: string;
   fullName?: string;
@@ -13,6 +31,7 @@ export interface AdminInfluencer {
   performanceScore?: number;
   deviationTrend?: string | number;
   ocrAccuracy?: number;
+  instagramDemographics?: InstagramDemographics;
   [key: string]: unknown;
 }
 

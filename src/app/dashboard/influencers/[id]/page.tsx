@@ -221,7 +221,10 @@ const InfluencerDetails = () => {
           </div>
         </div>
       </div>
-      <InfluencerDetailsComponent />
+      <InfluencerDetailsComponent
+        influencerId={typeof influencer?.id === "string" ? influencer.id : id}
+        instagramDemographics={influencer?.instagramDemographics}
+      />
     </>
   );
 };

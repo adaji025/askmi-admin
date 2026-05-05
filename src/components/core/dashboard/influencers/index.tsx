@@ -9,10 +9,19 @@ import VerificationStatus from "./verification-status";
 import CampaignHistory from "./campaign-history";
 import OCRActivity from "./ocr-activity";
 import Demograph from "./demograph";
+import type { InstagramDemographics } from "@/features/influencers/use-get-influencers";
 
 type TabType = "profile" | "campaign-history" | "ocr-activity";
 
-const InfluencerDetailsComponent = () => {
+interface InfluencerDetailsComponentProps {
+  influencerId?: string;
+  instagramDemographics?: InstagramDemographics | null;
+}
+
+const InfluencerDetailsComponent = ({
+  influencerId,
+  instagramDemographics,
+}: InfluencerDetailsComponentProps) => {
   const t = useTranslations("influencers.tabs");
   const tProfile = useTranslations("influencers.profile");
   const [activeTab, setActiveTab] = useState<TabType>("profile");
@@ -79,7 +88,10 @@ const InfluencerDetailsComponent = () => {
             <InfluencerInfo influencerInfo={influencerInfo} />
             <VerificationStatus verificationStatus={verificationStatus} />
           </div>
-          <Demograph />
+          <Demograph
+            influencerId={influencerId}
+            instagramDemographics={instagramDemographics}
+          />
         </div>
       )}
 
