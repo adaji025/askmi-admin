@@ -9,26 +9,21 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import type { VoteCollectionOverTimeItem } from "@/features/dashboard/use-get-dashboard-stats";
 
-const chartData = [
-  { month: "Jan", votes: 42 },
-  { month: "Feb", votes: 58 },
-  { month: "Mar", votes: 85 },
-  { month: "Apr", votes: 95 },
-  { month: "May", votes: 72 },
-  { month: "Jun", votes: 50 },
-  { month: "Jul", votes: 68 },
-  { month: "Aug", votes: 98 },
-  { month: "Sep", votes: 115 },
-  { month: "Oct", votes: 82, marked: true },
-  { month: "Nov", votes: 105 },
-  { month: "Dec", votes: 128 },
-];
+interface VoteDeliveryChartProps {
+  data: VoteCollectionOverTimeItem[];
+}
 
+interface ChartPoint {
+  month: string;
+  votes: number;
+  marked?: boolean;
+}
 
-const CustomDot = (props: any) => {
+const CustomDot = (props: { cx?: number; cy?: number; payload?: ChartPoint }) => {
   const { cx, cy, payload } = props;
-  if (payload.marked) {
+  if (payload?.marked) {
     return (
       <circle
         cx={cx}
@@ -43,9 +38,17 @@ const CustomDot = (props: any) => {
   return null;
 };
 
-export function VoteDeliveryChart() {
+export function VoteDeliveryChart({ data }: VoteDeliveryChartProps) {
   const t = useTranslations("dashboard.charts");
-  
+
+  const chartData: ChartPoint[] = data.map((item, index) => ({
+    month: item.month,
+    votes: item.voteCount,
+    marked: index === data.length - 1,
+  }));
+
+  const maxVotes = Math.max(...chartData.map((item) => item.votes), 0);
+
   const chartConfig = {
     votes: {
       label: t("votes"),
@@ -89,8 +92,8 @@ export function VoteDeliveryChart() {
             axisLine={false}
             tickMargin={12}
             tick={{ fill: "#6B7280", fontSize: 12 }}
-            tickFormatter={(value) => `${value}k`}
-            domain={[0, 140]}
+            tickFormatter={(value) => `${value}`}
+            domain={[0, Math.max(Math.ceil(maxVotes * 1.15), 10)]}
           />
           <ChartTooltip
             cursor={false}

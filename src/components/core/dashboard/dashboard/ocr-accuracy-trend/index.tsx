@@ -9,20 +9,20 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
+import type { OCRAccuracyTrendItem } from "@/features/dashboard/use-get-dashboard-stats"
 
-const chartData = [
-  { day: "Sun", accuracy: 72 },
-  { day: "Mon", accuracy: 112 },
-  { day: "Tue", accuracy: 88 },
-  { day: "Wed", accuracy: 36 },
-  { day: "Thu", accuracy: 82 },
-  { day: "Fri", accuracy: 56 },
-  { day: "Sat", accuracy: 80 },
-]
+interface OCRAccuracyTrendsProps {
+  data: OCRAccuracyTrendItem[];
+}
 
-export function OCRAccuracyTrends() {
+export function OCRAccuracyTrends({ data }: OCRAccuracyTrendsProps) {
   const t = useTranslations("dashboard.charts");
-  
+
+  const chartData = data.map((item) => ({
+    day: item.day,
+    accuracy: Number(item.ocrAccuracy.toFixed(2)),
+  }));
+
   const chartConfig = {
     accuracy: {
       label: t("ocrAccuracy"),
@@ -60,9 +60,9 @@ export function OCRAccuracyTrends() {
             axisLine={false}
             tickMargin={12}
             tick={{ fill: "#6B7280", fontSize: 12 }}
-            tickFormatter={(value) => `${value}k`}
-            domain={[0, 140]}
-            ticks={[0, 20, 40, 60, 80, 100, 120, 140]}
+            tickFormatter={(value) => `${value}%`}
+            domain={[0, 100]}
+            ticks={[0, 20, 40, 60, 80, 100]}
           />
           <ChartTooltip
             cursor={false}

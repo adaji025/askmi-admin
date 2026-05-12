@@ -9,15 +9,26 @@ interface OCRStatItem {
   value: string | number;
 }
 
-const OCRProcessingQueue = () => {
+interface OCRProcessingQueueProps {
+  processedToday: number;
+  autoVerified: number;
+  pendingReview: number;
+  flaggedFraud: number;
+}
+
+const OCRProcessingQueue = ({
+  processedToday,
+  autoVerified,
+  pendingReview,
+  flaggedFraud,
+}: OCRProcessingQueueProps) => {
   const t = useTranslations("dashboard.ocr");
 
   const stats: OCRStatItem[] = [
-    { label: t("processedToday"), value: "2,314" },
-    { label: t("autoVerified"), value: "1,937" },
-    { label: t("pendingReview"), value: "249" },
-    { label: t("flaggedFraud"), value: "16" },
-    { label: t("ocrErrors"), value: "58" },
+    { label: t("processedToday"), value: processedToday.toLocaleString() },
+    { label: t("autoVerified"), value: autoVerified.toLocaleString() },
+    { label: t("pendingReview"), value: pendingReview.toLocaleString() },
+    { label: t("flaggedFraud"), value: flaggedFraud.toLocaleString() },
   ];
 
   return (
